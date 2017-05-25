@@ -1,2 +1,61 @@
 # tdl-auth
-Responsible for managing user identities and permissions
+
+## The Auth flow
+
+### 1. Using my private key I securely generate and sign a user token
+
+Token contains:
+- unique username
+- expiration
+- other application specific data
+    
+### 2. User receives token via mail
+ 
+A URL will be generated with the token contained in the http GET parameters.
+The URL will take the user to a webpage with instruction on how to use generate and use the credentials.
+
+### 3. User exchanges token for temporary credentials.
+
+When user clicks the download button a request will be send to the AWS Lambda responsible for generating temporary credentials.
+
+The Lambda does the following:
+  - Verifies request signature using public key
+  - Generated temporary credentials using STS
+  - Creates the credentials files
+  - The Lambda will sit behind API Gateway and will be accessed via Http
+  
+### 4. User will be instructed to save the credentials file
+
+Normally this file will be saved in a location accesible by the consumer applications
+
+
+## Development
+
+The development of this feature will be done incrementally, using short iterations.
+
+
+**Phase 1** Prove that we can generate temporary credentials
+
+- Generate temporary credentials by hand
+- Copy credentials file to `record-and-upload`
+- Run `record-and-upload`, the upload should just work
+
+**Phase 2** Ensure that the credentials are valid and secure
+
+- The credentials should restrict the users to their personal folder, we need proper tests to prove this
+- The `record-and-upload` should validate that the user provided has enough permissions to proceed with the recording
+
+**Phase 3** Deployment scripts
+
+- Cloud Formation templates for the required infrastructure
+- Script to package and deploy Lambda
+
+**Phase 4** Secure endpoint
+
+- Script to generate and sign token with private key
+- AWS Lambda verifies user token
+
+**Phase 5** User experience
+
+- Prepared URL with token as parameter
+- Web front-end with a button to download credentials
