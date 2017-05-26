@@ -42,6 +42,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.16'
 
     testCompile 'junit:junit:4.12'
+    testCompile 'ro.ghionoiu:s3-sync-stream:0.0.8'
+    testCompile 'ch.qos.logback:logback-classic:1.1.3'
 }
 
 

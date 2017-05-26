@@ -10,19 +10,19 @@ import java.util.Arrays;
 public class DefaultS3FolderPolicy {
 
     public static Policy getForUser(String bucket, String userName) {
+        Statement creatingObjectsStatement = getObjectCreatingStatement(bucket);
         Statement multipartUploadStatement = getMultipartUploadStatement(bucket, userName);
-        Statement creatingObjectsStatement = getObjectCreatingStatement(bucket, userName);
 
         return new Policy("Files uploading policy", Arrays.asList(multipartUploadStatement, creatingObjectsStatement));
     }
 
-    private static Statement getObjectCreatingStatement(String bucket, String userName) {
+    private static Statement getObjectCreatingStatement(String bucket) {
         return new Statement(Statement.Effect.Allow)
                 .withActions(
                         () -> "s3:PutObject",
                         () -> "s3:GetObject"
                 )
-                .withResources(new Resource("arn:aws:s3:::" + bucket + "/" + userName + "/*"));
+                .withResources(new Resource("arn:aws:s3:::" + bucket + "/${aws:username}/*"));
     }
 
     private static Statement getMultipartUploadStatement(String bucket, String userName) {
@@ -31,7 +31,7 @@ public class DefaultS3FolderPolicy {
                         () -> "s3:ListBucket",
                         () -> "s3:ListBucketMultipartUploads"
                 )
-                .withResources(new Resource("arn:aws:s3:::" + bucket + "/" + userName + "/*"))
+                .withResources(new Resource("arn:aws:s3:::" + bucket + "/${aws:username}/*"))
                 .withConditions(
                         new Condition()
                                 .withType("StringEquals")
