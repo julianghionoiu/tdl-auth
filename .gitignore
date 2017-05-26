@@ -1,1 +1,4 @@
-.idea
+.idea/
+.gradle/
+.private/
+build/
