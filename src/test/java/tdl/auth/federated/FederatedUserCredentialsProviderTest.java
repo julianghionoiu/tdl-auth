@@ -11,6 +11,7 @@ import tdl.s3.sync.Source;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -42,7 +43,7 @@ public class FederatedUserCredentialsProviderTest {
         Source source = Source.getBuilder(path)
                 .setFilters(filters)
                 .create();
-        RemoteSync sync = new RemoteSync(source, remoteTestBucket.asDestination(test_user + "/"));
+        RemoteSync sync = new RemoteSync(source, remoteTestBucket.asDestination(federatedUserCredentialsProvider, test_user + "/"));
         sync.run();
 
         //Check that file exists in appropriate folder
@@ -77,7 +78,7 @@ public class FederatedUserCredentialsProviderTest {
             sync.run();
         } catch (Exception e) {
             //Check that error was due to insufficient access rights
-            assertThat(e.getMessage(), containsString("Forbidden"));
+            assertThat(e.getMessage(), anyOf(containsString("Forbidden"), containsString("AccessDenied")));
             errorCounter++;
         }
 
@@ -87,7 +88,7 @@ public class FederatedUserCredentialsProviderTest {
             sync.run();
         } catch (Exception e) {
             //Check that error was due to insufficient access rights
-            assertThat(e.getMessage(), containsString("Forbidden"));
+            assertThat(e.getMessage(), anyOf(containsString("Forbidden"), containsString("AccessDenied")));
             errorCounter++;
         }
 
