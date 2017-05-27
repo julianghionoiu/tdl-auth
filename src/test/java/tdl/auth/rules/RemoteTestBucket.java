@@ -36,6 +36,17 @@ public class RemoteTestBucket extends ExternalResource {
 
     }
 
+    public AmazonS3 getClient() {
+        return amazonS3;
+    }
+
+    public AmazonS3 getClient(AWSCredentialsProvider credentialsProvider) {
+        return AmazonS3ClientBuilder.standard()
+                .withCredentials(credentialsProvider)
+                .withRegion(secretsProvider.getS3Region())
+                .build();
+    }
+
     public AWSSecretPropertiesCredentialsProvider getSecretsProvider() {
         return secretsProvider;
     }
@@ -51,14 +62,8 @@ public class RemoteTestBucket extends ExternalResource {
     }
 
     public Destination asDestination(AWSCredentialsProvider credentialsProvider, String folder) {
-
-        AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard()
-                .withCredentials(credentialsProvider)
-                .withRegion(secretsProvider.getS3Region())
-                .build();
-
         return S3BucketDestination.builder()
-                .awsClient(amazonS3)
+                .awsClient(getClient(credentialsProvider))
                 .bucket(bucketName)
                 .prefix(folder)
                 .build();
