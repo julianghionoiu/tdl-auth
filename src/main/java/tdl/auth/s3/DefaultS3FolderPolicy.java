@@ -10,28 +10,34 @@ import java.util.Arrays;
 public class DefaultS3FolderPolicy {
 
     public static Policy getForUser(String bucket, String userName) {
-        Statement creatingObjectsStatement = getObjectCreatingStatement(bucket);
+        Statement creatingObjectsStatement = getObjectCreatingStatement(bucket, userName);
         Statement multipartUploadStatement = getMultipartUploadStatement(bucket, userName);
+        Statement listBucketStatement = getListBucketStatement(bucket, userName);
 
-        return new Policy("Files uploading policy", Arrays.asList(multipartUploadStatement, creatingObjectsStatement));
+        return new Policy("Files uploading policy", Arrays.asList(multipartUploadStatement, creatingObjectsStatement, listBucketStatement));
     }
 
-    private static Statement getObjectCreatingStatement(String bucket) {
+    private static Statement getObjectCreatingStatement(String bucket, String userName) {
         return new Statement(Statement.Effect.Allow)
                 .withActions(
                         () -> "s3:PutObject",
                         () -> "s3:GetObject"
                 )
-                .withResources(new Resource("arn:aws:s3:::" + bucket + "/${aws:username}/*"));
+                .withResources(new Resource("arn:aws:s3:::" + bucket + "/" + userName + "/*"));
     }
 
     private static Statement getMultipartUploadStatement(String bucket, String userName) {
         return new Statement(Statement.Effect.Allow)
+                .withActions(() -> "s3:ListBucketMultipartUploads")
+                .withResources(new Resource("arn:aws:s3:::" + bucket));
+    }
+
+    private static Statement getListBucketStatement(String bucket, String userName) {
+        return new Statement(Statement.Effect.Allow)
                 .withActions(
-                        () -> "s3:ListBucket",
-                        () -> "s3:ListBucketMultipartUploads"
+                        () -> "s3:ListBucket"
                 )
-                .withResources(new Resource("arn:aws:s3:::" + bucket + "/${aws:username}/*"))
+                .withResources(new Resource("arn:aws:s3:::" + bucket))
                 .withConditions(
                         new Condition()
                                 .withType("StringEquals")
