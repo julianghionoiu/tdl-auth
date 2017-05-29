@@ -1,73 +1,26 @@
 package tdl.auth.rules;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AbortMultipartUploadRequest;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.InitiateMultipartUploadRequest;
 import com.amazonaws.services.s3.model.ListMultipartUploadsRequest;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import org.junit.rules.ExternalResource;
-import tdl.auth.credentials.AWSSecretPropertiesCredentialsProvider;
-import tdl.s3.sync.destination.Destination;
-import tdl.s3.sync.destination.S3BucketDestination;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 
 public class RemoteTestBucket extends ExternalResource {
-
     private final AmazonS3 amazonS3;
-    private final String bucketName;
-
-    private final AWSSecretPropertiesCredentialsProvider secretsProvider;
+    private String bucketName;
 
     //~~~~ Construct
-    public RemoteTestBucket() {
-        Path privatePropertiesFile = Paths.get(".private", "aws-test-secrets");
-        secretsProvider = AWSSecretPropertiesCredentialsProvider.fromPlainTextFile(privatePropertiesFile);
-
+    public RemoteTestBucket(String region, String bucketName) {
+        this.bucketName = bucketName;
         amazonS3 = AmazonS3ClientBuilder.standard()
-                .withCredentials(secretsProvider)
-                .withRegion(secretsProvider.getS3Region())
-                .build();
-        bucketName = secretsProvider.getS3Bucket();
-
-    }
-
-    public AmazonS3 getClient() {
-        return amazonS3;
-    }
-
-    public AmazonS3 getClient(AWSCredentialsProvider credentialsProvider) {
-        return AmazonS3ClientBuilder.standard()
-                .withCredentials(credentialsProvider)
-                .withRegion(secretsProvider.getS3Region())
+                .withRegion(region)
                 .build();
     }
 
-    public AWSSecretPropertiesCredentialsProvider getSecretsProvider() {
-        return secretsProvider;
-    }
-
-    //~~~~ Getters
-
-    public Destination asDestination(String folder) {
-        return S3BucketDestination.builder()
-                .awsClient(amazonS3)
-                .bucket(bucketName)
-                .prefix(folder)
-                .build();
-    }
-
-    public Destination asDestination(AWSCredentialsProvider credentialsProvider, String folder) {
-        return S3BucketDestination.builder()
-                .awsClient(getClient(credentialsProvider))
-                .bucket(bucketName)
-                .prefix(folder)
-                .build();
-    }
 
     //~~~~ Lifecycle management
     @Override
@@ -96,12 +49,18 @@ public class RemoteTestBucket extends ExternalResource {
     }
 
     //~~~~ Bucket actions
+
+
     public boolean doesObjectExists(String key) {
         return amazonS3.doesObjectExist(bucketName, key);
     }
 
-    public ObjectMetadata getObjectMetadata(String key) {
-        return amazonS3.getObjectMetadata(bucketName, key);
+    public void givenMultipartUploadExists(String testBucketName, String prefix) {
+        InitiateMultipartUploadRequest uploadRequest = new InitiateMultipartUploadRequest(testBucketName, prefix + "/test_multipart.dat");
+        amazonS3.initiateMultipartUpload(uploadRequest);
     }
 
+    public void givenObjectExists(String testBucketName, String key) {
+        amazonS3.putObject(testBucketName, key, "test");
+    }
 }

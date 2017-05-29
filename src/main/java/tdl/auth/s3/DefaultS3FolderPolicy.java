@@ -14,7 +14,7 @@ public class DefaultS3FolderPolicy {
         Statement multipartUploadStatement = getMultipartUploadStatement(bucket, userName);
         Statement listBucketStatement = getListBucketStatement(bucket, userName);
 
-        return new Policy("Files uploading policy", Arrays.asList(multipartUploadStatement, creatingObjectsStatement, listBucketStatement));
+        return new Policy("PerUserFileUploadingPolicy", Arrays.asList(multipartUploadStatement, creatingObjectsStatement, listBucketStatement));
     }
 
     private static Statement getObjectCreatingStatement(String bucket, String userName) {

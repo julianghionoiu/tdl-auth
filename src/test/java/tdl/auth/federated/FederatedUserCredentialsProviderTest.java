@@ -1,172 +1,156 @@
 package tdl.auth.federated;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.ListMultipartUploadsRequest;
+import com.amazonaws.services.s3.model.MultipartUploadListing;
+import com.amazonaws.services.securitytoken.model.Credentials;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import tdl.auth.rules.RemoteTestBucket;
-import tdl.auth.s3.DefaultS3FolderPolicy;
-import tdl.s3.sync.Filters;
-import tdl.s3.sync.RemoteSync;
-import tdl.s3.sync.Source;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class FederatedUserCredentialsProviderTest {
+    private static final String TEST_AWS_REGION = "eu-west-2";
+    private static final String TEST_BUCKET_NAME = "tdl-test";
+    private static final String TEST_USERNAME = "tdl-test-user";
+    private static final String OTHER_USERNAME = "other_user";
 
     @Rule
-    public RemoteTestBucket remoteTestBucket = new RemoteTestBucket();
+    public ExpectedException thrown = ExpectedException.none();
 
-    private Source source;
-    private String s3Bucket;
-    private String test_user;
-    private FederatedUserCredentialsProvider federatedUserCredentialsProvider;
+    @Rule
+    public RemoteTestBucket remoteTestBucket = new RemoteTestBucket(TEST_AWS_REGION, TEST_BUCKET_NAME);
+
+    // Software under test
+    private FederatedUserCredentialsProvider federatedUserCredentialsProvider =
+            new FederatedUserCredentialsProvider(TEST_AWS_REGION, TEST_BUCKET_NAME);
+    private AmazonS3 federatedS3Client;
 
 
     @Before
     public void setUp() throws Exception {
-        String s3Region = remoteTestBucket.getSecretsProvider().getS3Region();
-        s3Bucket = remoteTestBucket.getSecretsProvider().getS3Bucket();
-        test_user = "test_user";
-
-        Path path = Paths.get("src/test/resources/test_1/");
-        Filters filters = Filters.getBuilder().include(Filters.endsWith("txt")).create();
-        source = Source.getBuilder(path)
-                .setFilters(filters)
-                .create();
-
-        //Get temporal credentials for user
-        federatedUserCredentialsProvider = FederatedUserCredentialsProvider.builder()
-                .iamUserCredentialsProvider(remoteTestBucket.getSecretsProvider())
-                .region(s3Region)
-                .userName(test_user)
-                .policy(DefaultS3FolderPolicy.getForUser(s3Bucket, test_user))
+        Credentials federatedUserCredentials = federatedUserCredentialsProvider.getTokenFor(TEST_USERNAME).getCredentials();
+        federatedS3Client = AmazonS3ClientBuilder.standard()
+                .withCredentials(new AWSStaticCredentialsProvider(new BasicSessionCredentials(
+                        federatedUserCredentials.getAccessKeyId(),
+                        federatedUserCredentials.getSecretAccessKey(),
+                        federatedUserCredentials.getSessionToken())))
+                .withRegion(TEST_AWS_REGION)
                 .build();
     }
 
-    @Test
-    public void should_get_credentials_with_access_to_write_file_to_s3() throws Exception {
-        //Prepare and upload file with temporal credentials to user's folder
-        RemoteSync sync = new RemoteSync(source, remoteTestBucket.asDestination(federatedUserCredentialsProvider, test_user + "/"));
-        sync.run();
+    //~~~~ Object listing permissions
 
-        //Check that file exists in appropriate folder
-        assertThat(remoteTestBucket.doesObjectExists(test_user + "/file.txt"), is(true));
+    @Test
+    public void should_have_permission_to_list_own_bucket() throws Exception {
+        expectNoException();
+        federatedS3Client.listObjects(TEST_BUCKET_NAME, TEST_USERNAME);
     }
 
     @Test
-    public void should_have_possibility_to_list_own_bucket() throws Exception {
-        //Upload file to user's folder with federated user
-        new RemoteSync(source, remoteTestBucket.asDestination(federatedUserCredentialsProvider, test_user + "/")).run();
-
-        //Check that user can list own folder
-        ListObjectsRequest request = new ListObjectsRequest(s3Bucket, test_user, null, null, null);
-        ObjectListing objectListing = remoteTestBucket.getClient(federatedUserCredentialsProvider).listObjects(request);
-        assertThat(objectListing.getObjectSummaries().size(), is(1));
+    public void should_not_have_permission_to_list_whole_bucket() throws Exception {
+        expectForbiddenException();
+        federatedS3Client.listObjects(TEST_BUCKET_NAME, "");
     }
 
     @Test
-    public void should_not_have_possibility_to_list_whole_bucket() throws Exception {
-        //Upload file to root with IAM user
-        new RemoteSync(source, remoteTestBucket.asDestination("")).run();
-        //Upload file to folder with IAM user
-        new RemoteSync(source, remoteTestBucket.asDestination("other_folder/")).run();
+    public void should_not_have_permission_to_list_other_folders() throws Exception {
+        expectForbiddenException();
+        federatedS3Client.listObjects(TEST_BUCKET_NAME, "other_folder");
+    }
 
-        //Check that user can't list whole bucket
-        int errorCounter = 0;
-        try {
-            remoteTestBucket.getClient(federatedUserCredentialsProvider).listObjects(s3Bucket);
-        } catch (Exception e) {
-            //Check that error was due to insufficient access rights
-            assertThat(e.getMessage(), anyOf(containsString("Forbidden"), containsString("AccessDenied")));
-            errorCounter++;
-        }
-        //Check that user can't list other folder
-        try {
-            ListObjectsRequest request = new ListObjectsRequest(s3Bucket, "other_folder", null, null, null);
-            remoteTestBucket.getClient(federatedUserCredentialsProvider).listObjects(request);
-        } catch (Exception e) {
-            //Check that error was due to insufficient access rights
-            assertThat(e.getMessage(), anyOf(containsString("Forbidden"), containsString("AccessDenied")));
-            errorCounter++;
-        }
-        assertThat(errorCounter, is(2));
+    //~~~~ Object retrieving permissions
+
+    @Test
+    public void should_have_permission_to_get_object_in_own_folder() throws Exception {
+        String ownFile = TEST_USERNAME + "/my_file.txt";
+        remoteTestBucket.givenObjectExists(TEST_BUCKET_NAME, ownFile);
+
+        expectNoException();
+        federatedS3Client.getObject(TEST_BUCKET_NAME, ownFile);
     }
 
     @Test
-    @Ignore("TODO restrict user to see only own uploads")
-    public void should_not_have_possibility_to_list_others_multipart_uploads() throws Exception {
-        //Start multipart upload with IAM user
-        remoteTestBucket.getClient().initiateMultipartUpload(new InitiateMultipartUploadRequest(s3Bucket, "test_multipart.dat"));
-        //ensure IAM user can see it
-        ListMultipartUploadsRequest request = new ListMultipartUploadsRequest(s3Bucket);
-        MultipartUploadListing multipartUploadListing = remoteTestBucket.getClient().listMultipartUploads(request);
-        assertThat(multipartUploadListing.getMultipartUploads().size(), is(1));
+    public void should_not_have_permission_to_get_objects_in_other_folders() throws Exception {
+        String otherFile = OTHER_USERNAME + "/my_file.txt";
+        remoteTestBucket.givenObjectExists(TEST_BUCKET_NAME, otherFile);
 
-        //ensure federated user do not have permissions to see this
-        int errorCounter = 0;
-        try {
-            remoteTestBucket.getClient(federatedUserCredentialsProvider).listMultipartUploads(request);
-        } catch (Exception e) {
-            //Check that error was due to insufficient access rights
-            assertThat(e.getMessage(), anyOf(containsString("Forbidden"), containsString("AccessDenied")));
-            errorCounter++;
-        }
-        assertThat(errorCounter, is(1));
+        expectForbiddenException();
+        federatedS3Client.getObject(TEST_BUCKET_NAME, otherFile);
     }
 
+    //~~~~ Multipart listing permissions
+
     @Test
-    @Ignore("TODO restrict user to see only own uploads")
-    public void should_have_possibility_to_list_own_multipart_uploads() throws Exception {
-        AmazonS3 client = remoteTestBucket.getClient(federatedUserCredentialsProvider);
-        //Start multipart upload with federated user to user's folder
-        InitiateMultipartUploadRequest uploadRequest = new InitiateMultipartUploadRequest(s3Bucket, test_user + "/test_multipart.dat");
-        client.initiateMultipartUpload(uploadRequest);
-        //ensure federated user can see it
-        ListMultipartUploadsRequest request = new ListMultipartUploadsRequest(s3Bucket);
-        request.setPrefix(test_user);
-        MultipartUploadListing multipartUploadListing = client.listMultipartUploads(request);
+    public void should_have_permission_to_list_own_multipart_uploads() throws Exception {
+        remoteTestBucket.givenMultipartUploadExists(TEST_BUCKET_NAME, TEST_USERNAME + "/upload.txt");
+        ListMultipartUploadsRequest request = new ListMultipartUploadsRequest(TEST_BUCKET_NAME);
+        request.setPrefix(TEST_USERNAME);
+
+        expectNoException();
+        MultipartUploadListing multipartUploadListing = federatedS3Client.listMultipartUploads(request);
         assertThat(multipartUploadListing.getMultipartUploads().size(), is(1));
     }
 
+    @Ignore("AWS bug. See: https://forums.aws.amazon.com/thread.jspa?threadID=158131")
     @Test
-    public void should_get_credentials_without_access_to_other_folders() throws Exception {
-        int errorCounter = 0;
-        //Try to upload file to other than user's folder
-        try {
-            RemoteSync sync = new RemoteSync(source, remoteTestBucket.asDestination(federatedUserCredentialsProvider, "other_folder/"));
-            sync.run();
-        } catch (Exception e) {
-            //Check that error was due to insufficient access rights
-            assertThat(e.getMessage(), anyOf(containsString("Forbidden"), containsString("AccessDenied")));
-            errorCounter++;
-        }
+    public void should_not_have_permission_to_list_other_multipart_uploads() throws Exception {
+        remoteTestBucket.givenMultipartUploadExists(TEST_BUCKET_NAME, OTHER_USERNAME + "/upload.txt");
+        ListMultipartUploadsRequest request = new ListMultipartUploadsRequest(TEST_BUCKET_NAME);
+        request.setPrefix(OTHER_USERNAME);
 
-        //Try to upload file to root folder
-        try {
-            RemoteSync sync = new RemoteSync(source, remoteTestBucket.asDestination(federatedUserCredentialsProvider, ""));
-            sync.run();
-        } catch (Exception e) {
-            //Check that error was due to insufficient access rights
-            assertThat(e.getMessage(), anyOf(containsString("Forbidden"), containsString("AccessDenied")));
-            errorCounter++;
-        }
+        expectForbiddenException();
+        federatedS3Client.listMultipartUploads(request);
+    }
 
-        //Check that there was 2 errors while uploading files
-        assertThat(errorCounter, is(2));
+    //~~~~ Part listing permissions
 
-        //Check that files were not uploaded
-        assertThat(remoteTestBucket.doesObjectExists("other_folder/file.txt"), is(false));
-        assertThat(remoteTestBucket.doesObjectExists("file.txt"), is(false));
+    @Test
+    public void should_have_permission_to_upload_parts_to_uploads_for_own_folder() throws Exception {
+        //TODO
+    }
+
+    @Test
+    public void should_not_have_permission_to_upload_parts_to_other_uploads() throws Exception {
+        //TODO
     }
 
 
+    //~~~~ Upload permission
+
+    @Test
+    public void should_have_permission_to_upload_to_its_own_s3_folder() throws Exception {
+        String key = TEST_USERNAME + "/test_write.txt";
+
+        federatedS3Client.putObject(TEST_BUCKET_NAME, key, "test");
+
+        assertThat(remoteTestBucket.doesObjectExists(key), is(true));
+    }
+
+    @Test
+    public void should_not_have_permission_to_upload_to_other_folders() throws Exception {
+        expectForbiddenException();
+        federatedS3Client.putObject(TEST_BUCKET_NAME, OTHER_USERNAME + "/test_write.txt", "test");
+    }
+
+    //~~~~ Helpers
+
+    private void expectNoException() {
+        //No exception
+    }
+
+    private void expectForbiddenException() {
+        thrown.expect(AmazonServiceException.class);
+        thrown.expectMessage(containsString("Access Denied"));
+    }
 }

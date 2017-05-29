@@ -1,29 +1,30 @@
 package tdl.auth;
 
-import com.amazonaws.auth.AWSSessionCredentials;
-import com.amazonaws.auth.policy.Policy;
+import com.amazonaws.services.securitytoken.model.Credentials;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import lombok.extern.slf4j.Slf4j;
-import tdl.auth.credentials.AWSSecretPropertiesCredentialsProvider;
 import tdl.auth.federated.FederatedUserCredentialsProvider;
-import tdl.auth.s3.DefaultS3FolderPolicy;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 @Slf4j
 public class CredentialsApp {
 
-    @Parameter(names = {"-c", "--config"}, description = "The file containing the AWS parameters")
-    private String configFile = ".private/aws-test-secrets";
+    @Parameter(names = {"-r", "--region"}, description = "The region where the bucket lives", required = true)
+    private String region;
 
-    @Parameter(names = {"-f", "--file"}, description = "The file to save temporal credentials")
+    @Parameter(names = {"-b", "--bucket"}, description = "Name of the bucket to generate permissions for", required = true)
+    private String bucket;
+
+    @Parameter(names = {"-u", "--username"}, description = "Username to generate permissions for", required = true)
+    private String username;
+
+    @Parameter(names = {"-f", "--file"}, description = "The file to save temporal credentials", required = true)
     private String fileToSave = ".private/aws-temp-secrets";
 
-    private AWSSecretPropertiesCredentialsProvider securityProperties;
 
     public static void main(String[] args) {
         log.info("Retrieving temporal credentials");
@@ -33,34 +34,27 @@ public class CredentialsApp {
         log.info("Credentials saved to file " + main.fileToSave);
     }
 
-    public void run() {
+    private void run() {
         try {
-            securityProperties = AWSSecretPropertiesCredentialsProvider.fromPlainTextFile(Paths.get(configFile));
+            FederatedUserCredentialsProvider temporalCredentialsProvider =  new FederatedUserCredentialsProvider(region, bucket);
 
-            Policy policy = DefaultS3FolderPolicy.getForUser(securityProperties.getS3Bucket(), securityProperties.getS3Prefix());
 
-            FederatedUserCredentialsProvider temporalCredentialsProvider =  FederatedUserCredentialsProvider.builder()
-                    .iamUserCredentialsProvider(securityProperties)
-                    .region(securityProperties.getS3Region())
-                    .userName(securityProperties.getS3Prefix())
-                    .policy(policy)
-                    .build();
-
-            saveCredentials(temporalCredentialsProvider.getCredentials());
+            Credentials credentials = temporalCredentialsProvider.getTokenFor(username).getCredentials();
+            saveCredentials(credentials, region, bucket, username);
         } catch (Exception e) {
             log.error("Exception encountered.", e);
         }
     }
 
-    private void saveCredentials(AWSSessionCredentials credentials) throws IOException {
+    private void saveCredentials(Credentials credentials, String s3Region, String s3Bucket, String s3Prefix) throws IOException {
         try (FileWriter writer = new FileWriter(fileToSave)) {
             Properties properties = new Properties();
-            properties.setProperty("aws_access_key_id", credentials.getAWSAccessKeyId());
-            properties.setProperty("aws_secret_access_key", credentials.getAWSSecretKey());
+            properties.setProperty("aws_access_key_id", credentials.getAccessKeyId());
+            properties.setProperty("aws_secret_access_key", credentials.getSecretAccessKey());
             properties.setProperty("aws_session_token", credentials.getSessionToken());
-            properties.setProperty("s3_region", securityProperties.getS3Region());
-            properties.setProperty("s3_bucket", securityProperties.getS3Bucket());
-            properties.setProperty("s3_prefix", securityProperties.getS3Prefix());
+            properties.setProperty("s3_region", s3Region);
+            properties.setProperty("s3_bucket", s3Bucket);
+            properties.setProperty("s3_prefix", s3Prefix);
             properties.store(writer, "temporal credentials properties");
         }
     }

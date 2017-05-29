@@ -10,8 +10,6 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'us.kirchmeier:gradle-capsule-plugin:1.0.2'
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.0.RC2"
         classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1"
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
         classpath 'ch.netzwerg:gradle-release-plugin:1.2.4'
@@ -52,21 +50,10 @@ apply plugin: 'com.github.johnrengelman.shadow'
 mainClassName = "tdl.auth.CredentialsApp"
 jar {
     manifest {
+        //noinspection GroovyAssignabilityCheck
         attributes "Main-Class": "$mainClassName"
     }
 }
-
-apply plugin: 'us.kirchmeier.capsule'
-
-// ~~~~~ Packagingtask mavenCapsule(type: MavenCapsule){
-task mavenCapsule(type: MavenCapsule) {
-    applicationClass mainClassName
-    capsuleManifest {
-        minJavaVersion = '1.8.0'
-        dependencyConfiguration configurations.compile
-    }
-}
-
 
 
 // ~~~~~ Gather coverage
