@@ -53,13 +53,13 @@ The development of this feature will be done incrementally, using short iteratio
 
 **Phase 1** Prove that we can generate temporary credentials
 
-- Generate temporary credentials by hand
-- Copy credentials file to `record-and-upload`
-- Run `record-and-upload`, the upload should just work
+- [DONE] Generate temporary credentials by hand
+- [DONE] Copy credentials file to `record-and-upload`
+- [DONE] Run `record-and-upload`, the upload should just work
 
 **Phase 2** Ensure that the credentials are valid and secure
 
-- The credentials should restrict the users to their personal folder, we need proper tests to prove this
+- [DONE] The credentials should restrict the users to their personal folder, we need proper tests to prove this
 - The `record-and-upload` should validate that the user provided has enough permissions to proceed with the recording
 
 **Phase 3** Deployment scripts
