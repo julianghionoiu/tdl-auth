@@ -7,11 +7,13 @@
 ### Build and run as command-line app
 ```bash
 ./gradlew shadowJar
-java -Dlogback.configurationFile=`pwd`/logback.xml \
-    -jar ./build/libs/s3-sync-stream-0.0.6-SNAPSHOT-all.jar \
-    -c ./.private/aws-test-secrets \
-    -d ./src/test/resources/test_a_1 \
-    --filter "^[0-9a-zA-Z\\_]+\\.txt$"
+java -jar ./build/libs/tld-auth-0.0.1-all.jar \
+    --region eu-west-2 \
+    --bucket tdl-test \
+    --username tdl-test-fed01 \
+    --file ./build/aws-test-secrets
+    
+cat ./build/aws-test-secrets | pbcopy
 ```
 
 
@@ -74,3 +76,11 @@ The development of this feature will be done incrementally, using short iteratio
 
 - Prepared URL with token as parameter
 - Web front-end with a button to download credentials
+
+
+### Useful commands
+
+
+```bash
+aws s3api --no-verify-ssl --profile federated --region eu-west-2 list-objects --bucket tdl-test  --prefix tdl-test-fed01
+```

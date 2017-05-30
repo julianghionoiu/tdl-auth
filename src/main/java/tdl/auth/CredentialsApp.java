@@ -27,7 +27,7 @@ public class CredentialsApp {
 
 
     public static void main(String[] args) {
-        log.info("Retrieving temporal credentials");
+        log.info("Retrieving temporary credentials");
         CredentialsApp main = new CredentialsApp();
         new JCommander(main, args);
         main.run();
@@ -38,7 +38,6 @@ public class CredentialsApp {
         try {
             FederatedUserCredentialsProvider temporalCredentialsProvider =  new FederatedUserCredentialsProvider(region, bucket);
 
-
             Credentials credentials = temporalCredentialsProvider.getTokenFor(username).getCredentials();
             saveCredentials(credentials, region, bucket, username);
         } catch (Exception e) {
@@ -46,7 +45,7 @@ public class CredentialsApp {
         }
     }
 
-    private void saveCredentials(Credentials credentials, String s3Region, String s3Bucket, String s3Prefix) throws IOException {
+    private void saveCredentials(Credentials credentials, String s3Region, String s3Bucket, String username) throws IOException {
         try (FileWriter writer = new FileWriter(fileToSave)) {
             Properties properties = new Properties();
             properties.setProperty("aws_access_key_id", credentials.getAccessKeyId());
@@ -54,8 +53,8 @@ public class CredentialsApp {
             properties.setProperty("aws_session_token", credentials.getSessionToken());
             properties.setProperty("s3_region", s3Region);
             properties.setProperty("s3_bucket", s3Bucket);
-            properties.setProperty("s3_prefix", s3Prefix);
-            properties.store(writer, "temporal credentials properties");
+            properties.setProperty("s3_prefix", username+"/");
+            properties.store(writer, "Temporary federated credentials");
         }
     }
 }

@@ -42,7 +42,7 @@ public class DefaultS3FolderPolicy {
                         new Condition()
                                 .withType("StringEquals")
                                 .withConditionKey("s3:prefix")
-                                .withValues(userName)
+                                .withValues(userName+"/")
                 );
     }
 }
