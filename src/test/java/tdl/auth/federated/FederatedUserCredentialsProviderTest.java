@@ -58,7 +58,7 @@ public class FederatedUserCredentialsProviderTest {
     @Test
     public void should_have_permission_to_list_own_bucket() throws Exception {
         expectNoException();
-        federatedS3Client.listObjects(TEST_BUCKET_NAME, TEST_USERNAME);
+        federatedS3Client.listObjects(TEST_BUCKET_NAME, TEST_USERNAME+"/");
     }
 
     @Test
