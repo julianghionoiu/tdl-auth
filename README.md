@@ -1,4 +1,19 @@
-# tdl-auth
+[![Java Version](http://img.shields.io/badge/Java-1.8-blue.svg)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+[![Codeship Status for julianghionoiu/tdl-auth](https://img.shields.io/codeship/b4770d30-2797-0135-63f7-5ee2fc56bc0c/master.svg)](https://codeship.com/projects/222984)
+[![Coverage Status](https://coveralls.io/repos/github/julianghionoiu/tdl-auth/badge.svg?branch=master)](https://coveralls.io/github/julianghionoiu/tdl-auth?branch=master)
+
+## Usage
+
+### Build and run as command-line app
+```bash
+./gradlew shadowJar
+java -Dlogback.configurationFile=`pwd`/logback.xml \
+    -jar ./build/libs/s3-sync-stream-0.0.6-SNAPSHOT-all.jar \
+    -c ./.private/aws-test-secrets \
+    -d ./src/test/resources/test_a_1 \
+    --filter "^[0-9a-zA-Z\\_]+\\.txt$"
+```
+
 
 ## The Auth flow
 
