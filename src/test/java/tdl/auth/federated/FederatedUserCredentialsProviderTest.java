@@ -15,13 +15,17 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import tdl.auth.rules.RemoteTestBucket;
 
+import java.util.Optional;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class FederatedUserCredentialsProviderTest {
-    private static final String TEST_AWS_REGION = "eu-west-2";
-    private static final String TEST_BUCKET_NAME = "tdl-test";
+    private static final String TEST_AWS_REGION = Optional.ofNullable(System.getenv("TEST_AWS_REGION"))
+            .orElse("eu-west-2");
+    private static final String TEST_BUCKET_NAME = Optional.ofNullable(System.getenv("TEST_BUCKET_NAME"))
+            .orElse("tdl-test-auth");
     private static final String TEST_USERNAME = "tdl-test-user";
     private static final String OTHER_USERNAME = "other_user";
 
