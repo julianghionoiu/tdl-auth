@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Cloud formation for deploying Auth"
+Resources:
+    #TODO: Log group
+    # The lambda definition
+    AuthLambdaFunction:
+        Type: "AWS::Lambda::Function"
+        Properties:
+            Code:
+                #Need to replace ENV_S3_BUCKET via bash to environment variable
+                S3Bucket: "ENV_S3_BUCKET"
+                #Need to replace ENV_S3_KEY via bash to environment variable
+                S3Key: "ENV_S3_KEY"      
+            FunctionName: "tdl-auth"
+            Handler: "tdl.auth.LambdaHandler"
+            MemorySize: 128
+            #TODO: Replace ENV_LAMBDA_ROLE via bash
+            Role: "ENV_LAMBDA_ROLE"
+            Runtime: "java8"
+            Timeout: 1
+            Environment:
+                ENV1: "VAL1"
+                ENV2: "VAL1"
+#TODO: Output
