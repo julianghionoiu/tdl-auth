@@ -10,7 +10,7 @@ Resources:
                 #Need to replace ENV_S3_BUCKET via bash to environment variable
                 S3Bucket: "ENV_S3_BUCKET"
                 #Need to replace ENV_S3_KEY via bash to environment variable
-                S3Key: "ENV_S3_KEY"      
+                S3Key: "ENV_S3_KEY"
             FunctionName: "tdl-auth"
             Handler: "tdl.auth.LambdaHandler"
             MemorySize: 128

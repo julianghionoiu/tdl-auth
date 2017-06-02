@@ -23,7 +23,7 @@ public class LambdaHandlerTest {
         HashMap<String, String> input = new HashMap<>();
         input.put("data", "SGVsbG8gV29ybGQh");
         JSONObject json = new JSONObject(input);
-        
+
         InputStream inputStream = new ByteArrayInputStream(json.toString().getBytes(StandardCharsets.UTF_8));
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         LambdaHandler handler = new LambdaHandler();

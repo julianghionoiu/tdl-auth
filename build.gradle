@@ -13,7 +13,6 @@ buildscript {
         classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1"
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
         classpath 'ch.netzwerg:gradle-release-plugin:1.2.4'
-        
     }
 
 }
@@ -41,7 +40,7 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.16.16'
 
-    
+
     testCompile('junit:junit:4.11'){
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
     }
