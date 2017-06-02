@@ -60,12 +60,12 @@ The development of this feature will be done incrementally, using short iteratio
 **Phase 2** Ensure that the credentials are valid and secure
 
 - [DONE] The credentials should restrict the users to their personal folder, we need proper tests to prove this
-- The `record-and-upload` should validate that the user provided has enough permissions to proceed with the recording
+- [DONE] The `record-and-upload` should validate that the user provided has enough permissions to proceed with the recording
 
 **Phase 3** Deployment scripts
 
-- Cloud Formation templates for the required infrastructure
-- Script to package and deploy Lambda
+- [DONE] Cloud Formation templates for the required infrastructure
+- [DONE] Script to package and deploy Lambda
 
 **Phase 4** Secure endpoint
 
