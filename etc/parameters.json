@@ -1,0 +1,22 @@
+[
+    {
+        "ParameterKey": "AuthLambdaFunctionS3Bucket",
+        "ParameterValue": "bucket"
+    }, 
+    {
+        "ParameterKey": "AuthLambdaFunctionS3Key",
+        "ParameterValue": "tld-auth-lambda-0.0.1.zip"
+    },
+    {
+        "ParameterKey": "AuthLambdaFunctionName",
+        "ParameterValue": "tdl-auth"
+    },
+    {
+        "ParameterKey": "AuthLambdaFunctionRole",
+        "ParameterValue": "arn:aws:iam::xxxxxxxxxxx:role/xxxx"
+    },
+    {
+        "ParameterKey": "ApiGatewayRestApiName",
+        "ParameterValue": "tdl-auth-api"
+    }
+]

@@ -76,3 +76,15 @@ jacocoTestReport {
         html.enabled = true
     }
 }
+
+task buildZip(type: Zip) {
+    baseName = "tld-auth-lambda"
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtime
+    }
+}
+
+
+build.dependsOn buildZip

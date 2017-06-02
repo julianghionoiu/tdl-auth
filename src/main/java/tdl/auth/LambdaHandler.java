@@ -10,16 +10,23 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 
+@Slf4j
 public class LambdaHandler implements RequestStreamHandler {
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
-        String inputJson = getStringInput(inputStream);
-        String base64data = getDataFromJson(inputJson);
-        String data = getDecodedValue(base64data);
-        outputStream.write(data.getBytes(StandardCharsets.UTF_8));
+        try {
+            String inputJson = getStringInput(inputStream);
+            log.info(inputJson);
+            String base64data = getDataFromJson(inputJson);
+            String data = getDecodedValue(base64data);
+            outputStream.write(data.getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static String getStringInput(InputStream inputStream) {

@@ -20,7 +20,7 @@ public class LambdaHandlerTest {
     @Test
     public void testHandler() throws IOException {
         Context context = mock(Context.class);
-        HashMap<String, String> input = new HashMap<>();
+        HashMap<String, Object> input = new HashMap<>();
         input.put("data", "SGVsbG8gV29ybGQh");
         JSONObject json = new JSONObject(input);
 

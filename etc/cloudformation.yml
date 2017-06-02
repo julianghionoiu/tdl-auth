@@ -1,24 +1,105 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: "Cloud formation for deploying Auth"
 Resources:
-    #TODO: Log group
-    # The lambda definition
     AuthLambdaFunction:
         Type: "AWS::Lambda::Function"
         Properties:
             Code:
-                #Need to replace ENV_S3_BUCKET via bash to environment variable
-                S3Bucket: "ENV_S3_BUCKET"
-                #Need to replace ENV_S3_KEY via bash to environment variable
-                S3Key: "ENV_S3_KEY"
-            FunctionName: "tdl-auth"
+                S3Bucket:
+                    Ref: AuthLambdaFunctionS3Bucket
+                S3Key:
+                    Ref: AuthLambdaFunctionS3Key
+            FunctionName:
+                Ref: AuthLambdaFunctionName
             Handler: "tdl.auth.LambdaHandler"
             MemorySize: 128
-            #TODO: Replace ENV_LAMBDA_ROLE via bash
-            Role: "ENV_LAMBDA_ROLE"
+            Role:
+                Ref: AuthLambdaFunctionRole
             Runtime: "java8"
             Timeout: 1
-            Environment:
-                ENV1: "VAL1"
-                ENV2: "VAL1"
+    ApiGatewayRestApi:
+        Type: AWS::ApiGateway::RestApi
+        Properties:
+            Name:
+                Ref: ApiGatewayRestApiName
+    ApiGatewayResourceReceive:
+        Type: AWS::ApiGateway::Resource
+        Properties:
+            ParentId:
+                Fn::GetAtt:
+                    - ApiGatewayRestApi
+                    - RootResourceId
+            PathPart: verify
+            RestApiId:
+                Ref: ApiGatewayRestApi
+    ApiGatewayResourceReceivePost:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: POST
+            RequestParameters: {}
+            ResourceId:
+                Ref: ApiGatewayResourceReceive
+            RestApiId:
+                Ref: ApiGatewayRestApi
+            AuthorizationType: NONE
+            Integration:
+                IntegrationHttpMethod: POST
+                Type: AWS
+                Uri:
+                    Fn::Join:
+                    - ''
+                    - - 'arn:aws:apigateway:'
+                      - Ref: AWS::Region
+                      - ":lambda:path/2015-03-31/functions/"
+                      - Fn::GetAtt:
+                        - AuthLambdaFunction
+                        - Arn
+                      - "/invocations"
+                IntegrationResponses:
+                    - StatusCode: 200
+                      ResponseTemplates:
+                        application/json: ''
+                      SelectionPattern: ''
+            MethodResponses:
+                - StatusCode: 200
+    ReceiveLambdaPermissionApiGateway:
+        Type: AWS::Lambda::Permission
+        Properties:
+            FunctionName:
+                Fn::GetAtt:
+                    - AuthLambdaFunction
+                    - Arn
+            Action: lambda:InvokeFunction
+            Principal: apigateway.amazonaws.com
+            SourceArn:
+                Fn::Join:
+                    - ''
+                    - - 'arn:aws:execute-api:'
+                      - Ref: AWS::Region
+                      - ":"
+                      - Ref: AWS::AccountId
+                      - ":"
+                      - Ref: ApiGatewayRestApi
+                      - "/*/*"
+    ApiGatewayDeployment:
+        Type: AWS::ApiGateway::Deployment
+        Properties:
+            RestApiId:
+                Ref: ApiGatewayRestApi
+            StageName: production
+        DependsOn:
+            - ApiGatewayResourceReceivePost
+
+
+Parameters:
+    AuthLambdaFunctionS3Bucket:
+        Type: String
+    AuthLambdaFunctionS3Key:
+        Type: String
+    AuthLambdaFunctionName:
+        Type: String
+    AuthLambdaFunctionRole:
+        Type: String
+    ApiGatewayRestApiName:
+        Type: String
 #TODO: Output
