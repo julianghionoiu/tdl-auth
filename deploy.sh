@@ -9,7 +9,7 @@ AWS_CF_EXEC="aws ${AWS_S3_CONFIG} cloudformation"
 
 echo "Uploading Zip to S3"
 aws $AWS_S3_CONFIG s3 cp \
-    ./build/distributions/tld-auth-0.0.1.zip \
+    ./build/distributions/tld-auth-lambda-0.0.1.zip \
     $ENV_DEPLOY_S3_PATH
 
 $AWS_CF_EXEC describe-stacks $STACK_OPT >  /dev/null 2>&1
