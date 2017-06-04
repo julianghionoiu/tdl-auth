@@ -16,6 +16,21 @@ java -jar ./build/libs/tld-auth-0.0.1-all.jar \
 cat ./build/aws-test-secrets | pbcopy
 ```
 
+### Deploy
+
+Prepare parameters
+```bash
+cp ./etc/parameters.private.json ./etc/parameters.json 
+```
+
+Create Stack
+```bash
+ENV_DEPLOY_S3_PATH=s3://tdl-artifacts/ \
+AWS_S3_CONFIG="--region eu-west-2" \
+STACK_NAME=testing-tdl-auth \
+./deploy.sh
+```
+
 
 ## The Auth flow
 
