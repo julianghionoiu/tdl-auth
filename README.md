@@ -35,7 +35,8 @@ Normally this file will be saved in a location accessible by the consumer applic
 ### Build and run as command-line app
 ```bash
 ./gradlew shadowJar
-java -jar ./build/libs/tld-auth-0.0.1-all.jar \
+java -Dlogback.configurationFile=`pwd`/logback.xml  \
+    -jar ./build/libs/tld-auth-0.0.1-all.jar \
     --region eu-west-2 \
     --bucket tdl-test \
     --username tdl-test-fed01 \
