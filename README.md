@@ -2,6 +2,34 @@
 [![Codeship Status for julianghionoiu/tdl-auth](https://img.shields.io/codeship/b4770d30-2797-0135-63f7-5ee2fc56bc0c/master.svg)](https://codeship.com/projects/222984)
 [![Coverage Status](https://coveralls.io/repos/github/julianghionoiu/tdl-auth/badge.svg?branch=master)](https://coveralls.io/github/julianghionoiu/tdl-auth?branch=master)
 
+## The Auth flow
+
+### 1. Using a private key you securely generate and sign a user token
+
+Token contains:
+- unique username
+- expiration
+- other application specific data
+    
+### 2. User receives token via mail
+ 
+A URL will be generated with the token contained in the http GET parameters.
+The URL will take the user to a webpage with instruction on how to use generate and use the credentials.
+
+### 3. User exchanges token for temporary credentials.
+
+When user clicks the download button a request will be send to the AWS Lambda responsible for generating temporary credentials.
+
+The Lambda does the following:
+  - Verifies request signature using public key
+  - Generated temporary credentials using STS
+  - Creates the credentials files
+  - The Lambda will sit behind API Gateway and will be accessed via Http
+  
+### 4. User will be instructed to save the credentials file
+
+Normally this file will be saved in a location accessible by the consumer applications
+
 ## Usage
 
 ### Build and run as command-line app
@@ -31,34 +59,10 @@ STACK_NAME=testing-tdl-auth \
 ./deploy.sh
 ```
 
-
-## The Auth flow
-
-### 1. Using my private key I securely generate and sign a user token
-
-Token contains:
-- unique username
-- expiration
-- other application specific data
-    
-### 2. User receives token via mail
- 
-A URL will be generated with the token contained in the http GET parameters.
-The URL will take the user to a webpage with instruction on how to use generate and use the credentials.
-
-### 3. User exchanges token for temporary credentials.
-
-When user clicks the download button a request will be send to the AWS Lambda responsible for generating temporary credentials.
-
-The Lambda does the following:
-  - Verifies request signature using public key
-  - Generated temporary credentials using STS
-  - Creates the credentials files
-  - The Lambda will sit behind API Gateway and will be accessed via Http
-  
-### 4. User will be instructed to save the credentials file
-
-Normally this file will be saved in a location accesible by the consumer applications
+Test
+```bash
+curl -XPOST https://jjz08ve2q3.execute-api.eu-west-2.amazonaws.com/production/verify --data '{"data":"SGVsbG8gV29ybGQh"}'
+```
 
 
 ## Development
