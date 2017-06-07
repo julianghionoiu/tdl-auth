@@ -22,46 +22,43 @@ Resources:
         Properties:
             Name:
                 Ref: ApiGatewayRestApiName
-    ApiGatewayResourceReceive:
-        Type: AWS::ApiGateway::Resource
-        Properties:
-            ParentId:
-                Fn::GetAtt:
-                    - ApiGatewayRestApi
-                    - RootResourceId
-            PathPart: verify
-            RestApiId:
-                Ref: ApiGatewayRestApi
-    ApiGatewayResourceReceivePost:
-        Type: AWS::ApiGateway::Method
-        Properties:
-            HttpMethod: POST
-            RequestParameters: {}
-            ResourceId:
-                Ref: ApiGatewayResourceReceive
-            RestApiId:
-                Ref: ApiGatewayRestApi
-            AuthorizationType: NONE
-            Integration:
-                IntegrationHttpMethod: POST
-                Type: AWS
-                Uri:
-                    Fn::Join:
-                    - ''
-                    - - 'arn:aws:apigateway:'
-                      - Ref: AWS::Region
-                      - ":lambda:path/2015-03-31/functions/"
-                      - Fn::GetAtt:
-                        - AuthLambdaFunction
-                        - Arn
-                      - "/invocations"
-                IntegrationResponses:
-                    - StatusCode: 200
-                      ResponseTemplates:
-                        application/json: ''
-                      SelectionPattern: ''
-            MethodResponses:
-                - StatusCode: 200
+            Description: Test API
+            FailOnWarnings: true
+            Body:
+                swagger: '2.0'
+                info:
+                    version: '2017-04-21T18:00:26Z'
+                    title: Gif
+                #host: tdl-auth-2.execute-api.ap-southeast-1.amazonaws.com
+                #basePath: "/production"
+                schemes:
+                    - https
+                paths:
+                    "/verify":
+                        get:
+                            responses:
+                                '200':
+                                    description: 200 response
+                                    headers:
+                                        Content-Type:
+                                            type: string
+                                        Content-Disposition:
+                                            type: string
+                            x-amazon-apigateway-integration:
+                                responses:
+                                    default:
+                                        statusCode: '200'
+                                        responseParameters:
+                                            method.response.header.Content-Type: "'image/gif'"
+                                            method.response.header.Content-Disposition: "'attachment; filename=\"credential.gif\"'"
+                                        contentHandling: CONVERT_TO_BINARY
+                                uri: http://oi260.photobucket.com/albums/ii2/catgirl214/ExampleText.gif
+                                passthroughBehavior: when_no_match
+                                httpMethod: GET
+                                contentHandling: CONVERT_TO_BINARY
+                                type: http
+                x-amazon-apigateway-binary-media-types:
+                    - image/gif
     ReceiveLambdaPermissionApiGateway:
         Type: AWS::Lambda::Permission
         Properties:
@@ -87,10 +84,6 @@ Resources:
             RestApiId:
                 Ref: ApiGatewayRestApi
             StageName: production
-        DependsOn:
-            - ApiGatewayResourceReceivePost
-
-
 Parameters:
     AuthLambdaFunctionS3Bucket:
         Type: String

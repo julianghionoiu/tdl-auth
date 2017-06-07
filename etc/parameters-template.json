@@ -2,7 +2,7 @@
     {
         "ParameterKey": "AuthLambdaFunctionS3Bucket",
         "ParameterValue": "bucket"
-    }, 
+    },
     {
         "ParameterKey": "AuthLambdaFunctionS3Key",
         "ParameterValue": "tld-auth-lambda-0.0.1.zip"
