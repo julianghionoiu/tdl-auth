@@ -22,7 +22,7 @@ Resources:
         Properties:
             Name:
                 Ref: ApiGatewayRestApiName
-            Description: Test API
+            Description: Auth API
             FailOnWarnings: true
             Body:
                 swagger: "2.0"
@@ -84,7 +84,16 @@ Resources:
                                       \ = $kvPair.split(\"=\"))\n \"$util.urlDecode($kvTokenised[0])\" : #if($kvTokenised[1].length()\
                                       \ > 0)\"$util.urlDecode($kvTokenised[1])\"#{else}\"\"#end#if( $foreach.hasNext\
                                       \ ),#end\n#end\n}"
-                                uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:103317387880:function:tdl-auth/invocations"
+                                uri:
+                                    Fn::Join:
+                                        - ''
+                                        - - 'arn:aws:apigateway:'
+                                          - Ref: AWS::Region
+                                          - ":lambda:path/2015-03-31/functions/"
+                                          - Fn::GetAtt:
+                                              - AuthLambdaFunction
+                                              - Arn
+                                          - "/invocations"
                                 passthroughBehavior: "when_no_templates"
                                 httpMethod: "POST"
                                 type: "aws"
