@@ -35,7 +35,7 @@ public class FederatedUserCredentialsProvider {
         this.region = region;
     }
 
-    public GetFederationTokenResult getTokenFor(String username) {
+    public GetFederationTokenResult getFederatedTokenFor(String username) {
         Policy policy = DefaultS3FolderPolicy.getForUser(bucket, username);
         GetFederationTokenRequest getFederationTokenRequest = new GetFederationTokenRequest()
                 .withName(username)

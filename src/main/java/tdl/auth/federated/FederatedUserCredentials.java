@@ -19,7 +19,7 @@ public class FederatedUserCredentials {
         this.username = username;
         this.provider = provider;
         credentials = provider
-                .getTokenFor(username)
+                .getFederatedTokenFor(username)
                 .getCredentials();
         properties = new Properties();
         storeProperties();
