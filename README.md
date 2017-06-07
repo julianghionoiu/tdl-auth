@@ -49,14 +49,20 @@ cat ./build/aws-test-secrets | pbcopy
 
 Prepare parameters
 ```bash
-cp ./etc/parameters.private.json ./etc/parameters.json 
+mkdir -p ./configs/deploy
+cp ./etc/parameters-template.json ./configs/deploy/parameters.json
+cp ./etc/env-template.json ./configs/deploy/env.sh
 ```
 
-Create Stack
+Set the correct parameters in `env.sh` and `parameters.json`. Example:
 ```bash
-ENV_DEPLOY_S3_PATH=s3://tdl-artifacts/ \
-AWS_S3_CONFIG="--region eu-west-2" \
-STACK_NAME=testing-tdl-auth \
+ENV_DEPLOY_S3_PATH=s3://tdl-artifacts/ 
+AWS_S3_CONFIG="--region eu-west-2" 
+STACK_NAME=testing-tdl-auth 
+```
+
+Deploy
+```bash
 ./deploy.sh
 ```
 

@@ -2,28 +2,25 @@ package tdl.auth;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import org.json.JSONObject;
+
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 
-@Slf4j
 public class LambdaHandler implements RequestStreamHandler {
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
         try {
             String inputJson = getStringInput(inputStream);
-            log.info(inputJson);
+            context.getLogger().log("inputJson:"+inputJson);
             String base64data = getDataFromJson(inputJson);
-            String data = getDecodedValue(base64data);
-            outputStream.write(data.getBytes(StandardCharsets.UTF_8));
+            context.getLogger().log("base64data:"+base64data);
+            String decodedValue = getDecodedValue(base64data);
+            context.getLogger().log("decodedValue:"+decodedValue);
+            outputStream.write(decodedValue.getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
             e.printStackTrace();
         }
