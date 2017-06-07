@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import org.json.JSONObject;
 
 import org.junit.Test;
@@ -20,6 +22,8 @@ public class LambdaHandlerTest {
     @Test
     public void testHandler() throws IOException {
         Context context = mock(Context.class);
+        when(context.getLogger()).thenReturn(System.out::println);
+        
         HashMap<String, Object> input = new HashMap<>();
         input.put("data", "SGVsbG8gV29ybGQh");
         JSONObject json = new JSONObject(input);
