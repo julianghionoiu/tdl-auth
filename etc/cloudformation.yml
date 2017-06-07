@@ -42,12 +42,15 @@ Resources:
                                     headers:
                                         Content-Type:
                                             type: "string"
+                                        Content-Disposition:
+                                            type: "string"
                             x-amazon-apigateway-integration:
                                 responses:
                                     default:
                                         statusCode: "200"
                                         responseParameters:
                                             method.response.header.Content-Type: "integration.response.header.Content-Type"
+                                            method.response.header.Content-Disposition: "'attachment; filename=\"credential.bin\"'"
                                         contentHandling: "CONVERT_TO_BINARY"
                                 requestTemplates:
                                     application/x-www-form-urlencoded: "## convert HTML POST data or HTTP GET\
