@@ -25,40 +25,68 @@ Resources:
             Description: Test API
             FailOnWarnings: true
             Body:
-                swagger: '2.0'
+                swagger: "2.0"
                 info:
-                    version: '2017-04-21T18:00:26Z'
-                    title: Gif
-                #host: tdl-auth-2.execute-api.ap-southeast-1.amazonaws.com
-                #basePath: "/production"
+                    version: "2017-06-07T15:26:32Z"
+                    title: "tdl-auth-api"
                 schemes:
-                    - https
+                    - "https"
                 paths:
-                    "/verify":
-                        get:
-                            responses:
-                                '200':
-                                    description: 200 response
-                                    headers:
-                                        Content-Type:
-                                            type: string
-                                        Content-Disposition:
-                                            type: string
-                            x-amazon-apigateway-integration:
-                                responses:
-                                    default:
-                                        statusCode: '200'
-                                        responseParameters:
-                                            method.response.header.Content-Type: "'image/gif'"
-                                            method.response.header.Content-Disposition: "'attachment; filename=\"credential.gif\"'"
-                                        contentHandling: CONVERT_TO_BINARY
-                                uri: http://oi260.photobucket.com/albums/ii2/catgirl214/ExampleText.gif
-                                passthroughBehavior: when_no_match
-                                httpMethod: GET
-                                contentHandling: CONVERT_TO_BINARY
-                                type: http
+                  /verify:
+                    post:
+                      consumes:
+                      - "application/x-www-form-urlencoded"
+                      responses:
+                        '200':
+                          description: "200 response"
+                          headers:
+                            Content-Type:
+                              type: "string"
+                      x-amazon-apigateway-integration:
+                        responses:
+                          default:
+                            statusCode: "200"
+                            responseParameters:
+                              method.response.header.Content-Type: "integration.response.header.Content-Type"
+                            contentHandling: "CONVERT_TO_BINARY"
+                        requestTemplates:
+                          application/x-www-form-urlencoded: "## convert HTML POST data or HTTP GET\
+                            \ query string to JSON\n \n## get the raw post data from the AWS built-in\
+                            \ variable and give it a nicer name\n#if ($context.httpMethod == \"POST\"\
+                            )\n #set($rawAPIData = $input.path(\"$\"))\n#elseif ($context.httpMethod\
+                            \ == \"GET\")\n #set($rawAPIData = $input.params().querystring)\n #set($rawAPIData\
+                            \ = $rawAPIData.toString())\n #set($rawAPIDataLength = $rawAPIData.length()\
+                            \ - 1)\n #set($rawAPIData = $rawAPIData.substring(1, $rawAPIDataLength))\n\
+                            \ #set($rawAPIData = $rawAPIData.replace(\", \", \"&\"))\n#else\n #set($rawAPIData\
+                            \ = \"\")\n#end\n \n## first we get the number of \"&\" in the string,\
+                            \ this tells us if there is more than one key value pair\n#set($countAmpersands\
+                            \ = $rawAPIData.length() - $rawAPIData.replace(\"&\", \"\").length())\n\
+                            \ \n## if there are no \"&\" at all then we have only one key value pair.\n\
+                            ## we append an ampersand to the string so that we can tokenise it the\
+                            \ same way as multiple kv pairs.\n## the \"empty\" kv pair to the right\
+                            \ of the ampersand will be ignored anyway.\n#if ($countAmpersands == 0)\n\
+                            \ #set($rawPostData = $rawAPIData + \"&\")\n#end\n \n## now we tokenise\
+                            \ using the ampersand(s)\n#set($tokenisedAmpersand = $rawAPIData.split(\"\
+                            &\"))\n \n## we set up a variable to hold the valid key value pairs\n\
+                            #set($tokenisedEquals = [])\n \n## now we set up a loop to find the valid\
+                            \ key value pairs, which must contain only one \"=\"\n#foreach( $kvPair\
+                            \ in $tokenisedAmpersand )\n #set($countEquals = $kvPair.length() - $kvPair.replace(\"\
+                            =\", \"\").length())\n #if ($countEquals == 1)\n  #set($kvTokenised =\
+                            \ $kvPair.split(\"=\"))\n  #if ($kvTokenised[0].length() > 0)\n   ## we\
+                            \ found a valid key value pair. add it to the list.\n   #set($devNull\
+                            \ = $tokenisedEquals.add($kvPair))\n  #end\n #end\n#end\n \n## next we\
+                            \ set up our loop inside the output structure \"{\" and \"}\"\n{\n#foreach(\
+                            \ $kvPair in $tokenisedEquals )\n  ## finally we output the JSON for this\
+                            \ pair and append a comma if this isn't the last pair\n  #set($kvTokenised\
+                            \ = $kvPair.split(\"=\"))\n \"$util.urlDecode($kvTokenised[0])\" : #if($kvTokenised[1].length()\
+                            \ > 0)\"$util.urlDecode($kvTokenised[1])\"#{else}\"\"#end#if( $foreach.hasNext\
+                            \ ),#end\n#end\n}"
+                        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:103317387880:function:tdl-auth/invocations"
+                        passthroughBehavior: "when_no_templates"
+                        httpMethod: "POST"
+                        type: "aws"
                 x-amazon-apigateway-binary-media-types:
-                    - image/gif
+                    - "application/octet-stream"
     ReceiveLambdaPermissionApiGateway:
         Type: AWS::Lambda::Permission
         Properties:
