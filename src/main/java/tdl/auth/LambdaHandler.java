@@ -2,12 +2,11 @@ package tdl.auth;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
-import org.json.JSONObject;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.stream.Collectors;
+import tdl.auth.federated.FederatedUserCredentials;
+import tdl.auth.lambda.CredentialInput;
 
 public class LambdaHandler implements RequestStreamHandler {
 
@@ -15,12 +14,12 @@ public class LambdaHandler implements RequestStreamHandler {
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
         try {
             String inputJson = getStringInput(inputStream);
-            context.getLogger().log("inputJson:"+inputJson);
-            String base64data = getDataFromJson(inputJson);
-            context.getLogger().log("base64data:"+base64data);
-            String decodedValue = getDecodedValue(base64data);
-            context.getLogger().log("decodedValue:"+decodedValue);
-            outputStream.write(decodedValue.getBytes(StandardCharsets.UTF_8));
+            context.getLogger().log("inputJson:" + inputJson);
+            CredentialInput credentialInput = CredentialInput.createFromJsonString(inputJson);
+            FederatedUserCredentials credentials = createCredentials(credentialInput);
+            context.getLogger().log("credential:" + credentialInput);
+            credentials.save(outputStream);
+            //outputStream.write(credentialInput.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,16 +27,14 @@ public class LambdaHandler implements RequestStreamHandler {
 
     private static String getStringInput(InputStream inputStream) {
         return new BufferedReader(new InputStreamReader(inputStream))
-                .lines().collect(Collectors.joining(""));
+                .lines()
+                .collect(Collectors.joining(""));
     }
 
-    private static String getDataFromJson(String inputJson) {
-        JSONObject json = new JSONObject(inputJson);
-        return json.getString("data");
+    private static FederatedUserCredentials createCredentials(CredentialInput input) {
+        String bucket = System.getenv("BUCKET");
+        String region = System.getenv("REGION");
+        return new FederatedUserCredentials(bucket, region, input.username);
     }
 
-    private static String getDecodedValue(String encoded) {
-        byte[] decoded = Base64.getDecoder().decode(encoded);
-        return new String(decoded, StandardCharsets.UTF_8);
-    }
 }

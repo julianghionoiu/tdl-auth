@@ -25,7 +25,8 @@ public class LambdaHandlerTest {
         when(context.getLogger()).thenReturn(System.out::println);
         
         HashMap<String, Object> input = new HashMap<>();
-        input.put("data", "SGVsbG8gV29ybGQh");
+        input.put("username", "username");
+        input.put("token", "SGVsbG8gV29ybGQh");
         JSONObject json = new JSONObject(input);
 
         InputStream inputStream = new ByteArrayInputStream(json.toString().getBytes(StandardCharsets.UTF_8));
@@ -34,6 +35,6 @@ public class LambdaHandlerTest {
 
         handler.handleRequest(inputStream, outputStream, context);
 
-        assertEquals(outputStream.toString(), "Hello World!");
+        assertEquals(outputStream.toString(), "{username:Hello World!}");
     }
 }

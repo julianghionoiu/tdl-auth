@@ -17,6 +17,12 @@ Resources:
                 Ref: AuthLambdaFunctionRole
             Runtime: "java8"
             Timeout: 1
+            Environment:
+                Variables:
+                    BUCKET:
+                        Ref: AuthLambdaEnvBucket
+                    REGION:
+                        Ref: AuthLambdaEnvRegion
     ApiGatewayRestApi:
         Type: AWS::ApiGateway::RestApi
         Properties:
@@ -130,6 +136,10 @@ Parameters:
     AuthLambdaFunctionS3Key:
         Type: String
     AuthLambdaFunctionName:
+        Type: String
+    AuthLambdaEnvBucket:
+        Type: String
+    AuthLambdaEnvRegion:
         Type: String
     AuthLambdaFunctionRole:
         Type: String
