@@ -4,6 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 import tdl.auth.federated.FederatedUserCredentials;
 import tdl.auth.federated.FederatedUserCredentialsProvider;
@@ -13,9 +14,12 @@ public class LambdaHandler implements RequestStreamHandler {
 
     private final FederatedUserCredentialsProvider credentialsProvider;
 
+    @SuppressWarnings("unused")
     public LambdaHandler() {
-        String bucket = System.getenv("BUCKET");
-        String region = System.getenv("REGION");
+        this(System.getenv("REGION"), System.getenv("BUCKET"));
+    }
+
+    LambdaHandler(String region, String bucket) {
         credentialsProvider = new FederatedUserCredentialsProvider(region, bucket);
     }
 
@@ -30,9 +34,9 @@ public class LambdaHandler implements RequestStreamHandler {
             FederatedUserCredentials credentials = createCredentials(credentialInput);
             context.getLogger().log("credentials:" + credentials);
             credentials.save(outputStream);
-            //outputStream.write(credentialInput.toString().getBytes(StandardCharsets.UTF_8));
+            outputStream.write(credentialInput.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
-            context.getLogger().log(e.toString());
+            context.getLogger().log("Exception "+e.getClass().getSimpleName()+": "+e.getMessage());
         }
     }
 
