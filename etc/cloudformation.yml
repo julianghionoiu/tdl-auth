@@ -12,11 +12,22 @@ Resources:
             FunctionName:
                 Ref: AuthLambdaFunctionName
             Handler: "tdl.auth.LambdaHandler"
-            MemorySize: 128
+            MemorySize: 512
             Role:
                 Ref: AuthLambdaFunctionRole
             Runtime: "java8"
-            Timeout: 1
+            Timeout: 30
+            Environment:
+                Variables:
+                    BUCKET:
+                        Ref: AuthLambdaEnvBucket
+                    REGION:
+                        Ref: AuthLambdaEnvRegion
+                    #TODO: Remove the hack below!
+                    ACCESS_KEY:
+                        Ref: AuthLambdaAwsAccessKey
+                    SECRET_KEY:
+                        Ref: AuthLambdaAwsSecretKey
     ApiGatewayRestApi:
         Type: AWS::ApiGateway::RestApi
         Properties:
@@ -130,6 +141,14 @@ Parameters:
     AuthLambdaFunctionS3Key:
         Type: String
     AuthLambdaFunctionName:
+        Type: String
+    AuthLambdaEnvBucket:
+        Type: String
+    AuthLambdaEnvRegion:
+        Type: String
+    AuthLambdaAwsAccessKey:
+        Type: String
+    AuthLambdaAwsSecretKey:
         Type: String
     AuthLambdaFunctionRole:
         Type: String

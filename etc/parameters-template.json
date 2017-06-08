@@ -16,6 +16,22 @@
         "ParameterValue": "arn:aws:iam::xxxxxxxxxxx:role/xxxx"
     },
     {
+        "ParameterKey": "AuthLambdaEnvBucket",
+        "ParameterValue": "bucketname"
+    },
+    {
+        "ParameterKey": "AuthLambdaEnvRegion",
+        "ParameterValue": "us-east-1"
+    },
+    {
+        "ParameterKey": "AuthLambdaAwsAccessKey",
+        "ParameterValue": "accesskey"
+    },
+    {
+        "ParameterKey": "AuthLambdaAwsSecretKey",
+        "ParameterValue": "secretkey"
+    },
+    {
         "ParameterKey": "ApiGatewayRestApiName",
         "ParameterValue": "tdl-auth-api"
     }
