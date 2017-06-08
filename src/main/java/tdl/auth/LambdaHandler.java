@@ -24,12 +24,16 @@ public class LambdaHandler implements RequestStreamHandler {
                 System.getenv("REGION"),
                 System.getenv("BUCKET"),
                 System.getenv("ACCESS_KEY"),
-                System.getenv("SECRET_KEY")
+                System.getenv("SECRET_KEY") //TODO: Encrypt this using KMS.
         );
 
     }
 
     LambdaHandler(String region, String bucket, String accessKey, String secretKey) {
+        /**
+         * A Lambda has temporary credentials obtained by calling AssumeRole on
+         * the Execution Role, so we need to use IAM user.
+         */
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
         AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
         credentialsProvider = new FederatedUserCredentialsProvider(region, bucket, awsCredential);
