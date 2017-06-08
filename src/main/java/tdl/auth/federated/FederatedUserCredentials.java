@@ -7,43 +7,39 @@ import java.util.Properties;
 
 public class FederatedUserCredentials {
 
-    public final String bucket;
-
-    public final String region;
-
     public final String username;
 
-    private Credentials credentials;
+    private final Credentials credentials;
 
-    private Properties properties;
+    private final Properties properties;
 
-    public FederatedUserCredentials(String bucket, String region, String username) {
-        this.bucket = bucket;
-        this.region = region;
+    private final FederatedUserCredentialsProvider provider;
+
+    public FederatedUserCredentials(FederatedUserCredentialsProvider provider, String username) {
         this.username = username;
-        createCredentials();
-        storeProperties();
-    }
-
-    private void createCredentials() {
-        FederatedUserCredentialsProvider provider = new FederatedUserCredentialsProvider(region, bucket);
-
+        this.provider = provider;
         credentials = provider
                 .getTokenFor(username)
                 .getCredentials();
+        properties = new Properties();
+        storeProperties();
     }
 
     private void storeProperties() {
-        properties = new Properties();
         properties.setProperty("aws_access_key_id", credentials.getAccessKeyId());
         properties.setProperty("aws_secret_access_key", credentials.getSecretAccessKey());
         properties.setProperty("aws_session_token", credentials.getSessionToken());
-        properties.setProperty("s3_region", region);
-        properties.setProperty("s3_bucket", bucket);
+        properties.setProperty("s3_region", provider.getRegion());
+        properties.setProperty("s3_bucket", provider.getBucket());
         properties.setProperty("s3_prefix", username + "/");
     }
 
     public void save(OutputStream outputStream) throws IOException {
         properties.store(outputStream, "Temporary federated credentials");
+    }
+
+    @Override
+    public String toString() {
+        return properties.toString();
     }
 }

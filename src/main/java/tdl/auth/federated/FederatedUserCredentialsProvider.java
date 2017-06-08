@@ -8,8 +8,12 @@ import com.amazonaws.services.securitytoken.model.GetFederationTokenResult;
 import tdl.auth.s3.DefaultS3FolderPolicy;
 
 public class FederatedUserCredentialsProvider {
+
     private final AWSSecurityTokenService tokenService;
-    private String bucket;
+
+    private final String bucket;
+
+    private final String region;
 
     public FederatedUserCredentialsProvider(String region, String bucket) {
         tokenService = AWSSecurityTokenServiceClientBuilder
@@ -17,6 +21,7 @@ public class FederatedUserCredentialsProvider {
                 .withRegion(region)
                 .build();
         this.bucket = bucket;
+        this.region = region;
     }
 
     public GetFederationTokenResult getTokenFor(String username) {
@@ -26,4 +31,13 @@ public class FederatedUserCredentialsProvider {
                 .withPolicy(policy.toJson());
         return tokenService.getFederationToken(getFederationTokenRequest);
     }
+
+    public String getBucket() {
+        return bucket;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
 }

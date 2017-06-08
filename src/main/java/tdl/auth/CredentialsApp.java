@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import lombok.extern.slf4j.Slf4j;
 
 import tdl.auth.federated.FederatedUserCredentials;
+import tdl.auth.federated.FederatedUserCredentialsProvider;
 
 @Slf4j
 public class CredentialsApp {
@@ -32,7 +33,8 @@ public class CredentialsApp {
 
     private void run() {
         try {
-            FederatedUserCredentials credentials = new FederatedUserCredentials(bucket, region, username);
+            FederatedUserCredentialsProvider credentialsProvider = new FederatedUserCredentialsProvider(region, bucket);
+            FederatedUserCredentials credentials = new FederatedUserCredentials(credentialsProvider, username);
 
             try (FileOutputStream output = new FileOutputStream(fileToSave)) {
                 credentials.save(output);

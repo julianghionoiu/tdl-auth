@@ -35,6 +35,6 @@ public class LambdaHandlerTest {
 
         handler.handleRequest(inputStream, outputStream, context);
 
-        assertEquals(outputStream.toString(), "{username:Hello World!}");
+        assertEquals(outputStream.toString(), "{username:SGVsbG8gV29ybGQh}");
     }
 }

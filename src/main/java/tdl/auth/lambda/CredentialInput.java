@@ -1,7 +1,5 @@
 package tdl.auth.lambda;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import org.json.JSONObject;
 
 public class CredentialInput {
@@ -10,14 +8,9 @@ public class CredentialInput {
 
     public final String token;
 
-    public CredentialInput(String username, String base64token) {
+    public CredentialInput(String username, String token) {
         this.username = username;
-        this.token = decodeToken(base64token);
-    }
-
-    private static String decodeToken(String encoded) {
-        byte[] decoded = Base64.getDecoder().decode(encoded);
-        return new String(decoded, StandardCharsets.UTF_8);
+        this.token = token;
     }
 
     @Override

@@ -6,22 +6,33 @@ import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import java.io.*;
 import java.util.stream.Collectors;
 import tdl.auth.federated.FederatedUserCredentials;
+import tdl.auth.federated.FederatedUserCredentialsProvider;
 import tdl.auth.lambda.CredentialInput;
 
 public class LambdaHandler implements RequestStreamHandler {
+
+    private final FederatedUserCredentialsProvider credentialsProvider;
+
+    public LambdaHandler() {
+        String bucket = System.getenv("BUCKET");
+        String region = System.getenv("REGION");
+        credentialsProvider = new FederatedUserCredentialsProvider(region, bucket);
+    }
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
         try {
             String inputJson = getStringInput(inputStream);
             context.getLogger().log("inputJson:" + inputJson);
+            context.getLogger().log("providers:" + credentialsProvider.getBucket() + " " + credentialsProvider.getRegion());
             CredentialInput credentialInput = CredentialInput.createFromJsonString(inputJson);
+            context.getLogger().log("input:" + credentialInput);
             FederatedUserCredentials credentials = createCredentials(credentialInput);
-            context.getLogger().log("credential:" + credentialInput);
+            context.getLogger().log("credentials:" + credentials);
             credentials.save(outputStream);
             //outputStream.write(credentialInput.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
-            e.printStackTrace();
+            context.getLogger().log(e.toString());
         }
     }
 
@@ -31,10 +42,8 @@ public class LambdaHandler implements RequestStreamHandler {
                 .collect(Collectors.joining(""));
     }
 
-    private static FederatedUserCredentials createCredentials(CredentialInput input) {
-        String bucket = System.getenv("BUCKET");
-        String region = System.getenv("REGION");
-        return new FederatedUserCredentials(bucket, region, input.username);
+    private FederatedUserCredentials createCredentials(CredentialInput input) {
+        return new FederatedUserCredentials(credentialsProvider, input.username);
     }
 
 }
