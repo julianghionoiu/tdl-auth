@@ -8,6 +8,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 import tdl.auth.federated.FederatedUserCredentials;
 import tdl.auth.federated.FederatedUserCredentialsProvider;
@@ -17,12 +18,18 @@ public class LambdaHandler implements RequestStreamHandler {
 
     private final FederatedUserCredentialsProvider credentialsProvider;
 
+    @SuppressWarnings("unused")
     public LambdaHandler() {
-        String bucket = System.getenv("BUCKET");
-        String region = System.getenv("REGION");
-        //TODO: Remove this hack.
-        String accessKey = System.getenv("ACCESS_KEY");
-        String secretKey = System.getenv("SECRET_KEY");
+        this(
+                System.getenv("REGION"),
+                System.getenv("BUCKET"),
+                System.getenv("ACCESS_KEY"),
+                System.getenv("SECRET_KEY")
+        );
+
+    }
+
+    LambdaHandler(String region, String bucket, String accessKey, String secretKey) {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
         AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
         credentialsProvider = new FederatedUserCredentialsProvider(region, bucket, awsCredential);
@@ -39,9 +46,8 @@ public class LambdaHandler implements RequestStreamHandler {
             FederatedUserCredentials credentials = createCredentials(credentialInput);
             context.getLogger().log("credentials:" + credentials);
             credentials.save(outputStream);
-            //outputStream.write(credentialInput.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
-            context.getLogger().log(e.toString());
+            context.getLogger().log("Exception " + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
 
