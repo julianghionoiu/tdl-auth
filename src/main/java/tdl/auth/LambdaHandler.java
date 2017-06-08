@@ -1,5 +1,9 @@
 package tdl.auth;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 
@@ -16,7 +20,12 @@ public class LambdaHandler implements RequestStreamHandler {
     public LambdaHandler() {
         String bucket = System.getenv("BUCKET");
         String region = System.getenv("REGION");
-        credentialsProvider = new FederatedUserCredentialsProvider(region, bucket);
+        //TODO: Remove this hack.
+        String accessKey = System.getenv("ACCESS_KEY");
+        String secretKey = System.getenv("SECRET_KEY");
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
+        AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
+        credentialsProvider = new FederatedUserCredentialsProvider(region, bucket, awsCredential);
     }
 
     @Override

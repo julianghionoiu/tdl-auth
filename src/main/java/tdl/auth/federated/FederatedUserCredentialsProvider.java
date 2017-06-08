@@ -1,5 +1,6 @@
 package tdl.auth.federated;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.policy.Policy;
 import com.amazonaws.services.securitytoken.AWSSecurityTokenService;
 import com.amazonaws.services.securitytoken.AWSSecurityTokenServiceClientBuilder;
@@ -18,6 +19,16 @@ public class FederatedUserCredentialsProvider {
     public FederatedUserCredentialsProvider(String region, String bucket) {
         tokenService = AWSSecurityTokenServiceClientBuilder
                 .standard()
+                .withRegion(region)
+                .build();
+        this.bucket = bucket;
+        this.region = region;
+    }
+    
+    public FederatedUserCredentialsProvider(String region, String bucket, AWSCredentialsProvider credentialsProvider) {
+        tokenService = AWSSecurityTokenServiceClientBuilder
+                .standard()
+                .withCredentials(credentialsProvider)
                 .withRegion(region)
                 .build();
         this.bucket = bucket;
