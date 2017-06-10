@@ -36,11 +36,11 @@ public class LambdaHandlerTest {
     private static final String TEST_JWT_KEY_ARN = Optional.ofNullable(System.getenv("TEST_JWT_KEY_ARN"))
             .orElse("arn:aws:kms:eu-west-2:577770582757:key/7298331e-c199-4e15-9138-906d1c3d9363");
     private static final String TEST_BUCKET = Optional.ofNullable(System.getenv("TEST_BUCKET"))
-            .orElseThrow(() -> new RuntimeException("TEST_BUCKET must be set"));
+            .orElse("testbucket");
     private static final String TEST_ACCESS_KEY = Optional.ofNullable(System.getenv("TEST_ACCESS_KEY"))
-            .orElseThrow(() -> new RuntimeException("TEST_ACCESS_KEY must be set"));
+            .orElse("ACCESS_KEY");
     private static final String TEST_SECRET_KEY = Optional.ofNullable(System.getenv("TEST_SECRET_KEY"))
-            .orElseThrow(() -> new RuntimeException("TEST_SECRET_KEY must be set"));
+            .orElse("SECRET_KEY");
 
     private Context context;
     private LambdaHandler handler;
