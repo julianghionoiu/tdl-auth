@@ -24,6 +24,8 @@ Resources:
                     REGION:
                         Ref: AuthLambdaEnvRegion
                     #TODO: Remove the hack below!
+                    JWT_DECRYPT_KEY_ARN:
+                        Ref: AuthLambdaEnvJwtDecryptKeyArn
                     ACCESS_KEY:
                         Ref: AuthLambdaAwsAccessKey
                     SECRET_KEY:
@@ -145,6 +147,8 @@ Parameters:
     AuthLambdaEnvBucket:
         Type: String
     AuthLambdaEnvRegion:
+        Type: String
+    AuthLambdaEnvJwtDecryptKeyArn:
         Type: String
     AuthLambdaAwsAccessKey:
         Type: String
