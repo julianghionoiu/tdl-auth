@@ -3,32 +3,24 @@ package tdl.auth;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
-import com.amazonaws.services.kms.AWSKMS;
-import com.amazonaws.services.kms.AWSKMSClientBuilder;
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
-import io.jsonwebtoken.Claims;
-
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.json.JSONException;
-import ro.ghionoiu.kmsjwt.key.KMSDecrypt;
-import ro.ghionoiu.kmsjwt.token.JWTDecoder;
-import ro.ghionoiu.kmsjwt.token.JWTVerificationException;
+import org.json.JSONObject;
+import tdl.auth.authorizer.AuthorizationException;
+import tdl.auth.authorizer.JWTKMSAuthorizer;
+import tdl.auth.authorizer.LambdaAuthorizer;
 import tdl.auth.federated.FederatedUserCredentials;
 import tdl.auth.federated.FederatedUserCredentialsProvider;
-import tdl.auth.lambda.CredentialInput;
+
+import java.io.*;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class LambdaHandler implements RequestStreamHandler {
 
-    private JWTDecoder jwtDecoder;
-    private final FederatedUserCredentialsProvider credentialsProvider;
+    private final FederatedUserCredentialsProvider temporaryCredentialsProvider;
+    private final LambdaAuthorizer lambdaAuthorizer;
 
     private static String getEnv(String key) {
         return Optional.ofNullable(System.getenv(key))
@@ -48,39 +40,50 @@ public class LambdaHandler implements RequestStreamHandler {
 
     }
 
+    /**
+     * A Lambda has temporary credentials obtained by calling AssumeRole on
+     * the Execution Role, so we need to use IAM user.
+     */
     LambdaHandler(String region, String jwtDecryptKeyARN, String bucket, String accessKey, String secretKey) {
-        /**
-         * A Lambda has temporary credentials obtained by calling AssumeRole on
-         * the Execution Role, so we need to use IAM user.
-         */
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
         AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
-        credentialsProvider = new FederatedUserCredentialsProvider(region, bucket, awsCredential);
-        AWSKMS kmsClient = AWSKMSClientBuilder.standard()
-                .withRegion(region)
-                .build();
-        KMSDecrypt kmsDecrypt = new KMSDecrypt(kmsClient, Collections.singleton(jwtDecryptKeyARN));
-        jwtDecoder = new JWTDecoder(kmsDecrypt);
+        temporaryCredentialsProvider = new FederatedUserCredentialsProvider(region, bucket, awsCredential);
+        lambdaAuthorizer = new JWTKMSAuthorizer(region, jwtDecryptKeyARN);
+    }
 
+    LambdaHandler(FederatedUserCredentialsProvider temporaryCredentialsProvider, LambdaAuthorizer lambdaAuthorizer) {
+        this.temporaryCredentialsProvider = temporaryCredentialsProvider;
+        this.lambdaAuthorizer = lambdaAuthorizer;
     }
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
         try {
+            // Get json input
             String inputJson = getStringInput(inputStream);
             context.getLogger().log("inputJson:" + inputJson);
-            context.getLogger().log("providers:" + credentialsProvider.getBucket() + " " + credentialsProvider.getRegion());
-            
-            CredentialInput credentialInput = CredentialInput.createFromJsonString(inputJson);
-            context.getLogger().log("input:" + credentialInput);
-            
-            FederatedUserCredentials credentials = createCredentials(credentialInput);
-            context.getLogger().log("credentials:" + credentials);
-            
-            authorize(credentialInput, context.getLogger());
-            credentials.save(outputStream);
 
-        } catch (JWTVerificationException e) {
+            // Parse JSON
+            JSONObject json = new JSONObject(inputJson);
+            String username = json.getString("username");
+            String token = json.getString("token");
+            context.getLogger().log("username:" + username+", token:"+token);
+
+            // Authorize
+            boolean isAuthorized = lambdaAuthorizer.isAuthorized(username, token);
+            if (!isAuthorized) {
+                throw new RuntimeException("[Authorization] User not authorized to perform action");
+            }
+
+            // Generate credentials
+            context.getLogger().log("providers:" + temporaryCredentialsProvider.getBucket() + " " + temporaryCredentialsProvider.getRegion());
+
+            FederatedUserCredentials temporaryCredentials = temporaryCredentialsProvider.getFederatedTokenFor(username);
+            context.getLogger().log("temporary credentials generated:" + temporaryCredentials);
+
+            // Return as file
+            temporaryCredentials.saveTo(outputStream);
+        } catch (AuthorizationException e) {
             throw new RuntimeException("[Verification] " + e.getMessage(), e);
         } catch (JSONException e) {
             throw new RuntimeException("[Input] " + e.getMessage(), e);
@@ -89,23 +92,9 @@ public class LambdaHandler implements RequestStreamHandler {
         }
     }
 
-    private void authorize(CredentialInput credentialInput, LambdaLogger logger) throws JWTVerificationException {
-        Claims claims = jwtDecoder.decodeAndVerify(credentialInput.token);
-        String principalId = claims.get("usr", String.class);
-        logger.log("username:" + credentialInput.username + ",principal: " + principalId);
-        if (!Objects.equals(credentialInput.username, principalId)) {
-            throw new RuntimeException("[Authorization] User not accepted");
-        }
-    }
-
     private static String getStringInput(InputStream inputStream) {
         return new BufferedReader(new InputStreamReader(inputStream))
                 .lines()
                 .collect(Collectors.joining(""));
     }
-
-    private FederatedUserCredentials createCredentials(CredentialInput input) {
-        return new FederatedUserCredentials(credentialsProvider, input.username);
-    }
-
 }
