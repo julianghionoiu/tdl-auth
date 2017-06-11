@@ -28,14 +28,14 @@ public class JWTKMSAuthorizer implements LambdaAuthorizer {
     }
 
     @Override
-    public boolean isAuthorized(String requestedPrincipal, String authToken) throws AuthorizationException {
+    public boolean isAuthorized(String requestedPrincipal, String authToken) throws AuthenticationException {
         Claims claims;
         try {
             claims = jwtDecoder.decodeAndVerify(authToken);
             String principalIdFromToken = claims.get("usr", String.class);
             return Objects.equals(requestedPrincipal, principalIdFromToken);
         } catch (JWTVerificationException e) {
-            throw new AuthorizationException("JWT token is not valid", e);
+            throw new AuthenticationException("JWT token is not valid", e);
         }
     }
 }

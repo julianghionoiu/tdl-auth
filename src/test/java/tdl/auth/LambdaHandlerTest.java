@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import tdl.auth.authorizer.AuthorizationException;
+import tdl.auth.authorizer.AuthenticationException;
 import tdl.auth.authorizer.LambdaAuthorizer;
 import tdl.auth.federated.FederatedUserCredentials;
 import tdl.auth.federated.FederatedUserCredentialsProvider;
@@ -27,6 +27,8 @@ public class LambdaHandlerTest {
     private LambdaAuthorizer lambdaAuthorizer;
     private Context context;
 
+    private ByteArrayOutputStream outputStream;
+
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
@@ -37,16 +39,16 @@ public class LambdaHandlerTest {
         lambdaHandler = new LambdaHandler(temporaryCredentialsProvider, lambdaAuthorizer);
         context = mock(Context.class);
         when(context.getLogger()).thenReturn(System.out::println);
+        outputStream = new ByteArrayOutputStream();
     }
 
     @Test
-    public void generates_credentials_file_for_valid_token() throws Exception, AuthorizationException {
+    public void generates_credentials_file_for_valid_token() throws Exception {
         when(lambdaAuthorizer.isAuthorized(eq("test-user"), eq("token")))
                 .thenReturn(true);
         when(temporaryCredentialsProvider.getFederatedTokenFor(eq("test-user")))
                 .thenReturn(validCredentials());
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         lambdaHandler.handleRequest(jsonPayloadAsStream("test-user", "token"),
                 outputStream, context);
 
@@ -60,30 +62,28 @@ public class LambdaHandlerTest {
     }
 
     @Test
-    public void detects_authorization_error() throws Exception, AuthorizationException {
+    public void detects_authentication_error() throws Exception {
+        doThrow(new AuthenticationException("failed", new Exception()))
+                .when(lambdaAuthorizer).isAuthorized(anyString(), anyString());
+
+        expectedException.expectMessage(containsString("[Authentication]"));
+        lambdaHandler.handleRequest(jsonPayloadAsStream("test-user", "token"),
+                outputStream, context);
+    }
+
+    @Test
+    public void detects_authorization_error() throws Exception {
         when(lambdaAuthorizer.isAuthorized(anyString(), anyString())).thenReturn(false);
 
         expectedException.expectMessage(containsString("[Authorization]"));
         lambdaHandler.handleRequest(jsonPayloadAsStream("test-user", "token"),
-                new ByteArrayOutputStream(), context);
+                outputStream, context);
     }
 
     @Test
-    public void detects_verification_error() throws Exception, AuthorizationException {
-        //noinspection unchecked
-        when(lambdaAuthorizer.isAuthorized(anyString(), anyString()))
-                .thenThrow(AuthorizationException.class);
-
-        expectedException.expectMessage(containsString("[Verification]"));
-        lambdaHandler.handleRequest(jsonPayloadAsStream("test-user", "token"),
-                new ByteArrayOutputStream(), context);
-    }
-
-    @Test
-    public void detects_invalid_input() throws Exception, AuthorizationException {
+    public void detects_invalid_input() throws Exception {
         expectedException.expectMessage(containsString("[Input]"));
-        lambdaHandler.handleRequest(asStream("invalidJson"),
-                new ByteArrayOutputStream(), context);
+        lambdaHandler.handleRequest(asStream("invalidJson"), outputStream, context);
     }
 
 
