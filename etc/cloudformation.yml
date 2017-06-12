@@ -6,12 +6,12 @@ Resources:
         Properties:
             Code:
                 S3Bucket:
-                    Ref: AuthLambdaFunctionS3Bucket
+                    Ref: LambdaFunctionS3Bucket
                 S3Key:
-                    Ref: AuthLambdaFunctionS3Key
+                    Ref: LambdaFunctionS3Key
             FunctionName:
                 Ref: AuthLambdaFunctionName
-            Handler: "tdl.auth.LambdaHandler"
+            Handler: "tdl.auth.AuthLambdaHandler"
             MemorySize: 512
             Role:
                 Ref: AuthLambdaFunctionRole
@@ -164,10 +164,33 @@ Resources:
             RestApiId:
                 Ref: ApiGatewayRestApi
             StageName: production
+            
+            
+    LinkGeneratorLambdaFunction:
+        Type: "AWS::Lambda::Function"
+        Properties:
+            Code:
+                S3Bucket:
+                    Ref: LambdaFunctionS3Bucket
+                S3Key:
+                    Ref: LambdaFunctionS3Key
+            FunctionName:
+                Ref: LinkGeneratorLambdaFunctionName
+            Handler: "tdl.auth.AuthLambdaHandler"
+            MemorySize: 512
+            Role:
+                Ref: LinkGeneratorLambdaFunctionRole
+            Runtime: "java8"
+            Timeout: 30
+            Environment:
+                Variables:
+                    PAGE_STORAGE_BUCKET:
+                        Ref: LinkGeneratorLambdaEnvPageStorageBucket
+
 Parameters:
-    AuthLambdaFunctionS3Bucket:
+    LambdaFunctionS3Bucket:
         Type: String
-    AuthLambdaFunctionS3Key:
+    LambdaFunctionS3Key:
         Type: String
     AuthLambdaFunctionName:
         Type: String
@@ -184,5 +207,13 @@ Parameters:
     AuthLambdaFunctionRole:
         Type: String
     ApiGatewayRestApiName:
+        Type: String
+        
+    ###
+    LinkGeneratorLambdaFunctionName:
+        Type: String
+    LinkGeneratorLambdaFunctionRole:
+        Type: String
+    LinkGeneratorLambdaEnvPageStorageBucket:
         Type: String
 #TODO: Output

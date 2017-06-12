@@ -32,6 +32,8 @@ repositories {
 dependencies {
     compile 'com.amazonaws:aws-lambda-java-core:1.1.0'
     compile 'com.amazonaws:aws-java-sdk-sts:1.11.135'
+    compile 'com.amazonaws:aws-java-sdk-ses:1.11.135'
+    compile 'com.amazonaws:aws-java-sdk-s3:1.11.135'
     compile 'ro.ghionoiu:kms-jwt:0.0.3'
 
     compile 'com.beust:jcommander:1.64'

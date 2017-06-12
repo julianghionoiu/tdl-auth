@@ -18,7 +18,7 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class LambdaHandler implements RequestStreamHandler {
+public class AuthLambdaHandler implements RequestStreamHandler {
 
     private final FederatedUserCredentialsProvider temporaryCredentialsProvider;
     private final LambdaAuthorizer lambdaAuthorizer;
@@ -30,7 +30,7 @@ public class LambdaHandler implements RequestStreamHandler {
     }
 
     @SuppressWarnings("unused")
-    public LambdaHandler() {
+    public AuthLambdaHandler() {
         this(
                 getEnv("REGION"),
                 getEnv("JWT_DECRYPT_KEY_ARN"),
@@ -45,14 +45,14 @@ public class LambdaHandler implements RequestStreamHandler {
      * A Lambda has temporary credentials obtained by calling AssumeRole on
      * the Execution Role, so we need to use IAM user.
      */
-    LambdaHandler(String region, String jwtDecryptKeyARN, String bucket, String accessKey, String secretKey) {
+    AuthLambdaHandler(String region, String jwtDecryptKeyARN, String bucket, String accessKey, String secretKey) {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
         AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
         temporaryCredentialsProvider = new FederatedUserCredentialsProvider(region, bucket, awsCredential);
         lambdaAuthorizer = new JWTKMSAuthorizer(region, jwtDecryptKeyARN);
     }
 
-    LambdaHandler(FederatedUserCredentialsProvider temporaryCredentialsProvider, LambdaAuthorizer lambdaAuthorizer) {
+    AuthLambdaHandler(FederatedUserCredentialsProvider temporaryCredentialsProvider, LambdaAuthorizer lambdaAuthorizer) {
         this.temporaryCredentialsProvider = temporaryCredentialsProvider;
         this.lambdaAuthorizer = lambdaAuthorizer;
     }

@@ -21,8 +21,8 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
-public class LambdaHandlerTest {
-    private LambdaHandler lambdaHandler;
+public class AuthLambdaHandlerTest {
+    private AuthLambdaHandler lambdaHandler;
     private FederatedUserCredentialsProvider temporaryCredentialsProvider;
     private LambdaAuthorizer lambdaAuthorizer;
     private Context context;
@@ -36,7 +36,7 @@ public class LambdaHandlerTest {
     public void setUp() throws Exception {
         temporaryCredentialsProvider = mock(FederatedUserCredentialsProvider.class);
         lambdaAuthorizer = mock(LambdaAuthorizer.class);
-        lambdaHandler = new LambdaHandler(temporaryCredentialsProvider, lambdaAuthorizer);
+        lambdaHandler = new AuthLambdaHandler(temporaryCredentialsProvider, lambdaAuthorizer);
         context = mock(Context.class);
         when(context.getLogger()).thenReturn(System.out::println);
         outputStream = new ByteArrayOutputStream();

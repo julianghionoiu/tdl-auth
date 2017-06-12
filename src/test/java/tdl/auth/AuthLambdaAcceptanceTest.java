@@ -23,7 +23,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class LambdaAcceptanceTest {
+public class AuthLambdaAcceptanceTest {
 
     private static final String TEST_AWS_REGION = Optional.ofNullable(System.getenv("TEST_AWS_REGION"))
             .orElse("eu-west-2");
@@ -37,7 +37,7 @@ public class LambdaAcceptanceTest {
             .orElse("SECRET_KEY");
 
     private Context context;
-    private LambdaHandler handler;
+    private AuthLambdaHandler handler;
     private KMSEncrypt kmsEncrypt;
 
     @Rule
@@ -48,7 +48,7 @@ public class LambdaAcceptanceTest {
         context = mock(Context.class);
         when(context.getLogger()).thenReturn(System.out::println);
 
-        handler = new LambdaHandler(TEST_AWS_REGION, TEST_JWT_KEY_ARN, TEST_BUCKET, TEST_ACCESS_KEY, TEST_SECRET_KEY);
+        handler = new AuthLambdaHandler(TEST_AWS_REGION, TEST_JWT_KEY_ARN, TEST_BUCKET, TEST_ACCESS_KEY, TEST_SECRET_KEY);
 
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withRegion(TEST_AWS_REGION)
