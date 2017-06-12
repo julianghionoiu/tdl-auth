@@ -35,12 +35,13 @@ public class FederatedUserCredentialsProvider {
         this.region = region;
     }
 
-    public GetFederationTokenResult getTokenFor(String username) {
+    public FederatedUserCredentials getFederatedTokenFor(String username) {
         Policy policy = DefaultS3FolderPolicy.getForUser(bucket, username);
         GetFederationTokenRequest getFederationTokenRequest = new GetFederationTokenRequest()
                 .withName(username)
                 .withPolicy(policy.toJson());
-        return tokenService.getFederationToken(getFederationTokenRequest);
+        GetFederationTokenResult federationTokenResult = tokenService.getFederationToken(getFederationTokenRequest);
+        return new FederatedUserCredentials(region, bucket, username, federationTokenResult.getCredentials());
     }
 
     public String getBucket() {

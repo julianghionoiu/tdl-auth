@@ -24,6 +24,10 @@
         "ParameterValue": "us-east-1"
     },
     {
+        "ParameterKey": "AuthLambdaEnvJwtDecryptKeyArn",
+        "ParameterValue": "arn:aws:kms:xxxxxxxxxxxxxx"
+    },
+    {
         "ParameterKey": "AuthLambdaAwsAccessKey",
         "ParameterValue": "accesskey"
     },

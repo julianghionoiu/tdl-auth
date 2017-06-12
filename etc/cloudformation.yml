@@ -24,6 +24,8 @@ Resources:
                     REGION:
                         Ref: AuthLambdaEnvRegion
                     #TODO: Remove the hack below!
+                    JWT_DECRYPT_KEY_ARN:
+                        Ref: AuthLambdaEnvJwtDecryptKeyArn
                     ACCESS_KEY:
                         Ref: AuthLambdaAwsAccessKey
                     SECRET_KEY:
@@ -49,14 +51,41 @@ Resources:
                                 - "application/x-www-form-urlencoded"
                             responses:
                                 '200':
-                                    description: "200 response"
+                                    description: "OK"
                                     headers:
                                         Content-Type:
                                             type: "string"
                                         Content-Disposition:
                                             type: "string"
+                                '400':
+                                    description: "Bad request"
+                                    headers:
+                                        Content-Type:
+                                            type: "string"
+                                '401':
+                                    description: "Not authorized to perform the requested action"
+                                    headers:
+                                        Content-Type:
+                                            type: "string"
+                                '403':
+                                    description: "Token not valid"
+                                    headers:
+                                        Content-Type:
+                                            type: "string"
                             x-amazon-apigateway-integration:
                                 responses:
+                                    "^\\[Input\\].*":
+                                        statusCode: "400"
+                                        responseParameters:
+                                            method.response.header.Content-Type: "'text/plain'"
+                                    "^\\[Authorization\\].*":
+                                        statusCode: "401"
+                                        responseParameters:
+                                            method.response.header.Content-Type: "'text/plain'"
+                                    "^\\[Authentication\\].*":
+                                        statusCode: "403"
+                                        responseParameters:
+                                            method.response.header.Content-Type: "'text/plain'"
                                     default:
                                         statusCode: "200"
                                         responseParameters:
@@ -145,6 +174,8 @@ Parameters:
     AuthLambdaEnvBucket:
         Type: String
     AuthLambdaEnvRegion:
+        Type: String
+    AuthLambdaEnvJwtDecryptKeyArn:
         Type: String
     AuthLambdaAwsAccessKey:
         Type: String

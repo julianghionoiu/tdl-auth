@@ -43,7 +43,9 @@ public class FederatedUserCredentialsProviderTest {
 
     @Before
     public void setUp() throws Exception {
-        Credentials federatedUserCredentials = federatedUserCredentialsProvider.getTokenFor(TEST_USERNAME).getCredentials();
+        Credentials federatedUserCredentials = federatedUserCredentialsProvider
+                .getFederatedTokenFor(TEST_USERNAME)
+                .getCredentials();
         federatedS3Client = AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicSessionCredentials(
                         federatedUserCredentials.getAccessKeyId(),

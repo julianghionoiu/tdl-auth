@@ -34,10 +34,11 @@ public class CredentialsApp {
     private void run() {
         try {
             FederatedUserCredentialsProvider credentialsProvider = new FederatedUserCredentialsProvider(region, bucket);
-            FederatedUserCredentials credentials = new FederatedUserCredentials(credentialsProvider, username);
+
+            FederatedUserCredentials credentials = credentialsProvider.getFederatedTokenFor(username);
 
             try (FileOutputStream output = new FileOutputStream(fileToSave)) {
-                credentials.save(output);
+                credentials.saveTo(output);
             }
         } catch (Exception e) {
             log.error("Exception encountered.", e);
