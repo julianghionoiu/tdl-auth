@@ -9,7 +9,14 @@ import com.amazonaws.services.simpleemail.model.Content;
 import com.amazonaws.services.simpleemail.model.Destination;
 import com.amazonaws.services.simpleemail.model.Message;
 import com.amazonaws.services.simpleemail.model.SendEmailRequest;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class Mailer {
 
@@ -19,25 +26,36 @@ public final class Mailer {
 
     private final String email;
 
-    private final URL pageUrl;
+    private final String pageUrl;
 
     private final AmazonSimpleEmailService client;
 
-    public Mailer(String email, URL pageUrl) {
+    private Configuration templateConfiguration;
+
+    public Mailer(String email, String pageUrl) {
         this.email = email;
         this.pageUrl = pageUrl;
         this.client = createClient();
     }
 
-    public String createBody() {
-        return ""; //TODO: Create HTML in resources
+    public void setTemplateConfiguration(Configuration templateConfiguration) {
+        this.templateConfiguration = templateConfiguration;
     }
 
-    public void send() {
+    public String createBody() throws IOException, TemplateException {
+        Template template = templateConfiguration.getTemplate("mail.txt");
+        StringWriter stringWriter = new StringWriter();
+        Map<String, String> contentParams = new HashMap<>();
+        contentParams.put("PAGE_URL", pageUrl);
+        template.process(contentParams, stringWriter);
+        return stringWriter.toString();
+    }
+
+    public void send() throws IOException, TemplateException {
         Destination destination = new Destination().withToAddresses(new String[]{email});
         Content subject = new Content().withData(SUBJECT);
-        Content htmlBody = new Content().withData(createBody());
-        Body body = new Body().withHtml(htmlBody);
+        Content textContent = new Content().withData(createBody());
+        Body body = new Body().withText(textContent);
         Message message = new Message().withSubject(subject).withBody(body);
         SendEmailRequest request = new SendEmailRequest()
                 .withSource(FROM)

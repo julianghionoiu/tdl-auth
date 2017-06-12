@@ -7,14 +7,26 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class Page {
 
-    private final String email;
+    private final String username;
+
+    private final String token;
+
+    private final String apiEndpointUrl;
 
     private final AmazonS3 client;
 
@@ -22,22 +34,37 @@ public final class Page {
 
     private String content;
 
-    public Page(String email) {
-        this.email = email;
+    private Configuration templateConfiguration;
+
+    public Page(String username, String token, String apiEndpointUrl) {
+        this.username = username;
+        this.token = token;
+        this.apiEndpointUrl = apiEndpointUrl;
         this.client = createClient();
     }
 
-    public void generateAndUpload() {
+    public void generateAndUpload() throws IOException, TemplateException {
         key = generateKey();
         content = generateContent();
         uploadPage();
     }
 
-    private String generateContent() {
-        return ""; //TODO: Create HTML in resources
+    public void setTemplateConfiguration(Configuration templateConfiguration) {
+        this.templateConfiguration = templateConfiguration;
     }
 
-    private String generateKey() {
+    public String generateContent() throws IOException, TemplateException {
+        Template template = templateConfiguration.getTemplate("page.html");
+        StringWriter stringWriter = new StringWriter();
+        Map<String, String> contentParams = new HashMap<>();
+        contentParams.put("API_ENDPOINT", apiEndpointUrl);
+        contentParams.put("USERNAME", username);
+        contentParams.put("TOKEN", token);
+        template.process(contentParams, stringWriter);
+        return stringWriter.toString();
+    }
+
+    public String generateKey() {
         return "";
     }
 
@@ -57,8 +84,8 @@ public final class Page {
         return key;
     }
 
-    public URL getPublicUrl() {
-        return client.getUrl(getBucket(), getKey());
+    public String getPublicUrl() {
+        return client.getUrl(getBucket(), getKey()).toString();
     }
 
     public AmazonS3 createClient() {
