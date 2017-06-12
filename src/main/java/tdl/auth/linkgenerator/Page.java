@@ -17,8 +17,11 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
-public final class Page {
+public class Page {
+
+    public static final long KEY_LENGTH = 32;
 
     private final String username;
 
@@ -26,7 +29,7 @@ public final class Page {
 
     private final String apiEndpointUrl;
 
-    private final AmazonS3 client;
+    private AmazonS3 client;
 
     private String key;
 
@@ -38,7 +41,6 @@ public final class Page {
         this.username = username;
         this.token = token;
         this.apiEndpointUrl = apiEndpointUrl;
-        this.client = createClient();
     }
 
     public void generateAndUpload() throws IOException, TemplateException {
@@ -63,10 +65,19 @@ public final class Page {
     }
 
     public String generateKey() {
-        return "";
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < KEY_LENGTH) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
     }
 
     private void uploadPage() {
+        client = createClient();
         InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
         ObjectMetadata metadata = new ObjectMetadata();
         PutObjectRequest request = new PutObjectRequest(getBucket(), getKey(), stream, metadata)

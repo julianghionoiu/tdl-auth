@@ -5,11 +5,11 @@ import com.amazonaws.services.simpleemail.model.SendEmailResult;
 import freemarker.template.TemplateException;
 import java.io.IOException;
 import org.junit.Test;
+import tdl.auth.LinkGeneratorLambdaHandler;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.*;
-import tdl.auth.LinkGeneratorLambdaHandler;
 
 public class MailerTest {
 
