@@ -25,8 +25,8 @@ public class AuthLambdaHandler implements RequestStreamHandler {
 
     private static String getEnv(String key) {
         return Optional.ofNullable(System.getenv(key))
-                .orElseThrow(() ->
-                    new RuntimeException("[Startup] Environment variable " + key + " not set"));
+                .orElseThrow(()
+                        -> new RuntimeException("[Startup] Environment variable " + key + " not set"));
     }
 
     @SuppressWarnings("unused")
@@ -38,12 +38,11 @@ public class AuthLambdaHandler implements RequestStreamHandler {
                 getEnv("ACCESS_KEY"),
                 getEnv("SECRET_KEY") //TODO: Encrypt this using KMS.
         );
-
     }
 
     /**
-     * A Lambda has temporary credentials obtained by calling AssumeRole on
-     * the Execution Role, so we need to use IAM user.
+     * A Lambda has temporary credentials obtained by calling AssumeRole on the
+     * Execution Role, so we need to use IAM user.
      */
     AuthLambdaHandler(String region, String jwtDecryptKeyARN, String bucket, String accessKey, String secretKey) {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
@@ -69,7 +68,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
         } catch (JSONException e) {
             exception = Optional.of(new RuntimeException("[Input] " + e.getMessage(), e));
         } catch (Exception e) {
-            exception = Optional.of(new RuntimeException("[UnknownException] " +e.getMessage(), e));
+            exception = Optional.of(new RuntimeException("[UnknownException] " + e.getMessage(), e));
         }
 
         if (exception.isPresent()) {
@@ -80,7 +79,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
             {
                 Throwable ex = e;
                 while (ex != null) {
-                    theTrace.add(ex.getClass().getSimpleName()+ ": " +ex.getMessage());
+                    theTrace.add(ex.getClass().getSimpleName() + ": " + ex.getMessage());
                     StackTraceElement[] stackTrace = ex.getStackTrace();
                     Arrays.stream(stackTrace).map(StackTraceElement::toString).forEach(theTrace::add);
                     ex = ex.getCause();
@@ -104,7 +103,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
         JSONObject json = new JSONObject(inputJson);
         String username = json.getString("username");
         String token = json.getString("token");
-        context.getLogger().log("username:" + username+", token:"+token);
+        context.getLogger().log("username:" + username + ", token:" + token);
 
         // Authorize
         boolean isAuthorized = lambdaAuthorizer.isAuthorized(username, token);
