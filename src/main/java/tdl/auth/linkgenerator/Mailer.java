@@ -9,16 +9,16 @@ import com.amazonaws.services.simpleemail.model.Content;
 import com.amazonaws.services.simpleemail.model.Destination;
 import com.amazonaws.services.simpleemail.model.Message;
 import com.amazonaws.services.simpleemail.model.SendEmailRequest;
+import com.amazonaws.services.simpleemail.model.SendEmailResult;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Mailer {
+public class Mailer {
 
     public static final String FROM = "sender@example.com";
 
@@ -28,14 +28,13 @@ public final class Mailer {
 
     private final String pageUrl;
 
-    private final AmazonSimpleEmailService client;
+    private AmazonSimpleEmailService client;
 
     private Configuration templateConfiguration;
 
     public Mailer(String email, String pageUrl) {
         this.email = email;
         this.pageUrl = pageUrl;
-        this.client = createClient();
     }
 
     public void setTemplateConfiguration(Configuration templateConfiguration) {
@@ -52,9 +51,11 @@ public final class Mailer {
     }
 
     public void send() throws IOException, TemplateException {
+        client = createClient();
         Destination destination = new Destination().withToAddresses(new String[]{email});
         Content subject = new Content().withData(SUBJECT);
-        Content textContent = new Content().withData(createBody());
+        String bodyContent = createBody();
+        Content textContent = new Content().withData(bodyContent);
         Body body = new Body().withText(textContent);
         Message message = new Message().withSubject(subject).withBody(body);
         SendEmailRequest request = new SendEmailRequest()
