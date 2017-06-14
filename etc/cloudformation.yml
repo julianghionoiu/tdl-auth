@@ -164,8 +164,8 @@ Resources:
             RestApiId:
                 Ref: ApiGatewayRestApi
             StageName: production
-            
-            
+
+
     LinkGeneratorLambdaFunction:
         Type: "AWS::Lambda::Function"
         Properties:
@@ -176,7 +176,7 @@ Resources:
                     Ref: LambdaFunctionS3Key
             FunctionName:
                 Ref: LinkGeneratorLambdaFunctionName
-            Handler: "tdl.auth.AuthLambdaHandler"
+            Handler: "tdl.auth.LinkGeneratorLambdaHandler"
             MemorySize: 512
             Role:
                 Ref: LinkGeneratorLambdaFunctionRole
@@ -186,6 +186,13 @@ Resources:
                 Variables:
                     PAGE_STORAGE_BUCKET:
                         Ref: LinkGeneratorLambdaEnvPageStorageBucket
+                    JWT_ENCRYPT_KEY_ARN:
+                        Ref: AuthLambdaEnvJwtDecryptKeyArn
+                    AUTH_REGION:
+                        Ref: AuthLambdaEnvRegion
+                    API_ENDPOINT_URL: "http://www.example.com"
+                    SENDER:
+                        Ref: LinkGeneratorLambdaEnvEmailSender
 
 Parameters:
     LambdaFunctionS3Bucket:
@@ -208,12 +215,14 @@ Parameters:
         Type: String
     ApiGatewayRestApiName:
         Type: String
-        
+
     ###
     LinkGeneratorLambdaFunctionName:
         Type: String
     LinkGeneratorLambdaFunctionRole:
         Type: String
     LinkGeneratorLambdaEnvPageStorageBucket:
+        Type: String
+    LinkGeneratorLambdaEnvEmailSender:
         Type: String
 #TODO: Output

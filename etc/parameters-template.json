@@ -38,5 +38,21 @@
     {
         "ParameterKey": "ApiGatewayRestApiName",
         "ParameterValue": "tdl-auth-api"
+    },
+    {
+        "ParameterKey": "LinkGeneratorLambdaFunctionName",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "LinkGeneratorLambdaFunctionRole",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "LinkGeneratorLambdaEnvPageStorageBucket",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "LinkGeneratorLambdaEnvEmailSender",
+        "ParameterValue": ""
     }
 ]

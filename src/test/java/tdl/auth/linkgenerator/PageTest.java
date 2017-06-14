@@ -37,7 +37,7 @@ public class PageTest {
         String token = "token";
         String url = "https://www.example.com/production/verify";
         Page page = new Page(username, token, url);
-        String key = page.generateKey();
+        String key = page.generateDirectory();
         assertEquals(key.length(), Page.KEY_LENGTH);
     }
 

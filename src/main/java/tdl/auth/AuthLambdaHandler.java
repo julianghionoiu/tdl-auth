@@ -17,6 +17,7 @@ import tdl.auth.federated.FederatedUserCredentialsProvider;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
+import tdl.auth.helpers.LambdaExceptionLogger;
 
 public class AuthLambdaHandler implements RequestStreamHandler {
 
@@ -73,22 +74,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
 
         if (exception.isPresent()) {
             Exception e = exception.get();
-
-            // Collect all stack traces
-            List<String> theTrace = new ArrayList<>();
-            {
-                Throwable ex = e;
-                while (ex != null) {
-                    theTrace.add(ex.getClass().getSimpleName() + ": " + ex.getMessage());
-                    StackTraceElement[] stackTrace = ex.getStackTrace();
-                    Arrays.stream(stackTrace).map(StackTraceElement::toString).forEach(theTrace::add);
-                    ex = ex.getCause();
-                }
-            }
-
-            //Log the stack traces
-            context.getLogger().log(theTrace.stream().collect(Collectors.joining("\n")));
-
+            LambdaExceptionLogger.logException(context, e);
             // Return the message to the user
             throw new IOException(e.getMessage());
         }

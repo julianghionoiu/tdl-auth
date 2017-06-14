@@ -20,8 +20,6 @@ import java.util.Map;
 
 public class Mailer {
 
-    public static final String FROM = "sender@example.com";
-
     public static final String SUBJECT = "Subject";
 
     private final String email;
@@ -50,6 +48,10 @@ public class Mailer {
         return stringWriter.toString();
     }
 
+    public String getSender() {
+        return System.getenv("SENDER");
+    }
+
     public void send() throws IOException, TemplateException {
         client = createClient();
         Destination destination = new Destination().withToAddresses(new String[]{email});
@@ -57,9 +59,11 @@ public class Mailer {
         String bodyContent = createBody();
         Content textContent = new Content().withData(bodyContent);
         Body body = new Body().withText(textContent);
-        Message message = new Message().withSubject(subject).withBody(body);
+        Message message = new Message()
+                .withSubject(subject)
+                .withBody(body);
         SendEmailRequest request = new SendEmailRequest()
-                .withSource(FROM)
+                .withSource(getSender())
                 .withDestination(destination)
                 .withMessage(message);
 
@@ -69,7 +73,6 @@ public class Mailer {
     public AmazonSimpleEmailService createClient() {
         return AmazonSimpleEmailServiceClient
                 .builder()
-                .withCredentials(new ProfileCredentialsProvider())
                 .withRegion(Regions.US_EAST_1)
                 .build();
     }

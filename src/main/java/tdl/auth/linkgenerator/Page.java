@@ -31,7 +31,7 @@ public class Page {
 
     private AmazonS3 client;
 
-    private String key;
+    private String directory;
 
     private String content;
 
@@ -44,7 +44,7 @@ public class Page {
     }
 
     public void generateAndUpload() throws IOException, TemplateException {
-        key = generateKey();
+        directory = generateDirectory();
         content = generateContent();
         uploadPage();
     }
@@ -64,7 +64,7 @@ public class Page {
         return stringWriter.toString();
     }
 
-    public String generateKey() {
+    public String generateDirectory() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
@@ -80,8 +80,11 @@ public class Page {
         client = createClient();
         InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
         ObjectMetadata metadata = new ObjectMetadata();
-        PutObjectRequest request = new PutObjectRequest(getBucket(), getKey(), stream, metadata)
-                .withCannedAcl(CannedAccessControlList.PublicRead);
+        metadata.setContentType("text/html");
+        metadata.setContentDisposition("inline; filename=\"index.html\"");
+        PutObjectRequest request = new PutObjectRequest(getBucket(), getFilePath(), stream, metadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead)
+                .withMetadata(metadata);
         client.putObject(request);
     }
 
@@ -89,19 +92,21 @@ public class Page {
         return System.getenv("PAGE_STORAGE_BUCKET");
     }
 
-    public String getKey() {
-        return key;
+    public String getFilePath() {
+        return getDirectory() + "/index.html";
+    }
+
+    public String getDirectory() {
+        return directory;
     }
 
     public String getPublicUrl() {
-        return client.getUrl(getBucket(), getKey()).toString();
+        return client.getUrl(getBucket(), getFilePath()).toString();
     }
 
     public AmazonS3 createClient() {
         return AmazonS3Client
                 .builder()
-                .withCredentials(new ProfileCredentialsProvider())
-                .withRegion(Regions.US_EAST_1)
                 .build();
     }
 }

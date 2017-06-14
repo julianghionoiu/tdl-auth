@@ -11,14 +11,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import ro.ghionoiu.kmsjwt.key.KMSEncrypt;
 import ro.ghionoiu.kmsjwt.key.KeyOperationException;
 import ro.ghionoiu.kmsjwt.token.JWTEncoder;
+import tdl.auth.helpers.LambdaExceptionLogger;
 import tdl.auth.linkgenerator.Mailer;
 import tdl.auth.linkgenerator.Page;
 
+/**
+ * This handler receives JSON containing email, username, challengeId, validity.
+ */
 public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Object>, String> {
 
     public static Configuration templateConfiguration;
@@ -44,15 +46,12 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
     @SuppressWarnings("unused")
     public LinkGeneratorLambdaHandler() {
         this(
-                getEnv("REGION"),
-                getEnv("JWT_ENCRYPT_KEY_ARN"),
-                getEnv("BUCKET"),
-                getEnv("ACCESS_KEY"),
-                getEnv("SECRET_KEY") //TODO: Encrypt this using KMS.
+                getEnv("AUTH_REGION"),
+                getEnv("JWT_ENCRYPT_KEY_ARN")
         );
     }
 
-    public LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String bucket, String accessKey, String secretKey) {
+    public LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn) {
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withRegion(region)
                 .build();
@@ -60,7 +59,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
     }
 
     @Override
-    public String handleRequest(Map<String, Object> request, Context cntxt) {
+    public String handleRequest(Map<String, Object> request, Context context) {
         try {
             String email = request.get("email").toString();
             String username = request.get("username").toString();
@@ -68,12 +67,14 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
             int validity = Integer.parseInt(request.get("validity").toString());
             String token = getToken(username, validity);
             Page page = new Page(username, token, getApiEndpointUrl());
+            page.setTemplateConfiguration(templateConfiguration);
             page.generateAndUpload();
             Mailer mailer = new Mailer(email, page.getPublicUrl());
+            mailer.setTemplateConfiguration(templateConfiguration);
             mailer.send();
             return "OK";
         } catch (IOException | TemplateException | KeyOperationException ex) {
-            Logger.getLogger(LinkGeneratorLambdaHandler.class.getName()).log(Level.SEVERE, null, ex);
+            LambdaExceptionLogger.logException(context, ex);
             return "NOT OK"; //TODO: Fix this
         }
     }
