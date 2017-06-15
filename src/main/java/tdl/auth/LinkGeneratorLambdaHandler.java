@@ -32,7 +32,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
     }
 
     private final String authEndpointURL;
-    private String pageStorageBucket;
+    private final String pageStorageBucket;
 
     private static Configuration createDefaultTemplateConfiguration() {
         Configuration configuration = new Configuration();
@@ -72,6 +72,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
             String challengeId = request.get("challenge").toString();
             int validity = Integer.parseInt(request.get("validity").toString());
             String token = getToken(username, validity);
+            context.getLogger().log("username: "+username+", token: "+token+", pageStorageBucket: "+ pageStorageBucket +", authEndpointURL: "+authEndpointURL);
             Page page = new Page(username, token, pageStorageBucket, authEndpointURL);
             page.setTemplateConfiguration(templateConfiguration);
             page.generateAndUpload();

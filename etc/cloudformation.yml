@@ -181,7 +181,7 @@ Resources:
             Role:
                 Ref: LinkGeneratorLambdaFunctionRole
             Runtime: "java8"
-            Timeout: 30
+            Timeout: 46
             Environment:
                 Variables:
                     PAGE_STORAGE_BUCKET:
