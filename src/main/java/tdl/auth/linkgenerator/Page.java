@@ -1,7 +1,5 @@
 package tdl.auth.linkgenerator;
 
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -21,11 +19,13 @@ import java.util.Random;
 
 public class Page {
 
-    public static final long KEY_LENGTH = 32;
+    static final long KEY_LENGTH = 32;
 
     private final String username;
 
     private final String token;
+
+    private String pageStorageBucket;
 
     private final String apiEndpointUrl;
 
@@ -37,9 +37,10 @@ public class Page {
 
     private Configuration templateConfiguration;
 
-    public Page(String username, String token, String apiEndpointUrl) {
+    public Page(String username, String token, String pageStorageBucket, String apiEndpointUrl) {
         this.username = username;
         this.token = token;
+        this.pageStorageBucket = pageStorageBucket;
         this.apiEndpointUrl = apiEndpointUrl;
     }
 
@@ -53,7 +54,7 @@ public class Page {
         this.templateConfiguration = templateConfiguration;
     }
 
-    public String generateContent() throws IOException, TemplateException {
+    String generateContent() throws IOException, TemplateException {
         Template template = templateConfiguration.getTemplate("page.html");
         StringWriter stringWriter = new StringWriter();
         Map<String, String> contentParams = new HashMap<>();
@@ -64,7 +65,7 @@ public class Page {
         return stringWriter.toString();
     }
 
-    public String generateDirectory() {
+    String generateDirectory() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
@@ -72,8 +73,7 @@ public class Page {
             int index = (int) (rnd.nextFloat() * SALTCHARS.length());
             salt.append(SALTCHARS.charAt(index));
         }
-        String saltStr = salt.toString();
-        return saltStr;
+        return salt.toString();
     }
 
     private void uploadPage() {
@@ -82,29 +82,26 @@ public class Page {
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType("text/html");
         metadata.setContentDisposition("inline; filename=\"index.html\"");
-        PutObjectRequest request = new PutObjectRequest(getBucket(), getFilePath(), stream, metadata)
+        PutObjectRequest request = new PutObjectRequest(pageStorageBucket, getFilePath(), stream, metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead)
                 .withMetadata(metadata);
         client.putObject(request);
     }
 
-    public String getBucket() {
-        return System.getenv("PAGE_STORAGE_BUCKET");
-    }
 
-    public String getFilePath() {
+    private String getFilePath() {
         return getDirectory() + "/index.html";
     }
 
-    public String getDirectory() {
+    private String getDirectory() {
         return directory;
     }
 
     public String getPublicUrl() {
-        return client.getUrl(getBucket(), getFilePath()).toString();
+        return client.getUrl(pageStorageBucket, getFilePath()).toString();
     }
 
-    public AmazonS3 createClient() {
+    AmazonS3 createClient() {
         return AmazonS3Client
                 .builder()
                 .build();

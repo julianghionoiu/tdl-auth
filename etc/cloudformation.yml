@@ -12,17 +12,17 @@ Resources:
             FunctionName:
                 Ref: AuthLambdaFunctionName
             Handler: "tdl.auth.AuthLambdaHandler"
-            MemorySize: 512
+            MemorySize: 1536
             Role:
                 Ref: AuthLambdaFunctionRole
             Runtime: "java8"
             Timeout: 30
             Environment:
                 Variables:
-                    BUCKET:
-                        Ref: AuthLambdaEnvBucket
                     REGION:
-                        Ref: AuthLambdaEnvRegion
+                        Ref: LambdaEnvRegion
+                    BUCKET:
+                        Ref: AuthLambdaEnvVideoStorageBucket
                     #TODO: Remove the hack below!
                     JWT_DECRYPT_KEY_ARN:
                         Ref: AuthLambdaEnvJwtDecryptKeyArn
@@ -177,33 +177,38 @@ Resources:
             FunctionName:
                 Ref: LinkGeneratorLambdaFunctionName
             Handler: "tdl.auth.LinkGeneratorLambdaHandler"
-            MemorySize: 512
+            MemorySize: 1536
             Role:
                 Ref: LinkGeneratorLambdaFunctionRole
             Runtime: "java8"
-            Timeout: 60
+            Timeout: 30
             Environment:
                 Variables:
                     PAGE_STORAGE_BUCKET:
                         Ref: LinkGeneratorLambdaEnvPageStorageBucket
                     JWT_ENCRYPT_KEY_ARN:
-                        Ref: AuthLambdaEnvJwtDecryptKeyArn
+                        Ref: LinkGeneratorLambdaEnvJwtEncryptKeyArn
                     AUTH_REGION:
-                        Ref: AuthLambdaEnvRegion
-                    API_ENDPOINT_URL: "http://www.example.com"
-                    SENDER:
-                        Ref: LinkGeneratorLambdaEnvEmailSender
+                        Ref: LambdaEnvRegion
+                    AUTH_ENDPOINT_URL:
+                        Ref: LinkGeneratorLambdaEnvAuthEndpointURL
+
 
 Parameters:
+    ### Common
     LambdaFunctionS3Bucket:
         Type: String
     LambdaFunctionS3Key:
         Type: String
+    LambdaEnvRegion:
+        Type: String
+
+    ### Auth
     AuthLambdaFunctionName:
         Type: String
-    AuthLambdaEnvBucket:
+    AuthLambdaFunctionRole:
         Type: String
-    AuthLambdaEnvRegion:
+    AuthLambdaEnvVideoStorageBucket:
         Type: String
     AuthLambdaEnvJwtDecryptKeyArn:
         Type: String
@@ -211,18 +216,18 @@ Parameters:
         Type: String
     AuthLambdaAwsSecretKey:
         Type: String
-    AuthLambdaFunctionRole:
-        Type: String
     ApiGatewayRestApiName:
         Type: String
 
-    ###
+    ### Link Generator
     LinkGeneratorLambdaFunctionName:
         Type: String
     LinkGeneratorLambdaFunctionRole:
         Type: String
+    LinkGeneratorLambdaEnvJwtEncryptKeyArn:
+        Type: String
     LinkGeneratorLambdaEnvPageStorageBucket:
         Type: String
-    LinkGeneratorLambdaEnvEmailSender:
+    LinkGeneratorLambdaEnvAuthEndpointURL:
         Type: String
 #TODO: Output

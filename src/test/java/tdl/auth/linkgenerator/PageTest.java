@@ -16,8 +16,9 @@ public class PageTest {
     public void generate() throws IOException, TemplateException {
         String username = "username";
         String token = "token";
+        String pageStorageBucket = "bucket";
         String url = "https://www.example.com/production/verify";
-        Page page = new Page(username, token, url);
+        Page page = new Page(username, token, pageStorageBucket, url);
         page.setTemplateConfiguration(LinkGeneratorLambdaHandler.templateConfiguration);
         String content = page.generateContent();
         assertThat(content, containsString(username));
@@ -35,8 +36,9 @@ public class PageTest {
     public void generateKey() {
         String username = "username";
         String token = "token";
+        String pageStorageBucket = "bucket";
         String url = "https://www.example.com/production/verify";
-        Page page = new Page(username, token, url);
+        Page page = new Page(username, token, pageStorageBucket, url);
         String key = page.generateDirectory();
         assertEquals(key.length(), Page.KEY_LENGTH);
     }

@@ -8,7 +8,10 @@ import com.amazonaws.services.securitytoken.model.GetFederationTokenRequest;
 import com.amazonaws.services.securitytoken.model.GetFederationTokenResult;
 import tdl.auth.s3.DefaultS3FolderPolicy;
 
+import java.util.concurrent.TimeUnit;
+
 public class FederatedUserCredentialsProvider {
+    private static final int TEMPORARY_CREDENTIALS_VALIDITY = (int) TimeUnit.HOURS.toSeconds(24);
 
     private final AWSSecurityTokenService tokenService;
 
@@ -39,6 +42,7 @@ public class FederatedUserCredentialsProvider {
         Policy policy = DefaultS3FolderPolicy.getForUser(bucket, username);
         GetFederationTokenRequest getFederationTokenRequest = new GetFederationTokenRequest()
                 .withName(username)
+                .withDurationSeconds(TEMPORARY_CREDENTIALS_VALIDITY)
                 .withPolicy(policy.toJson());
         GetFederationTokenResult federationTokenResult = tokenService.getFederationToken(getFederationTokenRequest);
         return new FederatedUserCredentials(region, bucket, username, federationTokenResult.getCredentials());
