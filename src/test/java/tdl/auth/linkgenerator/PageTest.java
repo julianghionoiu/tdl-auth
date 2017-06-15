@@ -16,38 +16,13 @@ public class PageTest {
     public void generate() throws IOException, TemplateException {
         String username = "username";
         String token = "token";
-        String pageStorageBucket = "bucket";
         String url = "https://www.example.com/production/verify";
-        Page page = new Page(username, token, pageStorageBucket, url);
-        page.setTemplateConfiguration(LinkGeneratorLambdaHandler.templateConfiguration);
-        String content = page.generateContent();
+        Page page = new Page(username, token, url, LinkGeneratorLambdaHandler.templateConfiguration);
+        String content = page.getContent();
         assertThat(content, containsString(username));
         assertThat(content, containsString(token));
         assertThat(content, containsString(url));
         //System.out.println(content);
     }
 
-    @Test
-    public void getPublicUrl() {
-
-    }
-
-    @Test
-    public void generateKey() {
-        String username = "username";
-        String token = "token";
-        String pageStorageBucket = "bucket";
-        String url = "https://www.example.com/production/verify";
-        Page page = new Page(username, token, pageStorageBucket, url);
-        String key = page.generateDirectory();
-        assertEquals(key.length(), Page.KEY_LENGTH);
-    }
-
-    @Test
-    public void createClient() throws IOException, TemplateException {
-        Page page = mock(Page.class);
-        doCallRealMethod().when(page).createClient();
-        Object client = page.createClient();
-        assertThat(client, instanceOf(AmazonS3.class));
-    }
 }

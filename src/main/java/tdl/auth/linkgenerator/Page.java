@@ -25,36 +25,21 @@ public class Page {
 
     private final String token;
 
-    private String pageStorageBucket;
-
     private final String apiEndpointUrl;
 
-    private AmazonS3 client;
-
-    private String directory;
-
-    private String content;
+    private final String content;
 
     private Configuration templateConfiguration;
 
-    public Page(String username, String token, String pageStorageBucket, String apiEndpointUrl) {
+    public Page(String username, String token, String apiEndpointUrl, Configuration templateConfiguration) throws IOException, TemplateException {
         this.username = username;
         this.token = token;
-        this.pageStorageBucket = pageStorageBucket;
         this.apiEndpointUrl = apiEndpointUrl;
-    }
-
-    public void generateAndUpload() throws IOException, TemplateException {
-        directory = generateDirectory();
-        content = generateContent();
-        uploadPage();
-    }
-
-    public void setTemplateConfiguration(Configuration templateConfiguration) {
         this.templateConfiguration = templateConfiguration;
+        content = generateContent();
     }
 
-    String generateContent() throws IOException, TemplateException {
+    private final String generateContent() throws IOException, TemplateException {
         Template template = templateConfiguration.getTemplate("page.html");
         StringWriter stringWriter = new StringWriter();
         Map<String, String> contentParams = new HashMap<>();
@@ -65,45 +50,7 @@ public class Page {
         return stringWriter.toString();
     }
 
-    String generateDirectory() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < KEY_LENGTH) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
-        return salt.toString();
-    }
-
-    private void uploadPage() {
-        client = createClient();
-        InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentType("text/html");
-        metadata.setContentDisposition("inline; filename=\"index.html\"");
-        PutObjectRequest request = new PutObjectRequest(pageStorageBucket, getFilePath(), stream, metadata)
-                .withCannedAcl(CannedAccessControlList.PublicRead)
-                .withMetadata(metadata);
-        client.putObject(request);
-    }
-
-
-    private String getFilePath() {
-        return getDirectory() + "/index.html";
-    }
-
-    private String getDirectory() {
-        return directory;
-    }
-
-    public String getPublicUrl() {
-        return client.getUrl(pageStorageBucket, getFilePath()).toString();
-    }
-
-    AmazonS3 createClient() {
-        return AmazonS3Client
-                .builder()
-                .build();
+    public String getContent() {
+        return content;
     }
 }

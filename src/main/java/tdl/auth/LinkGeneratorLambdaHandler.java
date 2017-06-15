@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
+import tdl.auth.linkgenerator.PageUploader;
 
 /**
  * This handler receives JSON containing email, username, challengeId, validity.
@@ -72,11 +73,11 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
             String challengeId = request.get("challenge").toString();
             int validity = Integer.parseInt(request.get("validity").toString());
             String token = getToken(username, validity);
-            context.getLogger().log("username: "+username+", token: "+token+", pageStorageBucket: "+ pageStorageBucket +", authEndpointURL: "+authEndpointURL);
-            Page page = new Page(username, token, pageStorageBucket, authEndpointURL);
-            page.setTemplateConfiguration(templateConfiguration);
-            page.generateAndUpload();
-            return page.getPublicUrl();
+            context.getLogger().log("username: " + username + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authEndpointURL: " + authEndpointURL);
+            Page page = new Page(username, token, authEndpointURL, templateConfiguration);
+            PageUploader pageUploader = new PageUploader(pageStorageBucket);
+            String publicUrl = pageUploader.uploadPage(page);
+            return publicUrl;
         } catch (IOException | TemplateException | KeyOperationException ex) {
             LambdaExceptionLogger.logException(context, ex);
             return "NOT OK"; //TODO: Fix this
