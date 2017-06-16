@@ -1,7 +1,9 @@
 package tdl.auth.federated;
 
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -22,24 +24,31 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class FederatedUserCredentialsProviderTest {
-    private static final String TEST_AWS_REGION = Optional.ofNullable(System.getenv("TEST_AWS_REGION"))
-            .orElse("eu-west-2");
-    private static final String TEST_BUCKET_NAME = Optional.ofNullable(System.getenv("TEST_BUCKET_NAME"))
-            .orElse("tdl-test-auth");
-    private static final String TEST_USERNAME = "tdl-test-user";
-    private static final String OTHER_USERNAME = "other_user";
+
+    private static final String TEST_AWS_REGION = System.getenv("TEST_AWS_REGION");
+    private static final String TEST_BUCKET_NAME = System.getenv("TEST_BUCKET");
+    private static final String TEST_USERNAME = System.getenv("TEST_USERNAME");
+    private static final String OTHER_USERNAME = "otherusername";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private AWSCredentialsProvider rootAwsCredential = new AWSStaticCredentialsProvider(new BasicAWSCredentials(
+            System.getenv("TEST_ROOT_AWS_ACCESS_KEY_ID"),
+            System.getenv("TEST_ROOT_AWS_SECRET_KEY_ID")
+    ));
+
     @Rule
-    public RemoteTestBucket remoteTestBucket = new RemoteTestBucket(TEST_AWS_REGION, TEST_BUCKET_NAME);
+    public RemoteTestBucket remoteTestBucket = new RemoteTestBucket(
+            TEST_AWS_REGION,
+            TEST_BUCKET_NAME,
+            rootAwsCredential
+    );
 
     // Software under test
-    private FederatedUserCredentialsProvider federatedUserCredentialsProvider =
-            new FederatedUserCredentialsProvider(TEST_AWS_REGION, TEST_BUCKET_NAME);
+    private FederatedUserCredentialsProvider federatedUserCredentialsProvider
+            = new FederatedUserCredentialsProvider(TEST_AWS_REGION, TEST_BUCKET_NAME, rootAwsCredential);
     private AmazonS3 federatedS3Client;
-
 
     @Before
     public void setUp() throws Exception {
@@ -56,11 +65,10 @@ public class FederatedUserCredentialsProviderTest {
     }
 
     //~~~~ Object listing permissions
-
     @Test
     public void should_have_permission_to_list_own_bucket() throws Exception {
         expectNoException();
-        federatedS3Client.listObjects(TEST_BUCKET_NAME, TEST_USERNAME+"/");
+        federatedS3Client.listObjects(TEST_BUCKET_NAME, TEST_USERNAME + "/");
     }
 
     @Test
@@ -76,7 +84,6 @@ public class FederatedUserCredentialsProviderTest {
     }
 
     //~~~~ Object retrieving permissions
-
     @Test
     public void should_have_permission_to_get_object_in_own_folder() throws Exception {
         String ownFile = TEST_USERNAME + "/my_file.txt";
@@ -96,7 +103,6 @@ public class FederatedUserCredentialsProviderTest {
     }
 
     //~~~~ Multipart listing permissions
-
     @Test
     public void should_have_permission_to_list_own_multipart_uploads() throws Exception {
         remoteTestBucket.givenMultipartUploadExists(TEST_BUCKET_NAME, TEST_USERNAME + "/upload.txt");
@@ -120,7 +126,6 @@ public class FederatedUserCredentialsProviderTest {
     }
 
     //~~~~ Part listing permissions
-
     @Test
     public void should_have_permission_to_upload_parts_to_uploads_for_own_folder() throws Exception {
         //TODO
@@ -131,9 +136,7 @@ public class FederatedUserCredentialsProviderTest {
         //TODO
     }
 
-
     //~~~~ Upload permission
-
     @Test
     public void should_have_permission_to_upload_to_its_own_s3_folder() throws Exception {
         String key = TEST_USERNAME + "/test_write.txt";
@@ -150,7 +153,6 @@ public class FederatedUserCredentialsProviderTest {
     }
 
     //~~~~ Helpers
-
     private void expectNoException() {
         //No exception
     }

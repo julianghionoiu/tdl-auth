@@ -1,5 +1,6 @@
 package tdl.auth.authorizer;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.services.kms.AWSKMS;
 import com.amazonaws.services.kms.AWSKMSClientBuilder;
 import io.jsonwebtoken.Claims;
@@ -15,9 +16,10 @@ public class JWTKMSAuthorizer implements LambdaAuthorizer {
 
     private final JWTDecoder jwtDecoder;
 
-    public JWTKMSAuthorizer(String region, String jwtDecryptKeyARN) {
+    public JWTKMSAuthorizer(String region, String jwtDecryptKeyARN, AWSCredentialsProvider credential) {
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withRegion(region)
+                .withCredentials(credential)
                 .build();
         KMSDecrypt kmsDecrypt = new KMSDecrypt(kmsClient, Collections.singleton(jwtDecryptKeyARN));
         jwtDecoder = new JWTDecoder(kmsDecrypt);

@@ -1,5 +1,6 @@
 package tdl.auth.rules;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AbortMultipartUploadRequest;
@@ -8,19 +9,19 @@ import com.amazonaws.services.s3.model.InitiateMultipartUploadRequest;
 import com.amazonaws.services.s3.model.ListMultipartUploadsRequest;
 import org.junit.rules.ExternalResource;
 
-
 public class RemoteTestBucket extends ExternalResource {
+
     private final AmazonS3 amazonS3;
     private String bucketName;
 
     //~~~~ Construct
-    public RemoteTestBucket(String region, String bucketName) {
+    public RemoteTestBucket(String region, String bucketName, AWSCredentialsProvider credentialsProvider) {
         this.bucketName = bucketName;
         amazonS3 = AmazonS3ClientBuilder.standard()
                 .withRegion(region)
+                .withCredentials(credentialsProvider)
                 .build();
     }
-
 
     //~~~~ Lifecycle management
     @Override
@@ -49,8 +50,6 @@ public class RemoteTestBucket extends ExternalResource {
     }
 
     //~~~~ Bucket actions
-
-
     public boolean doesObjectExists(String key) {
         return amazonS3.doesObjectExist(bucketName, key);
     }

@@ -1,0 +1,137 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Cloud formation for running test"
+Resources:
+    TestBucket:
+        Type: AWS::S3::Bucket
+    TestUser:
+        Type: AWS::IAM::User
+        Properties:
+            Policies:
+                - PolicyName: "FederatedKeyAccess"
+                  PolicyDocument:
+                      Statement:
+                          - Effect: "Allow"
+                            Action: "sts:GetFederationToken"
+                            #Todo: Set the user ARN
+                            Resource: "*"
+    TestAccessKey:
+        Type: AWS::IAM::AccessKey
+        Properties:
+            UserName:
+                Ref: TestUser
+    TestEncryptKey:
+        Type: AWS::KMS::Key
+        Properties:
+            KeyPolicy:
+                Version: "2012-10-17"
+                Statement:
+                    - Sid: "Allow administration of the key"
+                      Effect: "Allow"
+                      Principal:
+                          AWS:
+                            - Ref: CurrentUserArn
+                            - Fn::Join:
+                                - ''
+                                - - 'arn:aws:iam::'
+                                  - Ref: AWS::AccountId
+                                  - ":root"
+                      Action:
+                          - "kms:Create*"
+                          - "kms:Describe*"
+                          - "kms:Enable*"
+                          - "kms:List*"
+                          - "kms:Put*"
+                          - "kms:Update*"
+                          - "kms:Revoke*"
+                          - "kms:Disable*"
+                          - "kms:Get*"
+                          - "kms:Delete*"
+                          - "kms:ScheduleKeyDeletion"
+                          - "kms:CancelKeyDeletion"
+                      Resource: "*"
+                    - Sid: "Allow user"
+                      Effect: "Allow"
+                      Principal:
+                          AWS:
+                              Fn::GetAtt:
+                                  - TestUser
+                                  - Arn
+                      Action:
+                          - "kms:Encrypt"
+                          - "kms:Decrypt"
+                          - "kms:ReEncrypt"
+                          - "kms:GenerateDataKey*"
+                          - "kms:DescribeKey"
+                      Resource: "*"
+    TestS3Permission:
+        Type: AWS::IAM::Policy
+        Properties:
+            PolicyName: "S3-Access"
+            PolicyDocument:
+                #https://aws.amazon.com/blogs/security/writing-iam-policies-grant-access-to-user-specific-folders-in-an-amazon-s3-bucket/
+                Statement:
+                    - Sid: "AllowUserToSeeBucketListInTheConsole"
+                      Effect: "Allow"
+                      Action:
+                          - "s3:GetBucketLocation"
+                          - "s3:ListAllMyBuckets"
+                      Resource: "arn:aws:s3:::*"
+                    - Sid: "AllowListingObjectInUserBucket"
+                      Effect: "Allow"
+                      Action:
+                          - "s3:ListBucket"
+                      Resource:
+                          - Fn::GetAtt:
+                                - TestBucket
+                                - Arn
+                      Condition:
+                          StringEquals:
+                              s3:prefix:
+                                  - ''
+                                  - Fn::Join:
+                                        - ''
+                                        - - Ref: TestUser
+                                          - '/'
+                              s3:delimiter:
+                                  - '/'
+                    - Sid: "AllowAllS3ActionsInUserFolder"
+                      Effect: "Allow"
+                      Action:
+                          - "s3:*"
+                      Resource:
+                          - Fn::Join:
+                                - ''
+                                - - Fn::GetAtt:
+                                      - TestBucket
+                                      - Arn
+                                  - /
+                                  - Ref: TestUser
+                                  - "/*"
+            Users:
+                - Ref: TestUser
+Parameters:
+    CurrentUserArn:
+        Type: String
+Outputs:
+    TestRegion:
+        Value:
+            Ref: AWS::Region
+    TestUserName:
+        Value:
+            Ref: TestUser
+    TestBucketName:
+        Value:
+            Ref: TestBucket
+    TestAccessKeyId:
+        Value:
+            Ref: TestAccessKey
+    TestSecretKeyId:
+        Value:
+            Fn::GetAtt:
+                - TestAccessKey
+                - SecretAccessKey
+    TestEncryptKeyArn:
+        Value:
+            Fn::GetAtt:
+                - TestEncryptKey
+                - Arn

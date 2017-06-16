@@ -49,7 +49,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
         AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
         temporaryCredentialsProvider = new FederatedUserCredentialsProvider(region, bucket, awsCredential);
-        lambdaAuthorizer = new JWTKMSAuthorizer(region, jwtDecryptKeyARN);
+        lambdaAuthorizer = new JWTKMSAuthorizer(region, jwtDecryptKeyARN, awsCredential);
     }
 
     AuthLambdaHandler(FederatedUserCredentialsProvider temporaryCredentialsProvider, LambdaAuthorizer lambdaAuthorizer) {
@@ -76,7 +76,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
             Exception e = exception.get();
             LambdaExceptionLogger.logException(context, e);
             // Return the message to the user
-            throw new IOException(e.getMessage());
+            throw new IOException(e.getMessage(), e);
         }
     }
 

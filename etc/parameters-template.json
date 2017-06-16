@@ -11,8 +11,6 @@
     "ParameterKey": "LambdaEnvRegion",
     "ParameterValue": ""
   },
-
-
   {
     "ParameterKey": "AuthLambdaFunctionName",
     "ParameterValue": ""
