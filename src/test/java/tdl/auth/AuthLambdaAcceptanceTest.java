@@ -28,15 +28,16 @@ import static org.junit.Assert.assertThat;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static tdl.auth.test.TestConfiguration.getConfig;
 
 public class AuthLambdaAcceptanceTest {
 
-    private static final String TEST_AWS_REGION = System.getenv("TEST_AWS_REGION");
-    private static final String TEST_JWT_KEY_ARN = System.getenv("TEST_JWT_KEY_ARN");
-    private static final String TEST_BUCKET = System.getenv("TEST_BUCKET");
-    private static final String TEST_ACCESS_KEY = System.getenv("TEST_ACCESS_KEY");
-    private static final String TEST_SECRET_KEY = System.getenv("TEST_SECRET_KEY");
-    private static final String TEST_USERNAME = System.getenv("TEST_USERNAME");
+    private static final String TEST_AWS_REGION = getConfig("TEST_AWS_REGION");
+    private static final String TEST_JWT_KEY_ARN = getConfig("TEST_JWT_KEY_ARN");
+    private static final String TEST_BUCKET = getConfig("TEST_BUCKET");
+    private static final String TEST_ACCESS_KEY = getConfig("TEST_USER_ACCESS_KEY_ID");
+    private static final String TEST_SECRET_KEY = getConfig("TEST_USER_SECRET_KEY_ID");
+    private static final String TEST_USERNAME = getConfig("TEST_USERNAME");
 
     private Context context;
     private AuthLambdaHandler handler;

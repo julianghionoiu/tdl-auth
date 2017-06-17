@@ -20,20 +20,21 @@ import tdl.auth.rules.RemoteTestBucket;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static tdl.auth.test.TestConfiguration.getConfig;
 
 public class FederatedUserCredentialsProviderTest {
 
-    private static final String TEST_AWS_REGION = System.getenv("TEST_AWS_REGION");
-    private static final String TEST_BUCKET_NAME = System.getenv("TEST_BUCKET");
-    private static final String TEST_USERNAME = System.getenv("TEST_USERNAME");
+    private static final String TEST_AWS_REGION = getConfig("TEST_AWS_REGION");
+    private static final String TEST_BUCKET_NAME = getConfig("TEST_BUCKET");
+    private static final String TEST_USERNAME = getConfig("TEST_USERNAME");
     private static final String OTHER_USERNAME = "otherusername";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     private AWSCredentialsProvider rootAwsCredential = new AWSStaticCredentialsProvider(new BasicAWSCredentials(
-            System.getenv("TEST_ROOT_AWS_ACCESS_KEY_ID"),
-            System.getenv("TEST_ROOT_AWS_SECRET_KEY_ID")
+            getConfig("TEST_ROOT_USER_ACCESS_KEY_ID"),
+            getConfig("TEST_ROOT_USER_SECRET_KEY_ID")
     ));
 
     @Rule

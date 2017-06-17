@@ -3,18 +3,38 @@ Description: "Cloud formation for running test"
 Resources:
     TestBucket:
         Type: AWS::S3::Bucket
-    TestUser:
+    TestRootUser:
         Type: AWS::IAM::User
         Properties:
             Policies:
-                - PolicyName: "FederatedKeyAccess"
+                - PolicyName: "S3BucketAllAccess"
                   PolicyDocument:
                       Statement:
                           - Effect: "Allow"
-                            Action: "sts:GetFederationToken"
-                            #Todo: Set the user ARN
-                            Resource: "*"
-    TestAccessKey:
+                            Action:
+                                - "s3:GetBucketLocation"
+                                - "s3:ListAllMyBuckets"
+                            Resource: "arn:aws:s3:::*"
+                          - Effect: "Allow"
+                            Action: "s3:*"
+                            Resource:
+                                - Fn::GetAtt:
+                                    - TestBucket
+                                    - Arn
+                                - Fn::Join:
+                                    - ''
+                                    - - Fn::GetAtt:
+                                        - TestBucket
+                                        - Arn
+                                      - '/*'
+    TestRootUserAccessKey:
+        Type: AWS::IAM::AccessKey
+        Properties:
+            UserName:
+                Ref: TestRootUser
+    TestUser:
+        Type: AWS::IAM::User
+    TestUserAccessKey:
         Type: AWS::IAM::AccessKey
         Properties:
             UserName:
@@ -63,7 +83,10 @@ Resources:
                           - "kms:GenerateDataKey*"
                           - "kms:DescribeKey"
                       Resource: "*"
-    TestS3Permission:
+    ############################################################################
+    # Permissions
+    ############################################################################
+    TestUserS3Permission:
         Type: AWS::IAM::Policy
         Properties:
             PolicyName: "S3-Access"
@@ -109,6 +132,41 @@ Resources:
                                   - "/*"
             Users:
                 - Ref: TestUser
+    TestRootFederationPermission:
+        Type: AWS::IAM::Policy
+        Properties:
+            PolicyName: "FederatedRootKeyAccess"
+            PolicyDocument:
+                Statement:
+                    - Effect: "Allow"
+                      Action: "sts:*"
+                      #Todo: Set the user ARN
+                      Resource:
+                          Fn::Join:
+                              - ''
+                              - - "arn:aws:sts::"
+                                - Ref: AWS::AccountId
+                                - ":federated-user/"
+                                - Ref: TestUser
+            Users:
+                - Ref: TestRootUser
+    TestUserFederationPermission:
+        Type: AWS::IAM::Policy
+        Properties:
+            PolicyName: "FederatedKeyAccess"
+            PolicyDocument:
+                Statement:
+                    - Effect: "Allow"
+                      Action: "sts:GetFederationToken"
+                      Resource:
+                          Fn::Join:
+                              - ''
+                              - - "arn:aws:sts::"
+                                - Ref: AWS::AccountId
+                                - ":federated-user/"
+                                - Ref: TestUser
+            Users:
+                - Ref: TestUser
 Parameters:
     CurrentUserArn:
         Type: String
@@ -118,17 +176,25 @@ Outputs:
             Ref: AWS::Region
     TestUserName:
         Value:
-            Ref: TestUser
+            Ref: TestUser   
     TestBucketName:
         Value:
             Ref: TestBucket
-    TestAccessKeyId:
+    TestRootUserAccessKeyId:
         Value:
-            Ref: TestAccessKey
-    TestSecretKeyId:
+            Ref: TestRootUserAccessKey
+    TestRootUserSecretKeyId:
         Value:
             Fn::GetAtt:
-                - TestAccessKey
+                - TestRootUserAccessKey
+                - SecretAccessKey
+    TestUserAccessKeyId:
+        Value:
+            Ref: TestUserAccessKey
+    TestUserSecretKeyId:
+        Value:
+            Fn::GetAtt:
+                - TestUserAccessKey
                 - SecretAccessKey
     TestEncryptKeyArn:
         Value:
