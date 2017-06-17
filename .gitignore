@@ -5,3 +5,4 @@ build/
 /.nb-gradle/
 configs/
 *.private.*
+src/test/resources/configuration.properties
