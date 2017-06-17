@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class MailLinkLambdaHandler implements RequestHandler<Map<String, Object>, String> {
 
-    private static Configuration templateConfiguration;
+    private static final Configuration templateConfiguration;
 
     static {
         templateConfiguration = createDefaultTemplateConfiguration();
@@ -32,13 +32,18 @@ public class MailLinkLambdaHandler implements RequestHandler<Map<String, Object>
         try {
             String email = request.get("email").toString();
             String url = request.get("url").toString();
-            Mailer mailer = new Mailer(email, url);
-            mailer.setTemplateConfiguration(templateConfiguration);
+            Mailer mailer = createMailer(email, url);
             mailer.send();
             return "OK";
         } catch (IOException | TemplateException ex) {
             LambdaExceptionLogger.logException(context, ex);
             return "NOT OK"; //TODO: Fix this
         }
+    }
+    
+    public Mailer createMailer(String email, String url) {
+        Mailer mailer = new Mailer(email, url);
+        mailer.setTemplateConfiguration(templateConfiguration);
+        return mailer;
     }
 }

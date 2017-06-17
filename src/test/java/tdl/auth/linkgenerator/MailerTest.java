@@ -46,4 +46,11 @@ public class MailerTest {
         Object client = mailer.createClient();
         assertThat(client, instanceOf(AmazonSimpleEmailService.class));
     }
+    
+    @Test
+    public void getSender() {
+        Mailer mailer = mock(Mailer.class);
+        doCallRealMethod().when(mailer).getSender();
+        assertEquals(mailer.getSender(), System.getenv("SENDER"));
+    }
 }

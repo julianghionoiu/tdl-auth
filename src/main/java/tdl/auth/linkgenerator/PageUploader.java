@@ -14,18 +14,16 @@ import static tdl.auth.linkgenerator.Page.KEY_LENGTH;
 
 public class PageUploader {
 
-    private final AmazonS3 client;
+    private AmazonS3 client;
 
     private final String bucket;
 
     public PageUploader(String bucket) {
-        client = AmazonS3ClientBuilder
-                .standard()
-                .build();
         this.bucket = bucket;
     }
 
     public String uploadPage(Page page) {
+        client = createClient();
         String directory = generateDirectory();
         String path = directory + "/index.html";
 
@@ -38,6 +36,12 @@ public class PageUploader {
                 .withMetadata(metadata);
         client.putObject(request);
         return client.getUrl(bucket, path).toString();
+    }
+
+    public AmazonS3 createClient() {
+        return AmazonS3ClientBuilder
+                .standard()
+                .build();
     }
 
     private String generateDirectory() {

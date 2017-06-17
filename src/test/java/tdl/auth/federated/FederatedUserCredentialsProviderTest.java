@@ -17,8 +17,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import tdl.auth.rules.RemoteTestBucket;
 
-import java.util.Optional;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -62,6 +60,14 @@ public class FederatedUserCredentialsProviderTest {
                         federatedUserCredentials.getSessionToken())))
                 .withRegion(TEST_AWS_REGION)
                 .build();
+    }
+
+    //~~~~ Unit test
+    @Test
+    public void basicConstructor() {
+        expectNoException();
+        FederatedUserCredentialsProvider testCredential
+                = new FederatedUserCredentialsProvider(TEST_AWS_REGION, TEST_BUCKET_NAME);
     }
 
     //~~~~ Object listing permissions
