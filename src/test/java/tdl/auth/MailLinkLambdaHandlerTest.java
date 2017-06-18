@@ -29,7 +29,7 @@ public class MailLinkLambdaHandlerTest {
     }
 
     @Test
-    public void HandleRequestShouldReturnOkay() throws IOException, TemplateException {
+    public void handleRequestShouldReturnOkay() throws IOException, TemplateException {
         Map<String, Object> input = new HashMap<>();
         input.put("email", "test@email.com");
         input.put("url", "http://www.example.com");
@@ -45,7 +45,7 @@ public class MailLinkLambdaHandlerTest {
     }
     
     @Test
-    public void HandleRequestShouldReturnNotOkayOnException() throws IOException, TemplateException {
+    public void handleRequestShouldReturnNotOkayOnException() throws IOException, TemplateException {
         Map<String, Object> input = new HashMap<>();
         input.put("email", "test@email.com");
         input.put("url", "http://www.example.com");

@@ -36,7 +36,7 @@ public class AuthLambdaAcceptanceTest {
     private static final String TEST_JWT_KEY_ARN = getConfig("TEST_JWT_KEY_ARN");
     private static final String TEST_BUCKET = getConfig("TEST_BUCKET");
     private static final String TEST_ACCESS_KEY = getConfig("TEST_USER_ACCESS_KEY_ID");
-    private static final String TEST_SECRET_KEY = getConfig("TEST_USER_SECRET_KEY_ID");
+    private static final String TEST_SECRET_KEY = getConfig("TEST_USER_SECRET_ACCESS_KEY");
     private static final String TEST_USERNAME = getConfig("TEST_USERNAME");
 
     private Context context;

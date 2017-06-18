@@ -45,6 +45,12 @@ java -Dlogback.configurationFile=`pwd`/logback.xml  \
 cat ./build/aws-test-secrets | pbcopy
 ```
 
+### Testing
+
+Steps to test.
+1. Execute script `prepare-test.sh`, after previously set environment variable `AWS_CONFIG` and `STACK_NAME` for generating AWS test environment using CloudFormation.
+2. Execute gradle `test` action.
+
 ### Deploy
 
 Prepare resources

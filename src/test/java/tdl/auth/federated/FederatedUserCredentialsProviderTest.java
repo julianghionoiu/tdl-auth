@@ -34,7 +34,7 @@ public class FederatedUserCredentialsProviderTest {
 
     private AWSCredentialsProvider rootAwsCredential = new AWSStaticCredentialsProvider(new BasicAWSCredentials(
             getConfig("TEST_ROOT_USER_ACCESS_KEY_ID"),
-            getConfig("TEST_ROOT_USER_SECRET_KEY_ID")
+            getConfig("TEST_ROOT_USER_SECRET_ACCESS_KEY")
     ));
 
     @Rule

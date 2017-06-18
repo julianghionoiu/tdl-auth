@@ -49,12 +49,12 @@ Resources:
                       Effect: "Allow"
                       Principal:
                           AWS:
-                            - Ref: CurrentUserArn
-                            - Fn::Join:
-                                - ''
-                                - - 'arn:aws:iam::'
-                                  - Ref: AWS::AccountId
-                                  - ":root"
+                              - Ref: CurrentUserArn
+                              - Fn::Join:
+                                  - ''
+                                  - - 'arn:aws:iam::'
+                                    - Ref: AWS::AccountId
+                                    - ":root"
                       Action:
                           - "kms:Create*"
                           - "kms:Describe*"
@@ -73,8 +73,11 @@ Resources:
                       Effect: "Allow"
                       Principal:
                           AWS:
-                              Fn::GetAtt:
+                              - Fn::GetAtt:
                                   - TestUser
+                                  - Arn
+                              - Fn::GetAtt:
+                                  - TestRootUser
                                   - Arn
                       Action:
                           - "kms:Encrypt"

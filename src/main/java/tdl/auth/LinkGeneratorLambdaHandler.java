@@ -1,5 +1,8 @@
 package tdl.auth;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.kms.AWSKMS;
 import com.amazonaws.services.kms.AWSKMSClientBuilder;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -56,7 +59,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
                 getEnv("AUTH_ENDPOINT_URL")
         );
     }
-
+    
     private LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authEndpointURL) {
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withRegion(region)
@@ -80,6 +83,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
             return publicUrl;
         } catch (IOException | TemplateException | KeyOperationException ex) {
             LambdaExceptionLogger.logException(context, ex);
+            ex.printStackTrace();
             return "NOT OK"; //TODO: Fix this
         }
     }
