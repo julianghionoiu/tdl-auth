@@ -60,7 +60,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
         );
     }
     
-    private LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authEndpointURL) {
+    LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authEndpointURL) {
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withRegion(region)
                 .build();

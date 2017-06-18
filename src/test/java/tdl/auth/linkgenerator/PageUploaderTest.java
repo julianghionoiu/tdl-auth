@@ -4,18 +4,20 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import freemarker.template.TemplateException;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Before;
-import org.junit.Test;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-import static tdl.auth.test.TestConfiguration.getConfig;
+import static tdl.auth.test.TestConfiguration.TEST_BUCKET;
 
 public class PageUploaderTest {
 
@@ -25,7 +27,7 @@ public class PageUploaderTest {
     @Before
     public void setUp() throws Exception {
         s3client = mock(AmazonS3.class);
-        uploader = spy(new PageUploader(s3client, getConfig("TEST_BUCKET")));
+        uploader = spy(new PageUploader(s3client, TEST_BUCKET));
 
     }
 

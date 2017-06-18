@@ -4,8 +4,6 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.kms.AWSKMS;
 import com.amazonaws.services.kms.AWSKMSClientBuilder;
-import com.amazonaws.services.kms.model.DecryptRequest;
-import com.amazonaws.services.kms.model.EncryptRequest;
 import com.amazonaws.services.lambda.runtime.Context;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -18,26 +16,16 @@ import ro.ghionoiu.kmsjwt.token.JWTEncoder;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static tdl.auth.test.TestConfiguration.getConfig;
+import static tdl.auth.test.TestConfiguration.*;
 
 public class AuthLambdaAcceptanceTest {
-
-    private static final String TEST_AWS_REGION = getConfig("TEST_AWS_REGION");
-    private static final String TEST_JWT_KEY_ARN = getConfig("TEST_JWT_KEY_ARN");
-    private static final String TEST_BUCKET = getConfig("TEST_BUCKET");
-    private static final String TEST_ACCESS_KEY = getConfig("TEST_USER_ACCESS_KEY_ID");
-    private static final String TEST_SECRET_KEY = getConfig("TEST_USER_SECRET_ACCESS_KEY");
-    private static final String TEST_USERNAME = getConfig("TEST_USERNAME");
 
     private Context context;
     private AuthLambdaHandler handler;
@@ -51,12 +39,13 @@ public class AuthLambdaAcceptanceTest {
         context = mock(Context.class);
         when(context.getLogger()).thenReturn(System.out::println);
 
-        handler = new AuthLambdaHandler(TEST_AWS_REGION, TEST_JWT_KEY_ARN, TEST_BUCKET, TEST_ACCESS_KEY, TEST_SECRET_KEY);
+        handler = new AuthLambdaHandler(TEST_AWS_REGION, TEST_JWT_KEY_ARN, TEST_BUCKET,
+                TEST_USER_ACCESS_KEY_ID, TEST_USER_SECRET_ACCESS_KEY);
 
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withRegion(TEST_AWS_REGION)
                 .withCredentials(new AWSStaticCredentialsProvider(
-                        new BasicAWSCredentials(TEST_ACCESS_KEY, TEST_SECRET_KEY))
+                        new BasicAWSCredentials(TEST_USER_ACCESS_KEY_ID, TEST_USER_SECRET_ACCESS_KEY))
                 )
                 .build();
         kmsEncrypt = new KMSEncrypt(kmsClient, TEST_JWT_KEY_ARN);

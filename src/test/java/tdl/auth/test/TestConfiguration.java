@@ -8,8 +8,26 @@ public class TestConfiguration {
 
     private static final TestConfiguration INSTANCE;
 
+    public static final String TEST_AWS_REGION;
+    public static final String TEST_BUCKET;
+    public static final String TEST_ROOT_USER_ACCESS_KEY_ID;
+    public static final String TEST_ROOT_USER_SECRET_ACCESS_KEY;
+    public static final String TEST_USER_ACCESS_KEY_ID;
+    public static final String TEST_USER_SECRET_ACCESS_KEY;
+    public static final String TEST_USERNAME;
+    public static final String TEST_JWT_KEY_ARN;
+
     static {
         INSTANCE = new TestConfiguration();
+        TEST_AWS_REGION = getConfig("TEST_AWS_REGION");
+        TEST_BUCKET = getConfig("TEST_BUCKET");
+        TEST_ROOT_USER_ACCESS_KEY_ID = getConfig("TEST_ROOT_USER_ACCESS_KEY_ID");
+        TEST_ROOT_USER_SECRET_ACCESS_KEY = getConfig("TEST_ROOT_USER_SECRET_ACCESS_KEY");
+        TEST_USER_ACCESS_KEY_ID = getConfig("TEST_USER_ACCESS_KEY_ID");
+        TEST_USER_SECRET_ACCESS_KEY = getConfig("TEST_USER_SECRET_ACCESS_KEY");
+        TEST_JWT_KEY_ARN = getConfig("TEST_JWT_KEY_ARN");
+        TEST_USERNAME = getConfig("TEST_USERNAME");
+
     }
 
     private final Properties properties;
@@ -23,7 +41,9 @@ public class TestConfiguration {
         }
     }
 
-    public static String getConfig(String key) {
+
+
+    private static String getConfig(String key) {
         String config = INSTANCE.properties.getProperty(key);
         if (config == null) {
             throw new RuntimeException("Config [" + key + "] does not exists");
