@@ -21,14 +21,20 @@ else
     AWS_CF_COMMAND=update-stack
     AWS_WAIT_COMMAND=stack-update-complete
 fi
+
 ${AWS_CF_EXEC} $AWS_CF_COMMAND $AWS_CF_STACK_OPT \
     --template-body file://src/test/resources/cloudformation.yml \
     --capabilities CAPABILITY_IAM \
-    --parameters ParameterKey=CurrentUserArn,ParameterValue=$USER_ARN,UsePreviousValue=false
+    --parameters ParameterKey=CurrentUserArn,ParameterValue=$USER_ARN,UsePreviousValue=false \
+    2>&1
 
-echo "Waiting..."
-${AWS_CF_EXEC} wait $AWS_WAIT_COMMAND $AWS_CF_STACK_OPT
-echo "Done!"
+if [ $? -eq 255 ] && [ "$AWS_CF_COMMAND" == "update-stack" ]; then
+    echo "No update required"
+else
+    echo "Waiting..."
+    ${AWS_CF_EXEC} wait $AWS_WAIT_COMMAND $AWS_CF_STACK_OPT
+    echo "Done!"
+fi
 
 echo "Exporting environment"
 STACK_DESCRIPTION=$(${AWS_CF_EXEC} describe-stacks $AWS_CF_STACK_OPT)
