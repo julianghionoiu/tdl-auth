@@ -44,7 +44,8 @@ declare -A KEYS
 KEYS=( \
     [TEST_USERNAME]=TestUserName \
     [TEST_JWT_KEY_ARN]=TestEncryptKeyArn \
-    [TEST_BUCKET]=TestBucketName \
+    [TEST_PUBLIC_PAGE_BUCKET]=TestBucketName \
+    [TEST_VIDEO_STORAGE_BUCKET]=TestBucketName \
     [TEST_ROOT_USER_ACCESS_KEY_ID]=TestRootUserAccessKeyId \
     [TEST_ROOT_USER_SECRET_ACCESS_KEY]=TestRootUserSecretKeyId \
     [TEST_USER_ACCESS_KEY_ID]=TestUserAccessKeyId \

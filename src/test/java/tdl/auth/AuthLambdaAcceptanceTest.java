@@ -39,7 +39,7 @@ public class AuthLambdaAcceptanceTest {
         context = mock(Context.class);
         when(context.getLogger()).thenReturn(System.out::println);
 
-        handler = new AuthLambdaHandler(TEST_AWS_REGION, TEST_JWT_KEY_ARN, TEST_BUCKET,
+        handler = new AuthLambdaHandler(TEST_AWS_REGION, TEST_JWT_KEY_ARN, TEST_VIDEO_STORAGE_BUCKET,
                 TEST_USER_ACCESS_KEY_ID, TEST_USER_SECRET_ACCESS_KEY);
 
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()

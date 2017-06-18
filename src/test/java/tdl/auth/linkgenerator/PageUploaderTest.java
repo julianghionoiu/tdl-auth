@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-import static tdl.auth.test.TestConfiguration.TEST_BUCKET;
+import static tdl.auth.test.TestConfiguration.TEST_PUBLIC_PAGE_BUCKET;
 
 public class PageUploaderTest {
 
@@ -27,7 +27,7 @@ public class PageUploaderTest {
     @Before
     public void setUp() throws Exception {
         s3client = mock(AmazonS3.class);
-        uploader = spy(new PageUploader(s3client, TEST_BUCKET));
+        uploader = spy(new PageUploader(s3client, TEST_PUBLIC_PAGE_BUCKET));
 
     }
 

@@ -20,6 +20,7 @@ public class LinkGeneratorLambdaAcceptanceTest {
 
     @Rule
     public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+
     private LinkGeneratorLambdaHandler handler;
 
     @Before
@@ -27,20 +28,21 @@ public class LinkGeneratorLambdaAcceptanceTest {
         handler = new LinkGeneratorLambdaHandler(
                 TEST_AWS_REGION,
                 TEST_JWT_KEY_ARN,
-                TEST_BUCKET,
-                "http://www.example.com/");
+                TEST_PUBLIC_PAGE_BUCKET,
+                "http://www.example.com/",
+                TEST_USER_ACCESS_KEY_ID,
+                TEST_USER_SECRET_ACCESS_KEY);
 
     }
 
     @Test
     public void should_generate_link() {
-        //environmentVariables.set("AWS_CREDENTIAL_PROFILES_FILE", this.getClass().getResource("/credentials").toString());
         Map<String, Object> request = new HashMap<>();
         request.put("username", TEST_USERNAME);
         request.put("challenge", "123456");
         request.put("validity", 10);
         String url = handler.handleRequest(request, createMockContext());
-        assertThat(url, containsString(TEST_BUCKET));
+        assertThat(url, containsString(TEST_PUBLIC_PAGE_BUCKET));
     }
 
     private Context createMockContext() {

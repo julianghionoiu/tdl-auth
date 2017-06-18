@@ -9,18 +9,21 @@ public class TestConfiguration {
     private static final TestConfiguration INSTANCE;
 
     public static final String TEST_AWS_REGION;
-    public static final String TEST_BUCKET;
+    public static final String TEST_PUBLIC_PAGE_BUCKET;
+    public static final String TEST_VIDEO_STORAGE_BUCKET;
     public static final String TEST_ROOT_USER_ACCESS_KEY_ID;
     public static final String TEST_ROOT_USER_SECRET_ACCESS_KEY;
     public static final String TEST_USER_ACCESS_KEY_ID;
     public static final String TEST_USER_SECRET_ACCESS_KEY;
     public static final String TEST_USERNAME;
+
     public static final String TEST_JWT_KEY_ARN;
 
     static {
         INSTANCE = new TestConfiguration();
         TEST_AWS_REGION = getConfig("TEST_AWS_REGION");
-        TEST_BUCKET = getConfig("TEST_BUCKET");
+        TEST_PUBLIC_PAGE_BUCKET = getConfig("TEST_PUBLIC_PAGE_BUCKET");
+        TEST_VIDEO_STORAGE_BUCKET = getConfig("TEST_VIDEO_STORAGE_BUCKET");
         TEST_ROOT_USER_ACCESS_KEY_ID = getConfig("TEST_ROOT_USER_ACCESS_KEY_ID");
         TEST_ROOT_USER_SECRET_ACCESS_KEY = getConfig("TEST_ROOT_USER_SECRET_ACCESS_KEY");
         TEST_USER_ACCESS_KEY_ID = getConfig("TEST_USER_ACCESS_KEY_ID");

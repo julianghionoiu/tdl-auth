@@ -29,7 +29,6 @@ public class PageUploader {
         metadata.setContentType("text/html");
         metadata.setContentDisposition("inline; filename=\"index.html\"");
         PutObjectRequest request = new PutObjectRequest(bucket, path, stream, metadata)
-                .withCannedAcl(CannedAccessControlList.PublicRead)
                 .withMetadata(metadata);
         s3client.putObject(request);
         return s3client.getUrl(bucket, path).toString();

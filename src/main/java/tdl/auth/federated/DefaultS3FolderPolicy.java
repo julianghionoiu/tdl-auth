@@ -1,4 +1,4 @@
-package tdl.auth.s3;
+package tdl.auth.federated;
 
 import com.amazonaws.auth.policy.Condition;
 import com.amazonaws.auth.policy.Policy;
@@ -7,9 +7,9 @@ import com.amazonaws.auth.policy.Statement;
 
 import java.util.Arrays;
 
-public class DefaultS3FolderPolicy {
+class DefaultS3FolderPolicy {
 
-    public static Policy getForUser(String bucket, String userName) {
+    static Policy getForUser(String bucket, String userName) {
         Statement creatingObjectsStatement = getObjectCreatingStatement(bucket, userName);
         Statement multipartUploadStatement = getMultipartUploadStatement(bucket, userName);
         Statement listBucketStatement = getListBucketStatement(bucket, userName);

@@ -1,5 +1,8 @@
 package tdl.auth;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.kms.AWSKMS;
 import com.amazonaws.services.kms.AWSKMSClientBuilder;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -56,21 +59,27 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
                 getEnv("AUTH_REGION"),
                 getEnv("JWT_ENCRYPT_KEY_ARN"),
                 getEnv("PAGE_STORAGE_BUCKET"),
-                getEnv("AUTH_ENDPOINT_URL")
-        );
+                getEnv("AUTH_ENDPOINT_URL"),
+                getEnv("ACCESS_KEY"),
+                getEnv("SECRET_KEY"));
     }
     
-    LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authEndpointURL) {
+    LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authEndpointURL,
+                               String accessKey, String secretKey) {
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
+        AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
+                .withCredentials(awsCredential)
+                .withRegion(region)
+                .build();
+        AmazonS3 s3client = AmazonS3ClientBuilder
+                .standard()
+                .withCredentials(awsCredential)
                 .withRegion(region)
                 .build();
         kmsEncrypt = new KMSEncrypt(kmsClient, jwtEncryptKeyArn);
         this.pageStorageBucket = pageStorageBucket;
         this.authEndpointURL = authEndpointURL;
-        AmazonS3 s3client = AmazonS3ClientBuilder
-                .standard()
-                .withRegion(region)
-                .build();
         this.pageUploader = new PageUploader(s3client, pageStorageBucket);
     }
 

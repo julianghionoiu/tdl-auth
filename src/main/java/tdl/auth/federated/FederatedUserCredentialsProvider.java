@@ -6,7 +6,6 @@ import com.amazonaws.services.securitytoken.AWSSecurityTokenService;
 import com.amazonaws.services.securitytoken.AWSSecurityTokenServiceClientBuilder;
 import com.amazonaws.services.securitytoken.model.GetFederationTokenRequest;
 import com.amazonaws.services.securitytoken.model.GetFederationTokenResult;
-import tdl.auth.s3.DefaultS3FolderPolicy;
 
 import java.util.concurrent.TimeUnit;
 
