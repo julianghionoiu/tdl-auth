@@ -1,8 +1,6 @@
 package tdl.auth.linkgenerator;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Builder;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -14,16 +12,15 @@ import static tdl.auth.linkgenerator.Page.KEY_LENGTH;
 
 public class PageUploader {
 
-    private AmazonS3 client;
-
+    private final AmazonS3 s3client;
     private final String bucket;
 
-    public PageUploader(String bucket) {
+    public PageUploader(AmazonS3 s3client, String bucket) {
         this.bucket = bucket;
+        this.s3client = s3client;
     }
 
     public String uploadPage(Page page) {
-        client = createClient();
         String directory = generateDirectory();
         String path = directory + "/index.html";
 
@@ -34,14 +31,8 @@ public class PageUploader {
         PutObjectRequest request = new PutObjectRequest(bucket, path, stream, metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead)
                 .withMetadata(metadata);
-        client.putObject(request);
-        return client.getUrl(bucket, path).toString();
-    }
-
-    public AmazonS3 createClient() {
-        return AmazonS3ClientBuilder
-                .standard()
-                .build();
+        s3client.putObject(request);
+        return s3client.getUrl(bucket, path).toString();
     }
 
     private String generateDirectory() {

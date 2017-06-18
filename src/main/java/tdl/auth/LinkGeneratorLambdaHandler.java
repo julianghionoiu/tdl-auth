@@ -1,12 +1,11 @@
 package tdl.auth;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.kms.AWSKMS;
 import com.amazonaws.services.kms.AWSKMSClientBuilder;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import ro.ghionoiu.kmsjwt.key.KMSEncrypt;
@@ -37,6 +36,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
 
     private final String authEndpointURL;
     private final String pageStorageBucket;
+    private PageUploader pageUploader;
 
     private static Configuration createDefaultTemplateConfiguration() {
         Configuration configuration = new Configuration();
@@ -50,7 +50,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
                         -> new RuntimeException("[Startup] Environment variable " + key + " not set"));
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public LinkGeneratorLambdaHandler() {
         this(
                 getEnv("AUTH_REGION"),
@@ -67,6 +67,11 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
         kmsEncrypt = new KMSEncrypt(kmsClient, jwtEncryptKeyArn);
         this.pageStorageBucket = pageStorageBucket;
         this.authEndpointURL = authEndpointURL;
+        AmazonS3 s3client = AmazonS3ClientBuilder
+                .standard()
+                .withRegion(region)
+                .build();
+        this.pageUploader = new PageUploader(s3client, pageStorageBucket);
     }
 
     @Override
@@ -78,9 +83,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
             String token = getToken(username, validity);
             context.getLogger().log("username: " + username + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authEndpointURL: " + authEndpointURL);
             Page page = new Page(username, token, authEndpointURL, templateConfiguration);
-            PageUploader pageUploader = new PageUploader(pageStorageBucket);
-            String publicUrl = pageUploader.uploadPage(page);
-            return publicUrl;
+            return pageUploader.uploadPage(page);
         } catch (IOException | TemplateException | KeyOperationException ex) {
             LambdaExceptionLogger.logException(context, ex);
             ex.printStackTrace();
