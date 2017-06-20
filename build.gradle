@@ -32,12 +32,16 @@ repositories {
 dependencies {
     compile 'com.amazonaws:aws-lambda-java-core:1.1.0'
     compile 'com.amazonaws:aws-java-sdk-sts:1.11.135'
+    compile 'com.amazonaws:aws-java-sdk-ses:1.11.135'
+    compile 'com.amazonaws:aws-java-sdk-s3:1.11.135'
     compile 'ro.ghionoiu:kms-jwt:0.0.3'
 
     compile 'com.beust:jcommander:1.64'
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'ch.qos.logback:logback-classic:1.1.3'
     compile 'org.json:json:20140107'
+    
+    compile 'org.freemarker:freemarker:2.3.14'
 
     compileOnly 'org.projectlombok:lombok:1.16.16'
 
@@ -52,6 +56,7 @@ dependencies {
     testCompile 'org.powermock:powermock-api-mockito:1.7.0RC4'
     testCompile 'org.powermock:powermock-module-junit4:1.7.0RC4'
     testCompile 'org.powermock:powermock-module-junit4-rule-agent:1.7.0RC4'
+    testCompile 'com.github.stefanbirkner:system-rules:1.16.0'
 }
 
 

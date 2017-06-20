@@ -1,42 +1,64 @@
 [
-    {
-        "ParameterKey": "AuthLambdaFunctionS3Bucket",
-        "ParameterValue": "bucket"
-    },
-    {
-        "ParameterKey": "AuthLambdaFunctionS3Key",
-        "ParameterValue": "tld-auth-lambda-0.0.1.zip"
-    },
-    {
-        "ParameterKey": "AuthLambdaFunctionName",
-        "ParameterValue": "tdl-auth"
-    },
-    {
-        "ParameterKey": "AuthLambdaFunctionRole",
-        "ParameterValue": "arn:aws:iam::xxxxxxxxxxx:role/xxxx"
-    },
-    {
-        "ParameterKey": "AuthLambdaEnvBucket",
-        "ParameterValue": "bucketname"
-    },
-    {
-        "ParameterKey": "AuthLambdaEnvRegion",
-        "ParameterValue": "us-east-1"
-    },
-    {
-        "ParameterKey": "AuthLambdaEnvJwtDecryptKeyArn",
-        "ParameterValue": "arn:aws:kms:xxxxxxxxxxxxxx"
-    },
-    {
-        "ParameterKey": "AuthLambdaAwsAccessKey",
-        "ParameterValue": "accesskey"
-    },
-    {
-        "ParameterKey": "AuthLambdaAwsSecretKey",
-        "ParameterValue": "secretkey"
-    },
-    {
-        "ParameterKey": "ApiGatewayRestApiName",
-        "ParameterValue": "tdl-auth-api"
-    }
+  {
+    "ParameterKey": "LambdaFunctionS3Bucket",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "LambdaFunctionS3Key",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "LambdaEnvRegion",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "AuthLambdaFunctionName",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "AuthLambdaFunctionRole",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "AuthLambdaEnvVideoStorageBucket",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "AuthLambdaEnvJwtDecryptKeyArn",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "AuthLambdaAwsAccessKey",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "AuthLambdaAwsSecretKey",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "ApiGatewayRestApiName",
+    "ParameterValue": ""
+  },
+
+
+  {
+    "ParameterKey": "LinkGeneratorLambdaFunctionName",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "LinkGeneratorLambdaFunctionRole",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "LinkGeneratorLambdaEnvJwtEncryptKeyArn",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "LinkGeneratorLambdaEnvPageStorageBucket",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "LinkGeneratorLambdaEnvAuthEndpointURL",
+    "ParameterValue": ""
+  }
 ]

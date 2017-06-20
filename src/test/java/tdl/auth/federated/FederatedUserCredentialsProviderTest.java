@@ -1,7 +1,9 @@
 package tdl.auth.federated;
 
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -15,31 +17,34 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import tdl.auth.rules.RemoteTestBucket;
 
-import java.util.Optional;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static tdl.auth.test.TestConfiguration.*;
 
 public class FederatedUserCredentialsProviderTest {
-    private static final String TEST_AWS_REGION = Optional.ofNullable(System.getenv("TEST_AWS_REGION"))
-            .orElse("eu-west-2");
-    private static final String TEST_BUCKET_NAME = Optional.ofNullable(System.getenv("TEST_BUCKET_NAME"))
-            .orElse("tdl-test-auth");
-    private static final String TEST_USERNAME = "tdl-test-user";
-    private static final String OTHER_USERNAME = "other_user";
+
+    private static final String OTHER_USERNAME = "otherusername";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private AWSCredentialsProvider rootAwsCredential = new AWSStaticCredentialsProvider(new BasicAWSCredentials(
+            TEST_ROOT_USER_ACCESS_KEY_ID,
+            TEST_ROOT_USER_SECRET_ACCESS_KEY
+    ));
+
     @Rule
-    public RemoteTestBucket remoteTestBucket = new RemoteTestBucket(TEST_AWS_REGION, TEST_BUCKET_NAME);
+    public RemoteTestBucket remoteTestBucket = new RemoteTestBucket(
+            TEST_AWS_REGION,
+            TEST_VIDEO_STORAGE_BUCKET,
+            rootAwsCredential
+    );
 
     // Software under test
-    private FederatedUserCredentialsProvider federatedUserCredentialsProvider =
-            new FederatedUserCredentialsProvider(TEST_AWS_REGION, TEST_BUCKET_NAME);
+    private FederatedUserCredentialsProvider federatedUserCredentialsProvider
+            = new FederatedUserCredentialsProvider(TEST_AWS_REGION, TEST_VIDEO_STORAGE_BUCKET, rootAwsCredential);
     private AmazonS3 federatedS3Client;
-
 
     @Before
     public void setUp() throws Exception {
@@ -55,52 +60,57 @@ public class FederatedUserCredentialsProviderTest {
                 .build();
     }
 
-    //~~~~ Object listing permissions
+    //~~~~ Unit test
+    @Test
+    public void basicConstructor() {
+        expectNoException();
+        FederatedUserCredentialsProvider testCredential
+                = new FederatedUserCredentialsProvider(TEST_AWS_REGION, TEST_VIDEO_STORAGE_BUCKET);
+    }
 
+    //~~~~ Object listing permissions
     @Test
     public void should_have_permission_to_list_own_bucket() throws Exception {
         expectNoException();
-        federatedS3Client.listObjects(TEST_BUCKET_NAME, TEST_USERNAME+"/");
+        federatedS3Client.listObjects(TEST_VIDEO_STORAGE_BUCKET, TEST_USERNAME + "/");
     }
 
     @Test
     public void should_not_have_permission_to_list_whole_bucket() throws Exception {
         expectForbiddenException();
-        federatedS3Client.listObjects(TEST_BUCKET_NAME, "");
+        federatedS3Client.listObjects(TEST_VIDEO_STORAGE_BUCKET, "");
     }
 
     @Test
     public void should_not_have_permission_to_list_other_folders() throws Exception {
         expectForbiddenException();
-        federatedS3Client.listObjects(TEST_BUCKET_NAME, "other_folder");
+        federatedS3Client.listObjects(TEST_VIDEO_STORAGE_BUCKET, "other_folder");
     }
 
     //~~~~ Object retrieving permissions
-
     @Test
     public void should_have_permission_to_get_object_in_own_folder() throws Exception {
         String ownFile = TEST_USERNAME + "/my_file.txt";
-        remoteTestBucket.givenObjectExists(TEST_BUCKET_NAME, ownFile);
+        remoteTestBucket.givenObjectExists(TEST_VIDEO_STORAGE_BUCKET, ownFile);
 
         expectNoException();
-        federatedS3Client.getObject(TEST_BUCKET_NAME, ownFile);
+        federatedS3Client.getObject(TEST_VIDEO_STORAGE_BUCKET, ownFile);
     }
 
     @Test
     public void should_not_have_permission_to_get_objects_in_other_folders() throws Exception {
         String otherFile = OTHER_USERNAME + "/my_file.txt";
-        remoteTestBucket.givenObjectExists(TEST_BUCKET_NAME, otherFile);
+        remoteTestBucket.givenObjectExists(TEST_VIDEO_STORAGE_BUCKET, otherFile);
 
         expectForbiddenException();
-        federatedS3Client.getObject(TEST_BUCKET_NAME, otherFile);
+        federatedS3Client.getObject(TEST_VIDEO_STORAGE_BUCKET, otherFile);
     }
 
     //~~~~ Multipart listing permissions
-
     @Test
     public void should_have_permission_to_list_own_multipart_uploads() throws Exception {
-        remoteTestBucket.givenMultipartUploadExists(TEST_BUCKET_NAME, TEST_USERNAME + "/upload.txt");
-        ListMultipartUploadsRequest request = new ListMultipartUploadsRequest(TEST_BUCKET_NAME);
+        remoteTestBucket.givenMultipartUploadExists(TEST_VIDEO_STORAGE_BUCKET, TEST_USERNAME + "/upload.txt");
+        ListMultipartUploadsRequest request = new ListMultipartUploadsRequest(TEST_VIDEO_STORAGE_BUCKET);
         request.setPrefix(TEST_USERNAME);
 
         expectNoException();
@@ -111,8 +121,8 @@ public class FederatedUserCredentialsProviderTest {
     @Ignore("AWS bug. See: https://forums.aws.amazon.com/thread.jspa?threadID=158131")
     @Test
     public void should_not_have_permission_to_list_other_multipart_uploads() throws Exception {
-        remoteTestBucket.givenMultipartUploadExists(TEST_BUCKET_NAME, OTHER_USERNAME + "/upload.txt");
-        ListMultipartUploadsRequest request = new ListMultipartUploadsRequest(TEST_BUCKET_NAME);
+        remoteTestBucket.givenMultipartUploadExists(TEST_VIDEO_STORAGE_BUCKET, OTHER_USERNAME + "/upload.txt");
+        ListMultipartUploadsRequest request = new ListMultipartUploadsRequest(TEST_VIDEO_STORAGE_BUCKET);
         request.setPrefix(OTHER_USERNAME);
 
         expectForbiddenException();
@@ -120,7 +130,6 @@ public class FederatedUserCredentialsProviderTest {
     }
 
     //~~~~ Part listing permissions
-
     @Test
     public void should_have_permission_to_upload_parts_to_uploads_for_own_folder() throws Exception {
         //TODO
@@ -131,14 +140,12 @@ public class FederatedUserCredentialsProviderTest {
         //TODO
     }
 
-
     //~~~~ Upload permission
-
     @Test
     public void should_have_permission_to_upload_to_its_own_s3_folder() throws Exception {
         String key = TEST_USERNAME + "/test_write.txt";
 
-        federatedS3Client.putObject(TEST_BUCKET_NAME, key, "test");
+        federatedS3Client.putObject(TEST_VIDEO_STORAGE_BUCKET, key, "test");
 
         assertThat(remoteTestBucket.doesObjectExists(key), is(true));
     }
@@ -146,11 +153,10 @@ public class FederatedUserCredentialsProviderTest {
     @Test
     public void should_not_have_permission_to_upload_to_other_folders() throws Exception {
         expectForbiddenException();
-        federatedS3Client.putObject(TEST_BUCKET_NAME, OTHER_USERNAME + "/test_write.txt", "test");
+        federatedS3Client.putObject(TEST_VIDEO_STORAGE_BUCKET, OTHER_USERNAME + "/test_write.txt", "test");
     }
 
     //~~~~ Helpers
-
     private void expectNoException() {
         //No exception
     }

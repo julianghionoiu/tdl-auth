@@ -5,3 +5,5 @@ build/
 /.nb-gradle/
 configs/
 *.private.*
+src/test/resources/configuration.properties
+src/test/resources/credential-app-output.txt

@@ -45,7 +45,19 @@ java -Dlogback.configurationFile=`pwd`/logback.xml  \
 cat ./build/aws-test-secrets | pbcopy
 ```
 
+### Testing
+
+Steps to test.
+1. Execute script `prepare-test.sh`, after previously set environment variable `AWS_CONFIG` and `STACK_NAME` for generating AWS test environment using CloudFormation.
+2. Execute gradle `test` action.
+
 ### Deploy
+
+Prepare resources
+To make sure the link generator works properly, you have to do these steps
+1. Make sure lambda role can send SES.
+2. Make sure sender email is verified. The guide can be read [here](http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-email-addresses.html).
+3. Make sure S3 bucket is writable by lambda role.
 
 Prepare parameters
 ```bash

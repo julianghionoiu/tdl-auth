@@ -17,20 +17,21 @@ import tdl.auth.federated.FederatedUserCredentialsProvider;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
+import tdl.auth.helpers.LambdaExceptionLogger;
 
-public class LambdaHandler implements RequestStreamHandler {
+public class AuthLambdaHandler implements RequestStreamHandler {
 
     private final FederatedUserCredentialsProvider temporaryCredentialsProvider;
     private final LambdaAuthorizer lambdaAuthorizer;
 
     private static String getEnv(String key) {
         return Optional.ofNullable(System.getenv(key))
-                .orElseThrow(() ->
-                    new RuntimeException("[Startup] Environment variable " + key + " not set"));
+                .orElseThrow(()
+                        -> new RuntimeException("[Startup] Environment variable " + key + " not set"));
     }
 
     @SuppressWarnings("unused")
-    public LambdaHandler() {
+    public AuthLambdaHandler() {
         this(
                 getEnv("REGION"),
                 getEnv("JWT_DECRYPT_KEY_ARN"),
@@ -38,21 +39,20 @@ public class LambdaHandler implements RequestStreamHandler {
                 getEnv("ACCESS_KEY"),
                 getEnv("SECRET_KEY") //TODO: Encrypt this using KMS.
         );
-
     }
 
     /**
-     * A Lambda has temporary credentials obtained by calling AssumeRole on
-     * the Execution Role, so we need to use IAM user.
+     * A Lambda has temporary credentials obtained by calling AssumeRole on the
+     * Execution Role, so we need to use IAM user.
      */
-    LambdaHandler(String region, String jwtDecryptKeyARN, String bucket, String accessKey, String secretKey) {
+    AuthLambdaHandler(String region, String jwtDecryptKeyARN, String bucket, String accessKey, String secretKey) {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
         AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
         temporaryCredentialsProvider = new FederatedUserCredentialsProvider(region, bucket, awsCredential);
-        lambdaAuthorizer = new JWTKMSAuthorizer(region, jwtDecryptKeyARN);
+        lambdaAuthorizer = new JWTKMSAuthorizer(region, jwtDecryptKeyARN, awsCredential);
     }
 
-    LambdaHandler(FederatedUserCredentialsProvider temporaryCredentialsProvider, LambdaAuthorizer lambdaAuthorizer) {
+    AuthLambdaHandler(FederatedUserCredentialsProvider temporaryCredentialsProvider, LambdaAuthorizer lambdaAuthorizer) {
         this.temporaryCredentialsProvider = temporaryCredentialsProvider;
         this.lambdaAuthorizer = lambdaAuthorizer;
     }
@@ -69,29 +69,14 @@ public class LambdaHandler implements RequestStreamHandler {
         } catch (JSONException e) {
             exception = Optional.of(new RuntimeException("[Input] " + e.getMessage(), e));
         } catch (Exception e) {
-            exception = Optional.of(new RuntimeException("[UnknownException] " +e.getMessage(), e));
+            exception = Optional.of(new RuntimeException("[UnknownException] " + e.getMessage(), e));
         }
 
         if (exception.isPresent()) {
             Exception e = exception.get();
-
-            // Collect all stack traces
-            List<String> theTrace = new ArrayList<>();
-            {
-                Throwable ex = e;
-                while (ex != null) {
-                    theTrace.add(ex.getClass().getSimpleName()+ ": " +ex.getMessage());
-                    StackTraceElement[] stackTrace = ex.getStackTrace();
-                    Arrays.stream(stackTrace).map(StackTraceElement::toString).forEach(theTrace::add);
-                    ex = ex.getCause();
-                }
-            }
-
-            //Log the stack traces
-            context.getLogger().log(theTrace.stream().collect(Collectors.joining("\n")));
-
+            LambdaExceptionLogger.logException(context, e);
             // Return the message to the user
-            throw new IOException(e.getMessage());
+            throw new IOException(e.getMessage(), e);
         }
     }
 
@@ -104,7 +89,7 @@ public class LambdaHandler implements RequestStreamHandler {
         JSONObject json = new JSONObject(inputJson);
         String username = json.getString("username");
         String token = json.getString("token");
-        context.getLogger().log("username:" + username+", token:"+token);
+        context.getLogger().log("username:" + username + ", token:" + token);
 
         // Authorize
         boolean isAuthorized = lambdaAuthorizer.isAuthorized(username, token);
