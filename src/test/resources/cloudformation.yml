@@ -1,7 +1,11 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: "Cloud formation for running test"
 Resources:
-    TestBucket:
+    TestPublicPageBucket:
+        Type: AWS::S3::Bucket
+        Properties:
+            AccessControl: PublicRead
+    TestVideoStorageBucket:
         Type: AWS::S3::Bucket
     TestRootUser:
         Type: AWS::IAM::User
@@ -19,12 +23,21 @@ Resources:
                             Action: "s3:*"
                             Resource:
                                 - Fn::GetAtt:
-                                    - TestBucket
+                                    - TestVideoStorageBucket
+                                    - Arn
+                                - Fn::GetAtt:
+                                    - TestPublicPageBucket
                                     - Arn
                                 - Fn::Join:
                                     - ''
                                     - - Fn::GetAtt:
-                                        - TestBucket
+                                        - TestVideoStorageBucket
+                                        - Arn
+                                      - '/*'
+                                - Fn::Join:
+                                    - ''
+                                    - - Fn::GetAtt:
+                                        - TestPublicPageBucket
                                         - Arn
                                       - '/*'
     TestRootUserAccessKey:
@@ -108,7 +121,7 @@ Resources:
                           - "s3:ListBucket"
                       Resource:
                           - Fn::GetAtt:
-                                - TestBucket
+                                - TestVideoStorageBucket
                                 - Arn
                       Condition:
                           StringEquals:
@@ -128,7 +141,7 @@ Resources:
                           - Fn::Join:
                                 - ''
                                 - - Fn::GetAtt:
-                                      - TestBucket
+                                      - TestVideoStorageBucket
                                       - Arn
                                   - /
                                   - Ref: TestUser
@@ -179,10 +192,13 @@ Outputs:
             Ref: AWS::Region
     TestUserName:
         Value:
-            Ref: TestUser   
-    TestBucketName:
+            Ref: TestUser
+    TestPublicPageBucketName:
         Value:
-            Ref: TestBucket
+            Ref: TestPublicPageBucket
+    TestVideoStorageBucketName:
+        Value:
+            Ref: TestVideoStorageBucket
     TestRootUserAccessKeyId:
         Value:
             Ref: TestRootUserAccessKey

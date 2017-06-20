@@ -44,8 +44,6 @@ public class TestConfiguration {
         }
     }
 
-
-
     private static String getConfig(String key) {
         String config = INSTANCE.properties.getProperty(key);
         if (config == null) {

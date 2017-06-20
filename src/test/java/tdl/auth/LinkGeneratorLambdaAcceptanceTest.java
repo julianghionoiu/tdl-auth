@@ -2,6 +2,7 @@ package tdl.auth;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import io.jsonwebtoken.lang.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -30,9 +32,9 @@ public class LinkGeneratorLambdaAcceptanceTest {
                 TEST_JWT_KEY_ARN,
                 TEST_PUBLIC_PAGE_BUCKET,
                 "http://www.example.com/",
-                TEST_USER_ACCESS_KEY_ID,
-                TEST_USER_SECRET_ACCESS_KEY);
-
+                TEST_ROOT_USER_ACCESS_KEY_ID,
+                TEST_ROOT_USER_SECRET_ACCESS_KEY
+        );
     }
 
     @Test
@@ -43,6 +45,7 @@ public class LinkGeneratorLambdaAcceptanceTest {
         request.put("validity", 10);
         String url = handler.handleRequest(request, createMockContext());
         assertThat(url, containsString(TEST_PUBLIC_PAGE_BUCKET));
+        assertThat(url, not(containsString("&Signature="))); //assert that this is from public read bucket
     }
 
     private Context createMockContext() {
