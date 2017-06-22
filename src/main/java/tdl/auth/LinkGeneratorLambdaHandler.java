@@ -20,6 +20,7 @@ import tdl.auth.linkgenerator.Page;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import tdl.auth.linkgenerator.PageUploader;
@@ -63,9 +64,9 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
                 getEnv("ACCESS_KEY"),
                 getEnv("SECRET_KEY"));
     }
-    
+
     LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authEndpointURL,
-                               String accessKey, String secretKey) {
+            String accessKey, String secretKey) {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
         AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
@@ -86,18 +87,31 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
     @Override
     public String handleRequest(Map<String, Object> request, Context context) {
         try {
-            String username = request.get("username").toString();
-            String challengeId = request.get("challenge").toString();
-            int validity = Integer.parseInt(request.get("validity").toString());
-            String token = getToken(username, validity);
-            context.getLogger().log("username: " + username + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authEndpointURL: " + authEndpointURL);
-            Page page = new Page(username, token, authEndpointURL, templateConfiguration);
-            return pageUploader.uploadPage(page);
-        } catch (IOException | TemplateException | KeyOperationException ex) {
+            return getUploadPageUrlFromRequest(request, context);
+        } catch (Exception ex) {
+            String type = getLambdaExceptionTypeLabel(ex);
             LambdaExceptionLogger.logException(context, ex);
-            ex.printStackTrace();
-            return "NOT OK"; //TODO: Fix this
+            throw new RuntimeException("[" + type + "] " + ex.getMessage(), ex);
         }
+    }
+
+    public static String getLambdaExceptionTypeLabel(Exception ex) {
+        Map<Class, String> map = new HashMap<Class, String>() {{
+                put(KeyOperationException.class, "Token");
+                put(TemplateException.class, "Email");
+                put(IOException.class, "UnknownException");
+        }};
+        return map.getOrDefault(ex.getClass(), "UnknownException");
+    }
+
+    public String getUploadPageUrlFromRequest(Map<String, Object> request, Context context) throws KeyOperationException, IOException, TemplateException {
+        String username = request.get("username").toString();
+        String challengeId = request.get("challenge").toString();
+        int validity = Integer.parseInt(request.get("validity").toString());
+        String token = getToken(username, validity);
+        context.getLogger().log("username: " + username + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authEndpointURL: " + authEndpointURL);
+        Page page = new Page(username, token, authEndpointURL, templateConfiguration);
+        return pageUploader.uploadPage(page);
     }
 
     private String getToken(String username, int days) throws KeyOperationException {
