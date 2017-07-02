@@ -69,11 +69,12 @@ public class AuthLambdaAcceptanceTest {
         handler.handleRequest(asInputStream(json), outputStream, context);
 
         String credentialsFile = outputStream.toString();
-        assertThat(credentialsFile, containsString("Temporary federated credentials"));
+        assertThat(credentialsFile, containsString(" Auto-generated config file"));
         assertThat(credentialsFile, containsString(TEST_USERNAME + "/"));
         assertThat(credentialsFile, containsString("aws_secret_access_key"));
         assertThat(credentialsFile, containsString("aws_access_key_id"));
         assertThat(credentialsFile, containsString("aws_session_token"));
+        assertThat(credentialsFile, containsString("tdl_username"));
     }
 
     private ByteArrayInputStream asInputStream(JSONObject json) {

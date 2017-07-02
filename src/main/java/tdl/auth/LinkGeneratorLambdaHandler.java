@@ -1,8 +1,7 @@
 package tdl.auth;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.kms.AWSKMS;
 import com.amazonaws.services.kms.AWSKMSClientBuilder;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -61,14 +60,11 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
                 getEnv("JWT_ENCRYPT_KEY_ARN"),
                 getEnv("PAGE_STORAGE_BUCKET"),
                 getEnv("AUTH_ENDPOINT_URL"),
-                getEnv("ACCESS_KEY"),
-                getEnv("SECRET_KEY"));
+                DefaultAWSCredentialsProviderChain.getInstance());
     }
 
     LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authEndpointURL,
-            String accessKey, String secretKey) {
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
-        AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
+                               AWSCredentialsProvider awsCredential) {
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withCredentials(awsCredential)
                 .withRegion(region)
@@ -95,8 +91,9 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
         }
     }
 
-    public static String getLambdaExceptionTypeLabel(Exception ex) {
+    static String getLambdaExceptionTypeLabel(Exception ex) {
         Map<Class, String> map = new HashMap<Class, String>() {{
+                put(IllegalArgumentException.class, "Input");
                 put(KeyOperationException.class, "Token");
                 put(TemplateException.class, "Email");
                 put(IOException.class, "UnknownException");
@@ -104,11 +101,13 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
         return map.getOrDefault(ex.getClass(), "UnknownException");
     }
 
-    public String getUploadPageUrlFromRequest(Map<String, Object> request, Context context) throws KeyOperationException, IOException, TemplateException {
-        String username = request.get("username").toString();
-        String challengeId = request.get("challenge").toString();
-        int validity = Integer.parseInt(request.get("validity").toString());
-        String token = getToken(username, validity);
+    String getUploadPageUrlFromRequest(Map<String, Object> request, Context context) throws KeyOperationException, IOException, TemplateException {
+        String username = Optional.ofNullable(request.get("username"))
+                .map(Object::toString).orElseThrow(() -> new IllegalArgumentException("Field \"username\" not present"));
+        String validityDaysText = Optional.ofNullable(request.get("validityDays"))
+                .map(Object::toString).orElseThrow(() -> new IllegalArgumentException("Field \"validityDays\" not present"));
+        int validityDays = Integer.parseInt(validityDaysText);
+        String token = getToken(username, validityDays);
         context.getLogger().log("username: " + username + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authEndpointURL: " + authEndpointURL);
         Page page = new Page(username, token, authEndpointURL, templateConfiguration);
         return pageUploader.uploadPage(page);

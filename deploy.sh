@@ -8,9 +8,9 @@ AWS_CF_EXEC="aws ${AWS_CONFIG} cloudformation"
 LAMBDA_CODE=tld-auth-lambda-0.0.1.zip
 
 echo "Uploading Zip to S3..."
-SYNC_OUTPUT=$(aws $AWS_CONFIG s3 sync \
+SYNC_OUTPUT=$(aws ${AWS_CONFIG} s3 sync \
     ./build/distributions/ \
-    s3://$ENV_DEPLOY_S3_BUCKET/$ENV_DEPLOY_S3_PREFIX \
+    s3://${ENV_DEPLOY_S3_BUCKET}/${ENV_DEPLOY_S3_PREFIX} \
     --include "*.zip") #No deploying if already exists similar copy
 #SYNC_OUTPUT is empty if no file to sync
 if [ -n "${SYNC_OUTPUT}" ]; then
@@ -21,7 +21,7 @@ else
     ZIP_UPLOADED=0
 fi
 
-${AWS_CF_EXEC} describe-stacks $STACK_OPT > /dev/null  2>&1
+${AWS_CF_EXEC} describe-stacks ${STACK_OPT} > /dev/null  2>&1
 
 if [ $? -eq 0 ]; then
     echo "Stack exists. Updating..."
@@ -36,8 +36,8 @@ else
     exit 1
 fi
 
-${AWS_CF_EXEC} $AWS_CF_COMMAND \
-    $STACK_OPT \
+${AWS_CF_EXEC} ${AWS_CF_COMMAND} \
+    ${STACK_OPT} \
     --template-body file://etc/cloudformation.yml \
     --parameters file://configs/deploy/parameters.json \
     2>&1
@@ -47,9 +47,9 @@ if [ $? -eq 255 ] && [ "$AWS_CF_COMMAND" == "update-stack" ]; then
     if [ $ZIP_UPLOADED -eq 1 ]; then
         echo "Reupload lambda"
         STACK_DESCRIPTION=$(${AWS_CF_EXEC} describe-stacks ${STACK_OPT})
-        FUNCTION_NAMES=$(echo $STACK_DESCRIPTION | jq ".Stacks[0].Parameters[] | select(.ParameterKey|contains(\"FunctionName\")) | .ParameterValue" -r)
+        FUNCTION_NAMES=$(echo ${STACK_DESCRIPTION} | jq ".Stacks[0].Parameters[] | select(.ParameterKey|contains(\"FunctionName\")) | .ParameterValue" -r)
 
-        for FUNCTION_NAME in $FUNCTION_NAMES; do
+        for FUNCTION_NAME in ${FUNCTION_NAMES}; do
             echo "Updating function... $FUNCTION_NAME"
             aws ${AWS_CONFIG} lambda update-function-code \
                 --function-name $FUNCTION_NAME \

@@ -78,42 +78,21 @@ Deploy
 ./deploy.sh
 ```
 
-Test
+Test credentials endpoint
 ```bash
 curl -XPOST https://jjz08ve2q3.execute-api.eu-west-2.amazonaws.com/production/verify --data '{"data":"SGVsbG8gV29ybGQh"}'
 ```
 
-
-## Development
-
-The development of this feature will be done incrementally, using short iterations.
-
-
-**Phase 1** Prove that we can generate temporary credentials
-
-- [DONE] Generate temporary credentials by hand
-- [DONE] Copy credentials file to `record-and-upload`
-- [DONE] Run `record-and-upload`, the upload should just work
-
-**Phase 2** Ensure that the credentials are valid and secure
-
-- [DONE] The credentials should restrict the users to their personal folder, we need proper tests to prove this
-- [DONE] The `record-and-upload` should validate that the user provided has enough permissions to proceed with the recording
-
-**Phase 3** Deployment scripts
-
-- [DONE] Cloud Formation templates for the required infrastructure
-- [DONE] Script to package and deploy Lambda
-
-**Phase 4** Secure endpoint
-
-- Script to generate and sign token with private key
-- AWS Lambda verifies user token
-
-**Phase 5** User experience
-
-- Prepared URL with token as parameter
-- Web front-end with a button to download credentials
+Test link generator lambda
+```bash
+aws lambda invoke \
+--invocation-type RequestResponse \
+--function-name tdl-generate-intro \
+--region eu-west-2 \
+--log-type Tail \
+--payload '{"username":"tdl-test-userXYZ", "validityDays":"1"}' \
+./build/outputfile.txt 
+```
 
 
 ### Useful commands

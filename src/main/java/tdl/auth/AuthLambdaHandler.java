@@ -94,7 +94,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
         // Authorize
         boolean isAuthorized = lambdaAuthorizer.isAuthorized(username, token);
         if (!isAuthorized) {
-            throw new AuthorizationException("[Authorization] User not authorized to perform action");
+            throw new AuthorizationException("User not authorized to perform action");
         }
 
         // Generate credentials

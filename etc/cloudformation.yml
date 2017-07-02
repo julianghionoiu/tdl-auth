@@ -23,9 +23,9 @@ Resources:
                         Ref: LambdaEnvRegion
                     BUCKET:
                         Ref: AuthLambdaEnvVideoStorageBucket
-                    #TODO: Remove the hack below!
                     JWT_DECRYPT_KEY_ARN:
                         Ref: AuthLambdaEnvJwtDecryptKeyArn
+                    #TODO: Remove the hack below!
                     ACCESS_KEY:
                         Ref: AuthLambdaAwsAccessKey
                     SECRET_KEY:
