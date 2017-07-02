@@ -37,7 +37,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
         templateConfiguration = createDefaultTemplateConfiguration();
     }
 
-    private final String authEndpointURL;
+    private final String authVerifyEndpointURL;
     private final String pageStorageBucket;
     private PageUploader pageUploader;
 
@@ -63,7 +63,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
                 DefaultAWSCredentialsProviderChain.getInstance());
     }
 
-    LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authEndpointURL,
+    LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authVerifyEndpointURL,
                                AWSCredentialsProvider awsCredential) {
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withCredentials(awsCredential)
@@ -76,7 +76,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
                 .build();
         kmsEncrypt = new KMSEncrypt(kmsClient, jwtEncryptKeyArn);
         this.pageStorageBucket = pageStorageBucket;
-        this.authEndpointURL = authEndpointURL;
+        this.authVerifyEndpointURL = authVerifyEndpointURL;
         this.pageUploader = new PageUploader(s3client, pageStorageBucket);
     }
 
@@ -108,8 +108,8 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
                 .map(Object::toString).orElseThrow(() -> new IllegalArgumentException("Field \"validityDays\" not present"));
         int validityDays = Integer.parseInt(validityDaysText);
         String token = getToken(username, validityDays);
-        context.getLogger().log("username: " + username + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authEndpointURL: " + authEndpointURL);
-        Page page = new Page(username, token, authEndpointURL, templateConfiguration);
+        context.getLogger().log("username: " + username + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authVerifyEndpointURL: " + authVerifyEndpointURL);
+        Page page = new Page(username, token, authVerifyEndpointURL, templateConfiguration);
         return pageUploader.uploadPage(page);
     }
 

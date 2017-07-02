@@ -191,7 +191,7 @@ Resources:
                     AUTH_REGION:
                         Ref: LambdaEnvRegion
                     AUTH_ENDPOINT_URL:
-                        Ref: LinkGeneratorLambdaEnvAuthEndpointURL
+                        Ref: LinkGeneratorLambdaEnvAuthVerifyEndpointURL
 
 
 Parameters:
@@ -228,6 +228,6 @@ Parameters:
         Type: String
     LinkGeneratorLambdaEnvPageStorageBucket:
         Type: String
-    LinkGeneratorLambdaEnvAuthEndpointURL:
+    LinkGeneratorLambdaEnvAuthVerifyEndpointURL:
         Type: String
 #TODO: Output

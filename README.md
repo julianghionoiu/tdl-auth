@@ -92,6 +92,9 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"username":"tdl-test-userXYZ", "validityDays":"1"}' \
 ./build/outputfile.txt 
+
+echo "base64error"  | base64 --decode
+cat ./build/outputfile.txt
 ```
 
 
