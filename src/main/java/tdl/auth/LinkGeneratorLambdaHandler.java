@@ -14,20 +14,19 @@ import ro.ghionoiu.kmsjwt.key.KMSEncrypt;
 import ro.ghionoiu.kmsjwt.key.KeyOperationException;
 import ro.ghionoiu.kmsjwt.token.JWTEncoder;
 import tdl.auth.helpers.LambdaExceptionLogger;
+import tdl.auth.linkgenerator.LinkGeneratorRequest;
 import tdl.auth.linkgenerator.Page;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+
 import tdl.auth.linkgenerator.PageUploader;
 
 /**
  * This handler receives JSON containing email, username, challengeId, validity.
  */
-public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Object>, String> {
+public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorRequest, String> {
 
     public static Configuration templateConfiguration;
 
@@ -81,7 +80,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
     }
 
     @Override
-    public String handleRequest(Map<String, Object> request, Context context) {
+    public String handleRequest(LinkGeneratorRequest request, Context context) {
         try {
             return getUploadPageUrlFromRequest(request, context);
         } catch (Exception ex) {
@@ -101,15 +100,11 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
         return map.getOrDefault(ex.getClass(), "UnknownException");
     }
 
-    String getUploadPageUrlFromRequest(Map<String, Object> request, Context context) throws KeyOperationException, IOException, TemplateException {
-        String username = Optional.ofNullable(request.get("username"))
-                .map(Object::toString).orElseThrow(() -> new IllegalArgumentException("Field \"username\" not present"));
-        String validityDaysText = Optional.ofNullable(request.get("validityDays"))
-                .map(Object::toString).orElseThrow(() -> new IllegalArgumentException("Field \"validityDays\" not present"));
-        int validityDays = Integer.parseInt(validityDaysText);
-        String token = getToken(username, validityDays);
-        context.getLogger().log("username: " + username + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authVerifyEndpointURL: " + authVerifyEndpointURL);
-        Page page = new Page(username, token, authVerifyEndpointURL, templateConfiguration);
+    String getUploadPageUrlFromRequest(LinkGeneratorRequest request, Context context) throws KeyOperationException, IOException, TemplateException {
+        String token = getToken(request.getUsername(), request.getValidityDays());
+        String sessionId = encodeSessionId(request.getUsername());
+        context.getLogger().log("username: " + request.getUsername() + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authVerifyEndpointURL: " + authVerifyEndpointURL);
+        Page page = new Page(request.getUsername(), token, sessionId, authVerifyEndpointURL, templateConfiguration);
         return pageUploader.uploadPage(page);
     }
 
@@ -118,6 +113,13 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<Map<String, Ob
                 .setExpiration(getExpirationDate(days))
                 .claim("usr", username)
                 .compact();
+    }
+
+    //Debt: This logic needs to be shared between tdl-auth and tdl-server. At the moment it is duplicated
+    private static String encodeSessionId(String username, String... challenges) {
+        String challengeCSV = Arrays.stream(challenges).collect(Collectors.joining(","));
+        String unobfuscatedId = username + "|" + challengeCSV;
+        return Base64.getEncoder().encodeToString(unobfuscatedId.getBytes());
     }
 
     private Date getExpirationDate(int days) {

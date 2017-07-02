@@ -3,15 +3,16 @@ package tdl.auth;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import freemarker.template.TemplateException;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import ro.ghionoiu.kmsjwt.key.KeyOperationException;
+import tdl.auth.linkgenerator.LinkGeneratorRequest;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class LinkGeneratorLambdaTest {
     
@@ -47,6 +48,6 @@ public class LinkGeneratorLambdaTest {
         doNothing().when(logger).log(anyString());
         doReturn(logger).when(context).getLogger();
         
-        handler.handleRequest(mock(Map.class), context);
+        handler.handleRequest(mock(LinkGeneratorRequest.class), context);
     }
 }

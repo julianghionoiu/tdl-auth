@@ -17,15 +17,18 @@ public class Page {
 
     private final String token;
 
+    private final String sessionId;
+
     private final String authVerifyEndpointUrl;
 
     private final String content;
 
     private Configuration templateConfiguration;
 
-    public Page(String username, String token, String authVerifyEndpointUrl, Configuration templateConfiguration) throws IOException, TemplateException {
+    public Page(String username, String token, String sessionId, String authVerifyEndpointUrl, Configuration templateConfiguration) throws IOException, TemplateException {
         this.username = username;
         this.token = token;
+        this.sessionId = sessionId;
         this.authVerifyEndpointUrl = authVerifyEndpointUrl;
         this.templateConfiguration = templateConfiguration;
         content = generateContent();
@@ -38,6 +41,7 @@ public class Page {
         contentParams.put("API_VERIFY_ENDPOINT", authVerifyEndpointUrl);
         contentParams.put("USERNAME", username);
         contentParams.put("TOKEN", token);
+        contentParams.put("SESSION_ID", sessionId);
         template.process(contentParams, stringWriter);
         return stringWriter.toString();
     }

@@ -8,9 +8,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.EnvironmentVariables;
-
-import java.util.HashMap;
-import java.util.Map;
+import tdl.auth.linkgenerator.LinkGeneratorRequest;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
@@ -41,10 +39,7 @@ public class LinkGeneratorLambdaAcceptanceTest {
 
     @Test
     public void should_generate_link() {
-        Map<String, Object> request = new HashMap<>();
-        request.put("username", TEST_USERNAME);
-        request.put("validityDays", 10);
-        String url = handler.handleRequest(request, createMockContext());
+        String url = handler.handleRequest(new LinkGeneratorRequest(TEST_USERNAME, 10), createMockContext());
         assertThat(url, containsString(TEST_PUBLIC_PAGE_BUCKET));
         assertThat(url, not(containsString("&Signature="))); //assert that this is from public read bucket
     }
