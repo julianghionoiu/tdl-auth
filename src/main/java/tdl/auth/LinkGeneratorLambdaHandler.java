@@ -19,6 +19,7 @@ import tdl.auth.linkgenerator.Page;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import tdl.auth.linkgenerator.PageUploader;
@@ -101,8 +102,17 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
     }
 
     String getUploadPageUrlFromRequest(LinkGeneratorRequest request, Context context) throws KeyOperationException, IOException, TemplateException {
+        Predicate<LinkGeneratorRequest> validUsername = req -> req.getUsername() != null;
+        if (!validUsername.test(request)) throw new IllegalArgumentException("Not a valid username");
+
+        Predicate<LinkGeneratorRequest> positiveValidity = req -> req.getValidityDays() > 0;
+        if (!positiveValidity.test(request)) throw new IllegalArgumentException("Incorrect validity");
+
+        Predicate<LinkGeneratorRequest> nonNullChallenges = req -> req.getChallengeIds() != null && req.getChallengeIds().size() > 0;
+        if (!nonNullChallenges.test(request)) throw new IllegalArgumentException("Challenge IDs null or empty");
+
         String token = getToken(request.getUsername(), request.getValidityDays());
-        String sessionId = encodeSessionId(request.getUsername());
+        String sessionId = encodeSessionId(request.getUsername(), request.getChallengeIds());
         context.getLogger().log("username: " + request.getUsername() + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authVerifyEndpointURL: " + authVerifyEndpointURL);
         Page page = new Page(request.getUsername(), token, sessionId, authVerifyEndpointURL, templateConfiguration);
         return pageUploader.uploadPage(page);
@@ -116,8 +126,8 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
     }
 
     //Debt: This logic needs to be shared between tdl-auth and tdl-server. At the moment it is duplicated
-    private static String encodeSessionId(String username, String... challenges) {
-        String challengeCSV = Arrays.stream(challenges).collect(Collectors.joining(","));
+    private static String encodeSessionId(String username, List<String> challenges) {
+        String challengeCSV = challenges.stream().collect(Collectors.joining(","));
         String unobfuscatedId = username + "|" + challengeCSV;
         return Base64.getEncoder().encodeToString(unobfuscatedId.getBytes());
     }
