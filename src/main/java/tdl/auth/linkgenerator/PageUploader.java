@@ -1,16 +1,15 @@
 package tdl.auth.linkgenerator;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
-import static tdl.auth.linkgenerator.Page.KEY_LENGTH;
 
 public class PageUploader {
+    private static final long KEY_LENGTH = 32;
 
     private final AmazonS3 s3client;
     private final String bucket;
@@ -20,11 +19,11 @@ public class PageUploader {
         this.s3client = s3client;
     }
 
-    public String uploadPage(Page page) {
+    public String uploadPage(String pageContents) {
         String directory = generateDirectory();
         String path = directory + "/index.html";
 
-        InputStream stream = new ByteArrayInputStream(page.getContent().getBytes(StandardCharsets.UTF_8));
+        InputStream stream = new ByteArrayInputStream(pageContents.getBytes(StandardCharsets.UTF_8));
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType("text/html");
         metadata.setContentDisposition("inline; filename=\"index.html\"");

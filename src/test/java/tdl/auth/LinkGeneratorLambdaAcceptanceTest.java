@@ -4,12 +4,14 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import freemarker.template.TemplateException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.EnvironmentVariables;
 import tdl.auth.linkgenerator.LinkGeneratorRequest;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -27,7 +29,7 @@ public class LinkGeneratorLambdaAcceptanceTest {
     private LinkGeneratorLambdaHandler handler;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException, TemplateException {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(TEST_ROOT_USER_ACCESS_KEY_ID, TEST_ROOT_USER_SECRET_ACCESS_KEY);
         AWSStaticCredentialsProvider testCredentialsProvider = new AWSStaticCredentialsProvider(awsCreds);
         handler = new LinkGeneratorLambdaHandler(
@@ -35,7 +37,8 @@ public class LinkGeneratorLambdaAcceptanceTest {
                 TEST_JWT_KEY_ARN,
                 TEST_PUBLIC_PAGE_BUCKET,
                 "http://www.example.com/",
-                testCredentialsProvider
+                testCredentialsProvider,
+                "test-intro.html.ftl"
         );
     }
 

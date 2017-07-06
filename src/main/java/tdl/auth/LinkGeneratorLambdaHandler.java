@@ -15,7 +15,7 @@ import ro.ghionoiu.kmsjwt.key.KeyOperationException;
 import ro.ghionoiu.kmsjwt.token.JWTEncoder;
 import tdl.auth.helpers.LambdaExceptionLogger;
 import tdl.auth.linkgenerator.LinkGeneratorRequest;
-import tdl.auth.linkgenerator.Page;
+import tdl.auth.linkgenerator.IntroPageTemplate;
 
 import java.io.IOException;
 import java.util.*;
@@ -30,22 +30,19 @@ import tdl.auth.linkgenerator.PageUploader;
 public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorRequest, String> {
 
     public static Configuration templateConfiguration;
+    private final IntroPageTemplate introPageTemplate;
 
     private KMSEncrypt kmsEncrypt;
 
     static {
-        templateConfiguration = createDefaultTemplateConfiguration();
+        Configuration configuration = new Configuration();
+        configuration.setClassForTemplateLoading(LinkGeneratorLambdaHandler.class, "/templates/");
+        templateConfiguration = configuration;
     }
 
     private final String authVerifyEndpointURL;
     private final String pageStorageBucket;
     private PageUploader pageUploader;
-
-    private static Configuration createDefaultTemplateConfiguration() {
-        Configuration configuration = new Configuration();
-        configuration.setClassForTemplateLoading(LinkGeneratorLambdaHandler.class, "/templates/");
-        return configuration;
-    }
 
     private static String getEnv(String key) {
         return Optional.ofNullable(System.getenv(key))
@@ -54,17 +51,18 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
     }
 
     @SuppressWarnings({"unused", "WeakerAccess"})
-    public LinkGeneratorLambdaHandler() {
+    public LinkGeneratorLambdaHandler() throws IOException, TemplateException {
         this(
                 getEnv("AUTH_REGION"),
                 getEnv("JWT_ENCRYPT_KEY_ARN"),
                 getEnv("PAGE_STORAGE_BUCKET"),
                 getEnv("AUTH_ENDPOINT_URL"),
-                DefaultAWSCredentialsProviderChain.getInstance());
+                DefaultAWSCredentialsProviderChain.getInstance(),
+                "intro.html.ftl");
     }
 
     LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authVerifyEndpointURL,
-                               AWSCredentialsProvider awsCredential) {
+                               AWSCredentialsProvider awsCredential, String introPageTemplateName) throws IOException, TemplateException {
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withCredentials(awsCredential)
                 .withRegion(region)
@@ -78,6 +76,9 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
         this.pageStorageBucket = pageStorageBucket;
         this.authVerifyEndpointURL = authVerifyEndpointURL;
         this.pageUploader = new PageUploader(s3client, pageStorageBucket);
+
+
+        this.introPageTemplate = new IntroPageTemplate(introPageTemplateName);
     }
 
     @Override
@@ -114,8 +115,8 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
         String token = getToken(request.getUsername(), request.getValidityDays());
         String sessionId = encodeSessionId(request.getUsername(), request.getChallengeIds());
         context.getLogger().log("username: " + request.getUsername() + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authVerifyEndpointURL: " + authVerifyEndpointURL);
-        Page page = new Page(request.getUsername(), token, sessionId, authVerifyEndpointURL, templateConfiguration);
-        return pageUploader.uploadPage(page);
+        String pageContents = introPageTemplate.generateContent(request.getUsername(), token, sessionId, authVerifyEndpointURL);
+        return pageUploader.uploadPage(pageContents);
     }
 
     private String getToken(String username, int days) throws KeyOperationException {
