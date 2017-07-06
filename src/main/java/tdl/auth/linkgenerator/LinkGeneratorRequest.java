@@ -9,7 +9,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LinkGeneratorRequest {
+    private String mainChallengeTitle;
+    private String sponsorName;
     private String username;
     private Integer validityDays;
     private List<String> challengeIds;
+    private String codingDurationLabel;
 }

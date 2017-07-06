@@ -38,16 +38,19 @@ public class LinkGeneratorLambdaAcceptanceTest {
                 TEST_PUBLIC_PAGE_BUCKET,
                 "http://www.example.com/",
                 testCredentialsProvider,
-                "test-intro.html.ftl"
+                "intro.html.ftl"
         );
     }
 
     @Test
     public void should_generate_link() {
         LinkGeneratorRequest request = new LinkGeneratorRequest(
+                "AcceptanceTest",
+                "CI",
                 TEST_USERNAME,
                 10,
-                Arrays.asList("SUM", "UPR"));
+                Arrays.asList("SUM", "UPR"),
+                "0 seconds");
         String url = handler.handleRequest(request, createMockContext());
         assertThat(url, containsString(TEST_PUBLIC_PAGE_BUCKET));
         assertThat(url, not(containsString("&Signature="))); //assert that this is from public read bucket

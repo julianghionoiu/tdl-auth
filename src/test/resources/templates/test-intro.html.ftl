@@ -1,16 +1,21 @@
-<#-- @ftlvariable name="CHALLENGE_NAME" type="java.lang.String" -->
+<#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
-<#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
+<#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
 <#-- @ftlvariable name="USERNAME" type="java.lang.String" -->
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
+<#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
+<#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.String" -->
 <#-- @ftlvariable name="SESSION_ID" type="java.lang.String" -->
 <!DOCTYPE html>
 <html>
     <body>
         <div class="text-center">
-            <h1>Welcome to the ${CHALLENGE_NAME} challenge</h1>
+            <h1>Welcome to the ${MAIN_CHALLENGE_TITLE} challenge</h1>
             <h2>Sponsored by ${SPONSOR}</h2>
         </div>
+
+        This link will expire on: ${EXPIRATION_DATE}
+        You will get ${CODING_SESSION_DURATION} of uninterrupted coding challenge
 
         <!--suppress HtmlUnknownTarget -->
         <form action="${API_VERIFY_ENDPOINT}" method="post">

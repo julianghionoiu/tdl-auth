@@ -90,7 +90,12 @@ aws lambda invoke \
 --function-name tdl-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"username":"tdl-test-userXYZ", "validityDays": 1, "challengeIds": [ "SUM", "UPR", "HLO" ]}' \
+--payload '{"mainChallengeTitle":"simplest", 
+            "sponsorName": "Julian", 
+            "username":"tdl-test-userXYZ", 
+            "validityDays": 1, 
+            "challengeIds": [ "SUM", "UPR", "HLO" ],
+            "codingDurationLabel": "30 minutes"}' \
 ./build/outputfile.txt 
 
 echo "base64error"  | base64 --decode

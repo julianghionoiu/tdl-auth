@@ -1,8 +1,10 @@
-<#-- @ftlvariable name="CHALLENGE_NAME" type="java.lang.String" -->
+<#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
-<#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
+<#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
 <#-- @ftlvariable name="USERNAME" type="java.lang.String" -->
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
+<#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
+<#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.String" -->
 <#-- @ftlvariable name="SESSION_ID" type="java.lang.String" -->
 <!DOCTYPE html>
 <!--suppress HtmlUnknownTarget -->
@@ -77,7 +79,7 @@
 <body>
 
 <div class="jumbotron text-center">
-  <h1>Welcome to the ${CHALLENGE_NAME} challenge</h1>
+  <h1>Welcome to the ${MAIN_CHALLENGE_TITLE} challenge</h1>
   <h2>Sponsored by ${SPONSOR}</h2>
 </div>
 
@@ -106,7 +108,7 @@
           <div class="col-md-4">
             <img src="../000common/img/ic_timer_black_48px.svg">
             <h3>Challenge</h3>
-            <h4>~4 hours</h4>
+            <h4>~${CODING_SESSION_DURATION}</h4>
             <p>
               A realistic coding challenge designed to put your design skills to the test. This is the one that counts!
             </p>
@@ -136,17 +138,17 @@
       You will need:
       <ul>
         <li>45 minute for Preparation + Warmup</li>
-        <li>4 hours of uninterrupted coding challenge</li>
+        <li>${CODING_SESSION_DURATION} of uninterrupted coding challenge</li>
         <li>your laptop + your IDE and a connection to the internet</li>
       </ul>
       <div class="alert alert-success">
         We encourage you put aside some time in a quiet environment where you won't be interrupted so you can focus on
         the challenge.
       </div>
-      <p>Only people who have completed the challenge or spent at least 4 hours working on the challenge will have
+      <p>Only people who have completed the challenge or spent at least ${CODING_SESSION_DURATION} working on the challenge will have
       access to the other results and recordings</p>
       <p>If you are not ready you can come back to this page whenever you have
-        enough time.The link will expire on: DATE</p>
+          enough time. The link will expire on: <b>${EXPIRATION_DATE}</b></p>
       <p>You can stop any time you want. We will consider the progress you have made so far.</p>
       <p>Ready? Let's get started.</p>
     </div>
@@ -186,7 +188,7 @@
         </div>
         <div>
           <p>
-            Download the credentials by clicking the button below and save to the `config` directory of the repo you
+            Download the credentials by clicking the button below and save to the <code>config</code> directory of the repo you
             cloned above.
           </p>
           <form action="${API_VERIFY_ENDPOINT}" method="post">
@@ -310,7 +312,7 @@
       <div>
         <h3>5. Finishing</h3>
         <p>You can stop any time you want. We will consider the progress you have made so far.</p>
-        <p>Only people who have completed the challenge or spent at least 4 hours working on the challenge will have
+        <p>Only people who have completed the challenge or spent at least ${CODING_SESSION_DURATION} working on the challenge will have
           access to the other results and recordings.</p>
         <p>Stop the recorder (<code>CTRL + C</code>)</p>
       </div>

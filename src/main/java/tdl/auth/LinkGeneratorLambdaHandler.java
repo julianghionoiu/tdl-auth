@@ -103,6 +103,12 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
     }
 
     String getUploadPageUrlFromRequest(LinkGeneratorRequest request, Context context) throws KeyOperationException, IOException, TemplateException {
+        Predicate<LinkGeneratorRequest> mainChallengeTitle = req -> req.getMainChallengeTitle() != null;
+        if (!mainChallengeTitle.test(request)) throw new IllegalArgumentException("Not a valid main challenge title");
+
+        Predicate<LinkGeneratorRequest> sponsorName = req -> req.getSponsorName() != null;
+        if (!sponsorName.test(request)) throw new IllegalArgumentException("Not a valid sponsor name");
+
         Predicate<LinkGeneratorRequest> validUsername = req -> req.getUsername() != null;
         if (!validUsername.test(request)) throw new IllegalArgumentException("Not a valid username");
 
@@ -112,16 +118,28 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
         Predicate<LinkGeneratorRequest> nonNullChallenges = req -> req.getChallengeIds() != null && req.getChallengeIds().size() > 0;
         if (!nonNullChallenges.test(request)) throw new IllegalArgumentException("Challenge IDs null or empty");
 
-        String token = getToken(request.getUsername(), request.getValidityDays());
+        Predicate<LinkGeneratorRequest> codingDurationLabel = req -> req.getCodingDurationLabel() != null;
+        if (!codingDurationLabel.test(request)) throw new IllegalArgumentException("Not a valid coding duration label");
+
+
+        Date expirationDate = getExpirationDate(request.getValidityDays());
+        String token = getToken(request.getUsername(), expirationDate);
         String sessionId = encodeSessionId(request.getUsername(), request.getChallengeIds());
         context.getLogger().log("username: " + request.getUsername() + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authVerifyEndpointURL: " + authVerifyEndpointURL);
-        String pageContents = introPageTemplate.generateContent(request.getUsername(), token, sessionId, authVerifyEndpointURL);
+        String pageContents = introPageTemplate.generateContent(
+                request.getMainChallengeTitle(),
+                request.getSponsorName(),
+                request.getCodingDurationLabel(), request.getUsername(),
+                token,
+                authVerifyEndpointURL,
+                expirationDate, sessionId
+        );
         return pageUploader.uploadPage(pageContents);
     }
 
-    private String getToken(String username, int days) throws KeyOperationException {
+    private String getToken(String username, Date expirationDate) throws KeyOperationException {
         return JWTEncoder.builder(kmsEncrypt)
-                .setExpiration(getExpirationDate(days))
+                .setExpiration(expirationDate)
                 .claim("usr", username)
                 .compact();
     }

@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -35,10 +34,6 @@ public class IntroPageTemplateUploaderTest {
     @Test
     public void uploadPage() throws IOException, TemplateException {
         doCallRealMethod().when(uploader).uploadPage(any());
-        IntroPageTemplate introPageTemplate = mock(IntroPageTemplate.class);
-        doReturn("Hello World").when(introPageTemplate)
-                .generateContent(any(), any(), any(), any());
-        
         doReturn(mock(PutObjectResult.class)).when(s3client).putObject(any());
 
         URL url = new URL("http://www.example.com");
