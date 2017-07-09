@@ -75,6 +75,7 @@ STACK_NAME=testing-tdl-auth
 
 Deploy
 ```bash
+./gradlew clean build
 ./deploy.sh
 ```
 
