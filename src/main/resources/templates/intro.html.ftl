@@ -288,7 +288,7 @@
                     <img src="../000common/img/start-challenge.png" alt="Start challenge." class="img-responsive">
                     <p>1. In a web browser, start the challenge</p>
                     <div class="horizontal-arrow">
-                        <span class="glyphicon glyphicon-arrow-down hidden-sm hidden-xs"></span>
+                        <span class="glyphicon glyphicon-arrow-right hidden-sm hidden-xs"></span>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
@@ -296,7 +296,7 @@
                          class="img-responsive">
                     <p>2. On your command line, get the challenge instructions</p>
                     <div class="horizontal-arrow">
-                        <span class="glyphicon glyphicon-arrow-down hidden-sm hidden-xs"></span>
+                        <span class="glyphicon glyphicon-arrow-right hidden-sm hidden-xs"></span>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
@@ -316,7 +316,7 @@
                          class="img-responsive">
                     <p>5. On your command line, deploy your solution</p>
                     <div class="horizontal-arrow">
-                        <span class="glyphicon glyphicon-arrow-down hidden-sm hidden-xs"></span>
+                        <span class="glyphicon glyphicon-arrow-left hidden-sm hidden-xs"></span>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4 col-md-pull-8">
@@ -324,7 +324,7 @@
                          class="img-responsive">
                     <p>6. In a web browser, check your results.</p>
                     <div class="horizontal-arrow">
-                        <span class="glyphicon glyphicon-arrow-down hidden-sm hidden-xs"></span>
+                        <span class="glyphicon glyphicon-arrow-left hidden-sm hidden-xs"></span>
                     </div>
                 </div>
             </div>
