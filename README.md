@@ -80,14 +80,14 @@ Deploy
 
 Test credentials endpoint
 ```bash
-curl -XPOST https://jjz08ve2q3.execute-api.eu-west-2.amazonaws.com/production/verify --data '{"data":"SGVsbG8gV29ybGQh"}'
+curl -XPOST https://w62n5pnu7k.execute-api.eu-west-2.amazonaws.com/production/verify --data '{"username": "X", "token":"SGVsbG8gV29ybGQh"}'
 ```
 
 Test link generator lambda
 ```bash
 aws lambda invoke \
 --invocation-type RequestResponse \
---function-name tdl-generate-intro \
+--function-name tdl-testing-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"simplest", 

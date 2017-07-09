@@ -2,7 +2,13 @@
 
 set -x
 
-source ./configs/deploy/env.sh
+if [ $# -eq 0 ]
+  then
+    echo "Usage: $0 profile"
+fi
+PROFILE=$1
+
+source ./configs/deploy/env-${PROFILE}.sh
 STACK_OPT="--stack-name ${STACK_NAME}"
 AWS_CF_EXEC="aws ${AWS_CONFIG} cloudformation"
 LAMBDA_CODE=tld-auth-lambda-0.0.1.zip
@@ -22,12 +28,12 @@ else
 fi
 
 ${AWS_CF_EXEC} describe-stacks ${STACK_OPT} > /dev/null  2>&1
-
-if [ $? -eq 0 ]; then
+EXISTS=$?
+if [ ${EXISTS} -eq 0 ]; then
     echo "Stack exists. Updating..."
     AWS_CF_COMMAND=update-stack
     AWS_WAIT_COMMAND=stack-update-complete
-elif [ $? -eq 255 ]; then
+elif [ ${EXISTS} -eq 255 ]; then
     echo "Stack does not exists. Creating..."
     AWS_CF_COMMAND=create-stack
     AWS_WAIT_COMMAND=stack-create-complete
@@ -39,7 +45,7 @@ fi
 ${AWS_CF_EXEC} ${AWS_CF_COMMAND} \
     ${STACK_OPT} \
     --template-body file://etc/cloudformation.yml \
-    --parameters file://configs/deploy/parameters.json \
+    --parameters file://configs/deploy/parameters-${PROFILE}.json \
     2>&1
 
 if [ $? -eq 255 ] && [ "$AWS_CF_COMMAND" == "update-stack" ]; then
