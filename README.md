@@ -83,7 +83,7 @@ Test credentials endpoint
 curl -XPOST https://w62n5pnu7k.execute-api.eu-west-2.amazonaws.com/production/verify --data '{"username": "X", "token":"SGVsbG8gV29ybGQh"}'
 ```
 
-Test link generator lambda
+Test link generator lambda [TESTING]
 ```bash
 aws lambda invoke \
 --invocation-type RequestResponse \
@@ -97,7 +97,25 @@ aws lambda invoke \
             "challengeIds": [ "SUM", "UPR", "HLO" ],
             "codingDurationLabel": "30 minutes"}' \
 ./build/outputfile.txt 
+```
 
+Test link generator lambda [LIVE]
+```bash
+aws lambda invoke \
+--invocation-type RequestResponse \
+--function-name tdl-generate-intro \
+--region eu-west-2 \
+--log-type Tail \
+--payload '{"mainChallengeTitle":"official", 
+            "sponsorName": "Julian", 
+            "username":"tdl-live-userXYZ", 
+            "validityDays": 5, 
+            "challengeIds": [ "SUM", "UPR", "HLO" ],
+            "codingDurationLabel": "30 minutes"}' \
+./build/outputfile.txt 
+```
+
+```bash
 echo "base64error"  | base64 --decode
 cat ./build/outputfile.txt
 ```
