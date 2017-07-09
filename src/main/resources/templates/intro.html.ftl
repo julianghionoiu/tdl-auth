@@ -124,7 +124,7 @@
       <p>We promise that you will learn a lot by just going through this challenge.</p>
 
       <p>Focus on your development technique and see how well it plays out. You will be able to compare metrics afterwards.</p>
-      <p>Each screen gets recorded so after the challenge you get the opportunity to see how other people have approached this problem.
+      <p>Each screen gets recorded so after the challenge you get the opportunity to see (anonymously) how other people have approached this problem.
       Who knows, maybe you can learn something from them.</p>
     </div>
     <div class="col-md-5">
@@ -146,7 +146,7 @@
         the challenge.
       </div>
       <p>Only people who have completed the challenge or spent at least ${CODING_SESSION_DURATION} working on the challenge will have
-      access to the other results and recordings</p>
+      access to the other results and recordings.</p>
       <p>If you are not ready you can come back to this page whenever you have
           enough time. The link will expire on: <b>${EXPIRATION_DATE}</b></p>
       <p>You can stop any time you want. We will consider the progress you have made so far.</p>
@@ -187,10 +187,7 @@
           </div>
         </div>
         <div>
-          <p>
-            Download the credentials by clicking the button below and save to the <code>config</code> directory of the repo you
-            cloned above.
-          </p>
+          <p>To securely connect to the server you need to download and save the following credentials to the <code>config</code> directory:</p>
           <form action="${API_VERIFY_ENDPOINT}" method="post">
             <input type="hidden" name="username" value="${USERNAME}">
             <input type="hidden" name="token" value="${TOKEN}">
@@ -231,7 +228,7 @@
             </p>
           </li>
           <li>
-            <p>Start the screen recorder before starting the main challenge</p>
+            <p>Start the screen recorder in a new terminal tab/window.</p>
             <p>Windows:</p>
             <pre><code>./record_screen_and_upload.bat</code></pre>
             <p>OSX/Linux:</p>
@@ -248,7 +245,7 @@
   <div class="row dark-background">
     <div class="col-md-offset-1 col-md-6">
       <h3>3. Start the warmup</h3>
-      <p>Follow the instructions in the <code>README.md</code> file of the repo that you cloned.</p>
+      <p>In your IDE of choice, open up the <code>README.md</code> file of the repo that you cloned.</p>
       <p>
         Remember to start the screen recorder before you commence the main challenge.
       </p>
@@ -262,7 +259,8 @@
   <div class="row">
     <div id="challenge-flow" class="col-md-offset-1 col-md-10">
       <h2>4. The challenge flow</h2>
-      <p>Working on a challenge has the following flow.  Do not worry about the details, the Warmup will guide you through the process</p>
+      <p>While working on the challenge you will be interacting with three components: the web interface (befaster.io), a console (terminal), the IDE.</p>
+      <p>The challenge has the following flow.  Do not worry about the details, the Warmup will guide you through the process.</p>
       <div class="row">
         <div class="col-md-4">
           <img src="../000common/img/start-challenge.png" alt="Start challenge." class="img-responsive">
@@ -312,9 +310,9 @@
       <div>
         <h3>5. Finishing</h3>
         <p>You can stop any time you want. We will consider the progress you have made so far.</p>
-        <p>Only people who have completed the challenge or spent at least ${CODING_SESSION_DURATION} working on the challenge will have
-          access to the other results and recordings.</p>
-        <p>Stop the recorder (<code>CTRL + C</code>)</p>
+        <p>When you have finished, you simply have to stop the recorder (<code>CTRL + C</code> or <code>CTRL + D</code>).</p>
+        <p>After finishing, your recording will be reviewed by ${SPONSOR} and you will be contacted with feedback.</p>
+        <p>If you completed the challenge or spent at least ${CODING_SESSION_DURATION} working on the challenge, you will receive links to video recordings of other developers taking the challenge and an anonymised leader board with time data.  This will be a great opportunity to see how you rank, to see how other approaches to the challenge played out and to identify areas for improvement.</p>
       </div>
     </div>
   </div>
