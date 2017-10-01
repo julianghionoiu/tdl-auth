@@ -76,7 +76,7 @@ STACK_NAME=testing-tdl-auth
 Deploy
 ```bash
 ./gradlew clean build
-./deploy.sh
+./deploy.sh testing
 ```
 
 Test credentials endpoint
@@ -91,31 +91,48 @@ aws lambda invoke \
 --function-name tdl-testing-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"simplest", 
+--payload '{"mainChallengeTitle":"Warmup", 
             "sponsorName": "Julian", 
-            "username":"tdl-test-userXYZ", 
-            "validityDays": 1, 
-            "challengeIds": [ "SUM", "UPR", "HLO" ],
-            "codingDurationLabel": "30 minutes"}' \
+            "username":"tdl-test-iuli01", 
+            "validityDays": 14, 
+            "challengeIds": [ "SUM", "HLO" ],
+            "codingDurationLabel": "15 minutes"}' \
 ./build/outputfile.txt 
 ```
 
-Test link generator lambda [LIVE]
+Live Checkout link generator lambda [LIVE]
 ```bash
 aws lambda invoke \
 --invocation-type RequestResponse \
 --function-name tdl-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"official", 
+--payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"tdl-live-userXYZ", 
-            "validityDays": 5, 
-            "challengeIds": [ "SUM", "UPR", "HLO" ],
-            "codingDurationLabel": "30 minutes"}' \
+            "username":"tdl-live-mmxl01", 
+            "validityDays": 14, 
+            "challengeIds": [ "SUM", "HLO", "CHK" ],
+            "codingDurationLabel": "4 hours"}' \
 ./build/outputfile.txt 
 ```
 
+Live FizzDeluxe link generator lambda [LIVE]
+```bash
+aws lambda invoke \
+--invocation-type RequestResponse \
+--function-name tdl-generate-intro \
+--region eu-west-2 \
+--log-type Tail \
+--payload '{"mainChallengeTitle":"Secret", 
+            "sponsorName": "Julian", 
+            "username":"tdl-live-mmxl01", 
+            "validityDays": 14, 
+            "challengeIds": [ "SUM", "HLO", "FIZ" ],
+            "codingDurationLabel": "1 hour"}' \
+./build/outputfile.txt 
+```
+
+Result parse
 ```bash
 echo "base64error"  | base64 --decode
 cat ./build/outputfile.txt

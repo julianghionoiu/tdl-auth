@@ -103,7 +103,7 @@
                 <div class="col-md-4">
                     <img src="../000common/img/ic_settings_black_24dp_2x.png">
                     <h3>Set up</h3>
-                    <h4>15 mins</h4>
+                    <h4>20 mins</h4>
                     <p>
                         You will clone a github repo, install some libraries and will then be ready
                         to write code in your own IDE using your choice of frameworks and tools.
@@ -111,19 +111,18 @@
                 </div>
                 <div class="col-md-4">
                     <img src="../000common/img/ic_whatshot_black_24dp_2x.png">
-                    <h3>Warm up</h3>
-                    <h4>30 mins</h4>
+                    <h3>Challenge</h3>
+                    <h4>~${CODING_SESSION_DURATION}</h4>
                     <p>
-                        You will complete some simple warmup challenges to allow you to get used to the system
+                        A realistic coding challenge designed to measure code quality. Code through multiple incremental requirements.
                     </p>
                 </div>
                 <div class="col-md-4">
                     <img src="../000common/img/ic_timer_black_48px.svg">
-                    <h3>Challenge</h3>
-                    <h4>~${CODING_SESSION_DURATION}</h4>
+                    <h3>Pause/Resume</h3>
+                    <h4>anytime</h4>
                     <p>
-                        A realistic coding challenge designed to put your design skills to the test. This is the one
-                        that counts!
+                        You are in control of your time. You can choose to solve the challenge in one go or multiple sessions.
                     </p>
                 </div>
             </div>
@@ -153,8 +152,8 @@
             <h2>Before you start</h2>
             You will need:
             <ul>
-                <li>45 minute for Preparation + Warmup</li>
-                <li>${CODING_SESSION_DURATION} of uninterrupted coding challenge</li>
+                <li>20 minute for Preparation + Warmup</li>
+                <li>${CODING_SESSION_DURATION} challenge time, can be done in multiple coding sessions</li>
                 <li>your laptop + your IDE and a connection to the internet</li>
             </ul>
             <div class="alert alert-success">
@@ -167,7 +166,7 @@
                 access to the other results and recordings.</p>
             <p>If you are not ready you can come back to this page whenever you have
                 enough time. The link will expire on: <b>${EXPIRATION_DATE}</b></p>
-            <p>You can stop any time you want. We will consider the progress you have made so far.</p>
+            <p>The challenge can pe paused and resumed, provided that you do not work on it in-between the sessions.</p>
             <p>Ready? Let's get started.</p>
         </div>
     </div>
