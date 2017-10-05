@@ -93,7 +93,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Warmup", 
             "sponsorName": "Julian", 
-            "username":"tdl-test-iuli01", 
+            "username":"tdl-test-egor02", 
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO" ],
             "codingDurationLabel": "15 minutes"}' \
@@ -123,9 +123,9 @@ aws lambda invoke \
 --function-name tdl-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"Secret", 
-            "sponsorName": "Julian", 
-            "username":"tdl-live-mmxl01", 
+--payload '{"mainChallengeTitle":"Deluxe", 
+            "sponsorName": "Masabi", 
+            "username":"tdl-live-hros01", 
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO", "FIZ" ],
             "codingDurationLabel": "1 hour"}' \
