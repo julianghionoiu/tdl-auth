@@ -272,7 +272,7 @@
             <p>
                 Remember to start the screen recorder before you commence the main challenge.
             </p>
-            <h4>Still ready? Let's get go for it!</h4>
+            <h4>Still ready? Let's get going!</h4>
             <p>Copy the following <code>sessionId</code> and then press "Start challenge":</p>
             <pre><code>${SESSION_ID}</code></pre>
             <a href="http://run.befaster.io:8111" target="_blank" class="btn btn-primary">Start challenge</a>
