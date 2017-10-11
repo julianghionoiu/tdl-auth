@@ -179,6 +179,7 @@
                 <p>Clone the git repository for the language of your choice.</p>
                 <div>
                     <ul class="nav nav-tabs">
+                        <li><a data-toggle="tab" href="#csharp-warmup">C#</a></li>
                         <li class="active"><a data-toggle="tab" href="#java-warmup">Java</a></li>
                         <li><a data-toggle="tab" href="#nodejs-warmup">Node.js</a></li>
                         <li><a data-toggle="tab" href="#python-warmup">Python</a></li>
@@ -186,6 +187,9 @@
                         <li><a data-toggle="tab" href="#scala-warmup">Scala</a></li>
                     </ul>
                     <div class="tab-content">
+                        <div id="csharp-warmup" class="tab-pane fade">
+                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-csharp</code></pre>
+                        </div>
                         <div id="java-warmup" class="tab-pane fade in active">
                             <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-java</code></pre>
                         </div>

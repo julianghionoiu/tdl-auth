@@ -93,11 +93,12 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Warmup", 
             "sponsorName": "Julian", 
-            "username":"tdl-test-egor02", 
+            "username":"tdl-test-iuli01", 
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO" ],
             "codingDurationLabel": "15 minutes"}' \
 ./build/outputfile.txt 
+cat ./build/outputfile.txt
 ```
 
 Live Checkout link generator lambda [LIVE]
@@ -109,11 +110,12 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"tdl-live-mmxl01", 
-            "validityDays": 14, 
+            "username":"tdl-live-ujxv01", 
+            "validityDays": 10, 
             "challengeIds": [ "SUM", "HLO", "CHK" ],
             "codingDurationLabel": "4 hours"}' \
 ./build/outputfile.txt 
+cat ./build/outputfile.txt
 ```
 
 Live FizzDeluxe link generator lambda [LIVE]
@@ -125,17 +127,17 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Deluxe", 
             "sponsorName": "Masabi", 
-            "username":"tdl-live-hros01", 
+            "username":"tdl-live-dfcj01", 
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO", "FIZ" ],
             "codingDurationLabel": "1 hour"}' \
 ./build/outputfile.txt 
+cat ./build/outputfile.txt
 ```
 
-Result parse
+Error
 ```bash
 echo "base64error"  | base64 --decode
-cat ./build/outputfile.txt
 ```
 
 
