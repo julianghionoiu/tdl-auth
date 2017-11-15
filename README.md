@@ -91,14 +91,15 @@ aws lambda invoke \
 --function-name tdl-testing-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"Warmup", 
+--payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
             "username":"tdl-test-iuli01", 
             "validityDays": 14, 
-            "challengeIds": [ "SUM", "HLO" ],
-            "codingDurationLabel": "15 minutes"}' \
+            "challengeIds": [ "SUM", "HLO", "CHK" ],
+            "codingDurationLabel": "3 hours"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
+cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
 
 Live Checkout link generator lambda [LIVE]
@@ -108,14 +109,15 @@ aws lambda invoke \
 --function-name tdl-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"Secret", 
+--payload '{"mainChallengeTitle":"TEV", 
             "sponsorName": "Julian", 
-            "username":"tdl-live-pwdt01", 
+            "username":"tdl-live-demo01", 
             "validityDays": 10, 
             "challengeIds": [ "SUM", "HLO", "CHK" ],
-            "codingDurationLabel": "4 hours"}' \
+            "codingDurationLabel": "3-4 hours"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
+cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
 
 Live FizzDeluxe link generator lambda [LIVE]
@@ -127,12 +129,13 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Deluxe", 
             "sponsorName": "Masabi", 
-            "username":"tdl-live-dfcj01", 
+            "username":"tdl-live-gvjh01", 
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO", "FIZ" ],
             "codingDurationLabel": "1 hour"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
+cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
 
 Error
