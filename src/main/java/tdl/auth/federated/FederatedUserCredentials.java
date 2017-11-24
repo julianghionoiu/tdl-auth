@@ -32,8 +32,7 @@ public class FederatedUserCredentials {
         properties.setProperty("s3_region", region);
         properties.setProperty("s3_bucket", bucket);
         properties.setProperty("s3_prefix", username + "/");
-        properties.setProperty("tdl_username", username);
-        properties.store(outputStream, " Auto-generated config file ");
+        properties.store(outputStream, " Auto-generated credentials file ");
     }
 
 

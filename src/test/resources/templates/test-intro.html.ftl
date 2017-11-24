@@ -5,7 +5,7 @@
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
 <#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
 <#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.String" -->
-<#-- @ftlvariable name="SESSION_ID" type="java.lang.String" -->
+<#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
 <!DOCTYPE html>
 <html>
     <body>
@@ -16,6 +16,7 @@
 
         This link will expire on: ${EXPIRATION_DATE}
         You will get ${CODING_SESSION_DURATION} of uninterrupted coding challenge
+
 
         <!--suppress HtmlUnknownTarget -->
         <form action="${API_VERIFY_ENDPOINT}" method="post">
@@ -28,7 +29,7 @@
 
         <p>
             <label for="sid">Copy SessionId:</label>
-            <input type="text" id="sid" name="session_id" value="${SESSION_ID}" size="50"><br/>
+            <input type="text" id="sid" name="journey_id" value="${JOURNEY_ID}" size="50"><br/>
             Go to: <a href="http://run.befaster.io:8111">http://run.befaster.io:8111</a>
         </p>
     </body>

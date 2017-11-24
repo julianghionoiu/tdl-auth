@@ -16,25 +16,27 @@ public class IntroPageTemplateTest {
         String challengeTitle = "challengeTitle";
         String sponsorName = "sponsorName";
         String username = "myUsername";
+        String codingSessionDurationLabel = "3hours";
         String token = "myToken";
-        String sessionId = "mySessionId";
+        String journeyId = "myJourneyId";
         String url = "https://www.example.com/production/verify";
         IntroPageTemplate introPageTemplate = new IntroPageTemplate("test-intro.html.ftl");
         String content = introPageTemplate.generateContent(
                 challengeTitle,
                 sponsorName,
+                codingSessionDurationLabel,
                 username,
                 token,
-                sessionId,
                 url,
                 new Date(),
-                sessionId);
+                journeyId);
         assertThat(content, containsString(challengeTitle));
         assertThat(content, containsString(sponsorName));
         assertThat(content, containsString(username));
+        assertThat(content, containsString(codingSessionDurationLabel));
         assertThat(content, containsString(token));
         assertThat(content, containsString(url));
-        assertThat(content, containsString(sessionId));
+        assertThat(content, containsString(journeyId));
     }
 
 }

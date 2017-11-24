@@ -1,6 +1,8 @@
 package tdl.auth.authorizer;
 
+import io.jsonwebtoken.Claims;
+
 public interface LambdaAuthorizer {
 
-    boolean isAuthorized(String requestedPrincipal, String authToken) throws AuthenticationException;
+    Claims getClaims(String requestedPrincipal, String authToken) throws AuthenticationException, AuthorizationException;
 }

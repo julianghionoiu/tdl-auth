@@ -30,14 +30,18 @@ public class JWTKMSAuthorizer implements LambdaAuthorizer {
     }
 
     @Override
-    public boolean isAuthorized(String requestedPrincipal, String authToken) throws AuthenticationException {
+    public Claims getClaims(String requestedPrincipal, String authToken) throws AuthenticationException, AuthorizationException {
         Claims claims;
         try {
             claims = jwtDecoder.decodeAndVerify(authToken);
             String principalIdFromToken = claims.get("usr", String.class);
-            return Objects.equals(requestedPrincipal, principalIdFromToken);
+            if (!Objects.equals(requestedPrincipal, principalIdFromToken)) {
+                throw new AuthorizationException("User not authorized to perform action");
+            }
+
+            return claims;
         } catch (JWTVerificationException e) {
-            throw new AuthenticationException("JWT token is not valid", e);
+            throw new AuthenticationException("JWT Token not valid");
         }
     }
 }

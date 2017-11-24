@@ -30,7 +30,7 @@ public class IntroPageTemplate {
                                   String token,
                                   String authVerifyEndpointUrl,
                                   Date expirationDate,
-                                  String sessionId)
+                                  String journeyId)
             throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
         Map<String, String> contentParams = new HashMap<>();
@@ -41,7 +41,7 @@ public class IntroPageTemplate {
         contentParams.put("API_VERIFY_ENDPOINT", authVerifyEndpointUrl);
         contentParams.put("USERNAME", username);
         contentParams.put("TOKEN", token);
-        contentParams.put("SESSION_ID", sessionId);
+        contentParams.put("JOURNEY_ID", journeyId);
         template.process(contentParams, stringWriter);
         return stringWriter.toString();
     }

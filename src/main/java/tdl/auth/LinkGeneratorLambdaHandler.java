@@ -12,7 +12,8 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import ro.ghionoiu.kmsjwt.key.KMSEncrypt;
 import ro.ghionoiu.kmsjwt.key.KeyOperationException;
-import ro.ghionoiu.kmsjwt.token.JWTEncoder;
+import tdl.auth.helpers.JWTTdlTokenUtils;
+import tdl.auth.helpers.JourneyIdUtils;
 import tdl.auth.helpers.LambdaExceptionLogger;
 import tdl.auth.linkgenerator.LinkGeneratorRequest;
 import tdl.auth.linkgenerator.IntroPageTemplate;
@@ -20,7 +21,6 @@ import tdl.auth.linkgenerator.IntroPageTemplate;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import tdl.auth.linkgenerator.PageUploader;
 
@@ -123,8 +123,8 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
 
 
         Date expirationDate = getExpirationDate(request.getValidityDays());
-        String token = getToken(request.getUsername(), expirationDate);
-        String sessionId = encodeSessionId(request.getUsername(), request.getChallengeIds());
+        String token = JWTTdlTokenUtils.generate(kmsEncrypt, request.getUsername(), request.getChallengeIds(), expirationDate);
+        String journeyId = JourneyIdUtils.encode(request.getUsername(), request.getChallengeIds());
         context.getLogger().log("username: " + request.getUsername() + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authVerifyEndpointURL: " + authVerifyEndpointURL);
         String pageContents = introPageTemplate.generateContent(
                 request.getMainChallengeTitle(),
@@ -132,23 +132,9 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
                 request.getCodingDurationLabel(), request.getUsername(),
                 token,
                 authVerifyEndpointURL,
-                expirationDate, sessionId
+                expirationDate, journeyId
         );
         return pageUploader.uploadPage(pageContents);
-    }
-
-    private String getToken(String username, Date expirationDate) throws KeyOperationException {
-        return JWTEncoder.builder(kmsEncrypt)
-                .setExpiration(expirationDate)
-                .claim("usr", username)
-                .compact();
-    }
-
-    //Debt: This logic needs to be shared between tdl-auth and tdl-server. At the moment it is duplicated
-    private static String encodeSessionId(String username, List<String> challenges) {
-        String challengeCSV = challenges.stream().collect(Collectors.joining(","));
-        String unobfuscatedId = username + "|" + challengeCSV + "|" + "Q";
-        return Base64.getEncoder().encodeToString(unobfuscatedId.getBytes());
     }
 
     private Date getExpirationDate(int days) {

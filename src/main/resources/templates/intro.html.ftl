@@ -5,7 +5,7 @@
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
 <#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
 <#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.String" -->
-<#-- @ftlvariable name="SESSION_ID" type="java.lang.String" -->
+<#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
 <!DOCTYPE html>
 <!--suppress HtmlUnknownTarget -->
 <html lang="en">
@@ -274,7 +274,7 @@
             </p>
             <h4>Still ready? Let's get going!</h4>
             <p>Copy the following <code>sessionId</code> and then press "Start challenge":</p>
-            <pre><code>${SESSION_ID}</code></pre>
+            <pre><code>${JOURNEY_ID}</code></pre>
             <a href="http://run.befaster.io:8111" target="_blank" class="btn btn-primary">Start challenge</a>
         </div>
     </div>

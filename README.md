@@ -129,7 +129,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Deluxe", 
             "sponsorName": "Masabi", 
-            "username":"tdl-live-gvjh01", 
+            "username":"tdl-live-cfiy01", 
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO", "FIZ" ],
             "codingDurationLabel": "1 hour"}' \

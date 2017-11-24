@@ -5,6 +5,7 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
+import io.jsonwebtoken.Claims;
 import org.json.JSONException;
 import org.json.JSONObject;
 import tdl.auth.authorizer.AuthenticationException;
@@ -17,6 +18,9 @@ import tdl.auth.federated.FederatedUserCredentialsProvider;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import tdl.auth.helpers.JWTTdlTokenUtils;
+import tdl.auth.helpers.JourneyIdUtils;
 import tdl.auth.helpers.LambdaExceptionLogger;
 
 public class AuthLambdaHandler implements RequestStreamHandler {
@@ -92,10 +96,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
         context.getLogger().log("username:" + username + ", token:" + token);
 
         // Authorize
-        boolean isAuthorized = lambdaAuthorizer.isAuthorized(username, token);
-        if (!isAuthorized) {
-            throw new AuthorizationException("User not authorized to perform action");
-        }
+        Claims claims = lambdaAuthorizer.getClaims(username, token);
 
         // Generate credentials
         context.getLogger().log("providers:" + temporaryCredentialsProvider.getBucket() + " " + temporaryCredentialsProvider.getRegion());
@@ -103,13 +104,42 @@ public class AuthLambdaHandler implements RequestStreamHandler {
         FederatedUserCredentials temporaryCredentials = temporaryCredentialsProvider.getFederatedTokenFor(username);
         context.getLogger().log("temporary credentials generated:" + temporaryCredentials);
 
-        // Return as file
+        // Write AWS credentials to file
         temporaryCredentials.saveTo(outputStream);
+
+        // Write Configuration to file
+        List<String> challengeIds = JWTTdlTokenUtils.getChallengeIds(claims);
+        RunnerConfiguration.of(username, challengeIds).saveTo(outputStream);
     }
 
     private static String getStringInput(InputStream inputStream) {
         return new BufferedReader(new InputStreamReader(inputStream))
                 .lines()
                 .collect(Collectors.joining(""));
+    }
+
+    private static class RunnerConfiguration {
+        private final String username;
+        private final List<String> challengeIds;
+
+        RunnerConfiguration(String username, List<String> challengeIds) {
+            this.username = username;
+            this.challengeIds = challengeIds;
+        }
+
+        static RunnerConfiguration of(String username, List<String> challengeIds) {
+            return new RunnerConfiguration(username, challengeIds);
+        }
+
+        void saveTo(OutputStream outputStream) throws IOException {
+            Properties properties = new Properties();
+            properties.setProperty("tdl_username", username);
+            properties.setProperty("tdl_hostname", "run.befaster.io");
+            properties.setProperty("tdl_require_rec", "true");
+            properties.setProperty("tdl_journey_id", JourneyIdUtils.encode(username, challengeIds));
+            properties.setProperty("tdl_use_coloured_output", "true");
+            properties.setProperty("tdl_enable_experimental", "false");
+            properties.store(outputStream, " Runner specific configuration ");
+        }
     }
 }

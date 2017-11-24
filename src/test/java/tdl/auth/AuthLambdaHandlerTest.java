@@ -2,12 +2,14 @@ package tdl.auth;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.securitytoken.model.Credentials;
+import io.jsonwebtoken.impl.DefaultClaims;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import tdl.auth.authorizer.AuthenticationException;
+import tdl.auth.authorizer.AuthorizationException;
 import tdl.auth.authorizer.LambdaAuthorizer;
 import tdl.auth.federated.FederatedUserCredentials;
 import tdl.auth.federated.FederatedUserCredentialsProvider;
@@ -44,8 +46,8 @@ public class AuthLambdaHandlerTest {
 
     @Test
     public void generates_credentials_file_for_valid_token() throws Exception {
-        when(lambdaAuthorizer.isAuthorized(eq("test-user"), eq("token")))
-                .thenReturn(true);
+        when(lambdaAuthorizer.getClaims(eq("test-user"), eq("token")))
+                .thenReturn(new DefaultClaims());
         when(temporaryCredentialsProvider.getFederatedTokenFor(eq("test-user")))
                 .thenReturn(validCredentials());
 
@@ -64,7 +66,7 @@ public class AuthLambdaHandlerTest {
     @Test
     public void detects_authentication_error() throws Exception {
         doThrow(new AuthenticationException("failed", new Exception()))
-                .when(lambdaAuthorizer).isAuthorized(anyString(), anyString());
+                .when(lambdaAuthorizer).getClaims(anyString(), anyString());
 
         expectedException.expectMessage(containsString("[Authentication]"));
         lambdaHandler.handleRequest(jsonPayloadAsStream("test-user", "token"),
@@ -73,7 +75,7 @@ public class AuthLambdaHandlerTest {
 
     @Test
     public void detects_authorization_error() throws Exception {
-        when(lambdaAuthorizer.isAuthorized(anyString(), anyString())).thenReturn(false);
+        when(lambdaAuthorizer.getClaims(anyString(), anyString())).thenThrow(new AuthorizationException("Not allowed"));
 
         expectedException.expectMessage(containsString("[Authorization]"));
         lambdaHandler.handleRequest(jsonPayloadAsStream("test-user", "token"),

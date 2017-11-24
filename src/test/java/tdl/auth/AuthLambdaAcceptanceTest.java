@@ -13,11 +13,14 @@ import org.junit.rules.ExpectedException;
 import ro.ghionoiu.kmsjwt.key.KMSEncrypt;
 import ro.ghionoiu.kmsjwt.key.KeyOperationException;
 import ro.ghionoiu.kmsjwt.token.JWTEncoder;
+import tdl.auth.helpers.JourneyIdUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
@@ -52,16 +55,18 @@ public class AuthLambdaAcceptanceTest {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private String getValidToken(String username) throws KeyOperationException {
+    private String getValidToken(String username, List<String> challengeIds) throws KeyOperationException {
         return JWTEncoder.builder(kmsEncrypt)
                 .claim("usr", username)
+                .claim("tdl_chx", challengeIds)
                 .compact();
     }
 
     @Test
     public void obtain_temporary_credentials_for_user() throws Exception {
         HashMap<String, Object> input = new HashMap<>();
-        input.put("token", getValidToken(TEST_USERNAME));
+        List<String> challengeIds = Arrays.asList("SUM", "HLO");
+        input.put("token", getValidToken(TEST_USERNAME, challengeIds));
         input.put("username", TEST_USERNAME);
         JSONObject json = new JSONObject(input);
         //Logger.getLogger("Test").log(Level.INFO, json.toString());
@@ -69,12 +74,25 @@ public class AuthLambdaAcceptanceTest {
         handler.handleRequest(asInputStream(json), outputStream, context);
 
         String credentialsFile = outputStream.toString();
-        assertThat(credentialsFile, containsString(" Auto-generated config file"));
-        assertThat(credentialsFile, containsString(TEST_USERNAME + "/"));
+
+        assertThat(credentialsFile, containsString(" Auto-generated credentials file"));
+        assertThat(credentialsFile, containsString("s3_prefix=" + TEST_USERNAME + "/"));
         assertThat(credentialsFile, containsString("aws_secret_access_key"));
         assertThat(credentialsFile, containsString("aws_access_key_id"));
         assertThat(credentialsFile, containsString("aws_session_token"));
-        assertThat(credentialsFile, containsString("tdl_username"));
+
+        assertThat(credentialsFile, containsString(" Runner specific configuration"));
+        assertThat(credentialsFile, containsString("tdl_username=" + TEST_USERNAME));
+        assertThat(credentialsFile, containsString("tdl_hostname=run.befaster.io"));
+        assertThat(credentialsFile, containsString("tdl_require_rec=true"));
+        assertThat(credentialsFile, containsString("tdl_journey_id="
+                + asProperty(JourneyIdUtils.encode(TEST_USERNAME, challengeIds))));
+        assertThat(credentialsFile, containsString("tdl_use_coloured_output=true"));
+        assertThat(credentialsFile, containsString("tdl_enable_experimental=false"));
+    }
+
+    private static String asProperty(String s) {
+        return s.replaceAll("=", "\\\\=");
     }
 
     private ByteArrayInputStream asInputStream(JSONObject json) {
