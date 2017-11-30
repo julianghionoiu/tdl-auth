@@ -138,7 +138,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
             properties.setProperty("tdl_require_rec", "true");
             properties.setProperty("tdl_journey_id", JourneyIdUtils.encode(username, challengeIds));
             properties.setProperty("tdl_use_coloured_output", "true");
-            properties.setProperty("tdl_enable_experimental", "false");
+            properties.setProperty("tdl_enable_experimental", "true");
             properties.store(outputStream, " Runner specific configuration ");
         }
     }

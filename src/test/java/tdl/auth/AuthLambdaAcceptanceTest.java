@@ -88,7 +88,7 @@ public class AuthLambdaAcceptanceTest {
         assertThat(credentialsFile, containsString("tdl_journey_id="
                 + asProperty(JourneyIdUtils.encode(TEST_USERNAME, challengeIds))));
         assertThat(credentialsFile, containsString("tdl_use_coloured_output=true"));
-        assertThat(credentialsFile, containsString("tdl_enable_experimental=false"));
+        assertThat(credentialsFile, containsString("tdl_enable_experimental=true"));
     }
 
     private static String asProperty(String s) {

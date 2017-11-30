@@ -131,7 +131,7 @@
 
     <div class="row dark-background">
         <div class="col-md-offset-1 col-md-5">
-            <h2>It is not just a coding assignment</h2>
+            <h2>It is not just a coding exercise</h2>
             <p>You go through a realistic coding challenge designed to put your core software development skills to the
                 test.</p>
             <p>We promise that you will learn a lot by just going through this challenge.</p>
@@ -139,8 +139,7 @@
             <p>Focus on your development technique and see how well it plays out. You will be able to compare metrics
                 afterwards.</p>
             <p>Each screen gets recorded so after the challenge you get the opportunity to see (anonymously) how other
-                people have approached this problem.
-                Who knows, maybe you can learn something from them.</p>
+                people have approached this problem. You might be able to learn something from them.</p>
         </div>
         <div class="col-md-5">
             <img src="../000common/img/leaderboard-transparent-bg.png" class="img-responsive"/>
@@ -166,7 +165,7 @@
                 access to the other results and recordings.</p>
             <p>If you are not ready you can come back to this page whenever you have
                 enough time. The link will expire on: <b>${EXPIRATION_DATE}</b></p>
-            <p>The challenge can pe paused and resumed, provided that you do not work on it in-between the sessions.</p>
+            <p>The challenge can pe paused and resumed, you are in control of your time. You can do it one go or multiple sessions.</p>
             <p>Ready? Let's get started.</p>
         </div>
     </div>
@@ -180,15 +179,20 @@
                 <div>
                     <ul class="nav nav-tabs">
                         <li><a data-toggle="tab" href="#csharp-warmup">C#</a></li>
+                        <li><a data-toggle="tab" href="#fsharp-warmup">F#</a></li>
                         <li class="active"><a data-toggle="tab" href="#java-warmup">Java</a></li>
                         <li><a data-toggle="tab" href="#nodejs-warmup">Node.js</a></li>
                         <li><a data-toggle="tab" href="#python-warmup">Python</a></li>
                         <li><a data-toggle="tab" href="#ruby-warmup">Ruby</a></li>
                         <li><a data-toggle="tab" href="#scala-warmup">Scala</a></li>
+                        <li><a data-toggle="tab" href="#vb-warmup">VB.Net</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="csharp-warmup" class="tab-pane fade">
                             <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-csharp</code></pre>
+                        </div>
+                        <div id="fsharp-warmup" class="tab-pane fade">
+                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-fsharp</code></pre>
                         </div>
                         <div id="java-warmup" class="tab-pane fade in active">
                             <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-java</code></pre>
@@ -204,6 +208,9 @@
                         </div>
                         <div id="scala-warmup" class="tab-pane fade">
                             <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-scala</code></pre>
+                        </div>
+                        <div id="vb-warmup" class="tab-pane fade">
+                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-vbnet</code></pre>
                         </div>
                     </div>
                 </div>
@@ -222,16 +229,12 @@
 
     <div class="row">
         <div class="col-md-offset-1 col-md-5">
-            <div class="bottom-border">
-                <h2>Screen recording</h2>
+            <div id="setup-screen-recording">
+                <h2>2. Start recording</h2>
                 <p>While working on the main challenge you are going to record your screen and stream this to a storage
                     server.</p>
                 <p>After you perform the challenge you get to see (anonymously) how the
                     other participants tackled the same challenge.</p>
-                <p>It will be a learning exercise for both you and us.</p>
-            </div>
-            <div id="setup-screen-recording">
-                <h2>2. Start recording</h2>
                 <div class="alert alert-danger" role="alert">
                     <span class="glyphicon glyphicon-warning-sign"></span>
                     Close all the tabs that contain <strong>personal identifiable information</strong> (email, social
@@ -240,24 +243,22 @@
                     you start recording.
                 </div>
                 <p>
-                    If your name appears in your command prompt you can change this by following the instructions in the
-                    <a href="#problems-remove-name-from-prompt">problems section</a> below.
+                    <ul>
+                        <li>
+                            <p>Requires Java 8. If you do not have Java 8 <a
+                                    href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">download</a>
+                                and install it.
+                            </p>
+                        </li>
+                        <li>
+                            <p>Start the screen recorder in a new terminal tab/window.</p>
+                            <p>Windows:</p>
+                            <pre><code>./record_screen_and_upload.bat</code></pre>
+                            <p>OSX/Linux:</p>
+                            <pre><code>./record_screen_and_upload.sh</code></pre>
+                        </li>
+                    </ul>
                 </p>
-                <ul>
-                    <li>
-                        <p>Requires Java 8. If you do not have Java 8 <a
-                                href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">download</a>
-                            and install it.
-                        </p>
-                    </li>
-                    <li>
-                        <p>Start the screen recorder in a new terminal tab/window.</p>
-                        <p>Windows:</p>
-                        <pre><code>./record_screen_and_upload.bat</code></pre>
-                        <p>OSX/Linux:</p>
-                        <pre><code>./record_screen_and_upload.sh</code></pre>
-                    </li>
-                </ul>
             </div>
         </div>
         <div class="col-md-5">
@@ -265,70 +266,43 @@
         </div>
     </div>
 
-    <div class="row dark-background">
-        <div class="col-md-offset-1 col-md-6">
-            <h3>3. Start the warmup</h3>
-            <p>In your IDE of choice, open up the <code>README.md</code> file of the repo that you cloned.</p>
-            <p>
-                Remember to start the screen recorder before you commence the main challenge.
-            </p>
-            <h4>Still ready? Let's get going!</h4>
-            <p>Copy the following <code>sessionId</code> and then press "Start challenge":</p>
-            <pre><code>${JOURNEY_ID}</code></pre>
-            <a href="http://run.befaster.io:8111" target="_blank" class="btn btn-primary">Start challenge</a>
-        </div>
-    </div>
-
     <div class="row">
         <div id="challenge-flow" class="col-md-offset-1 col-md-10">
-            <h2>4. The challenge flow</h2>
-            <p>While working on the challenge you will be interacting with three components: the web interface
-                (befaster.io), a console (terminal), the IDE.</p>
+            <h2>3. Start the warmup</h2>
+            <p>In your IDE of choice, open up the <code>README.md</code> file of the repo that you cloned.</p>
+            <p>To get started, follow the instructions provided in the README.md and source code comments.</p>
+            <br/>
+            <p>While working on the challenge you will be interacting with the server by running the code and you will provide your solutions within the same project.</p>
             <p>The challenge has the following flow. Do not worry about the details, the Warmup will guide you through
                 the process.</p>
             <div class="row">
-                <div class="col-sm-12 col-md-4">
+                <div class="col-sm-12 col-md-5">
                     <img src="../000common/img/start-challenge.png" alt="Start challenge." class="img-responsive">
-                    <p>1. In a web browser, start the challenge</p>
+                    <p>1. Start the challenge</p>
                     <div class="horizontal-arrow">
                         <span class="glyphicon glyphicon-arrow-right hidden-sm hidden-xs"></span>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4">
-                    <img src="../000common/img/get_round_descriptionv3.png" alt="Get challenge instructions"
+                <div class="col-sm-12 col-md-5">
+                    <img src="../000common/img/read-instructionsv3.png" alt="Get challenge instructions"
                          class="img-responsive">
-                    <p>2. On your command line, get the challenge instructions</p>
+                    <p>2. Read the challenge instructions</p>
                     <div class="horizontal-arrow">
-                        <span class="glyphicon glyphicon-arrow-right hidden-sm hidden-xs"></span>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-4">
-                    <img src="../000common/img/read-instructionsv3.png" alt="Example of challenge instructions"
-                         class="img-responsive">
-                    <p>3. In your IDE, read the challenge instructions</p>
-                    <div class="text-center">
                         <span class="glyphicon glyphicon-arrow-down hidden-sm hidden-xs"></span>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4 col-md-push-8">
-                    <img src="../000common/img/write-a-solution.png" alt="Code a solution." class="img-responsive">
-                    <p>4. In your IDE, write a solution</p>
-                </div>
-                <div class="col-sm-12 col-md-4">
-                    <img src="../000common/img/deployv3.png" alt="Deploy your solution to production."
+                <div class="col-sm-12 col-md-5">
+                    <img src="../000common/img/check-resultsv2.png" alt="Deploy your solution to production."
                          class="img-responsive">
-                    <p>5. On your command line, deploy your solution</p>
+                    <p>4. Deploy and get feedback</p>
                     <div class="horizontal-arrow">
                         <span class="glyphicon glyphicon-arrow-left hidden-sm hidden-xs"></span>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4 col-md-pull-8">
-                    <img src="../000common/img/check-resultsv2.png" alt="See if your solution worked."
+                <div class="col-sm-12 col-md-5">
+                    <img src="../000common/img/write-a-solution.png" alt="Example of challenge instructions"
                          class="img-responsive">
-                    <p>6. In a web browser, check your results.</p>
-                    <div class="horizontal-arrow">
-                        <span class="glyphicon glyphicon-arrow-left hidden-sm hidden-xs"></span>
-                    </div>
+                    <p>3. Write a solution</p>
                 </div>
             </div>
         </div>
@@ -337,7 +311,7 @@
     <div class="row bottom-border dark-background">
         <div class="col-md-offset-1 col-md-10">
             <div>
-                <h3>5. Finishing</h3>
+                <h3>4. Finishing</h3>
                 <p>You can stop any time you want. We will consider the progress you have made so far.</p>
                 <p>When you have finished, you simply have to stop the recorder (<code>CTRL + C</code> or <code>CTRL +
                     D</code>).</p>
@@ -372,26 +346,6 @@
                     above.
                 </p>
             </div>
-        </div>
-        <div class="col-md-offset-1 col-md-10">
-            <div id="problems-copy-and-paste-into-gotty">
-                <h3>Can't copy and paste session id into http://run.befaster.io website</h3>
-                <p>Some browser versions have problems with copying and pasting text into a gotty terminal.</p>
-                <p>
-                    <strong>Actions:</strong> Type the session id into the gotty terminal on the http://run.befaster.io
-                    website
-                </p>
-            </div>
-        </div>
-        <div class="col-md-offset-1 col-md-10">
-            <div id="problems-remove-name-from-prompt">
-                <h3>I want to remove my name from the command prompt</h3>
-                <p>For bash shells you can add the following to the bottom of your <code>.bashrc</code> file so that
-                    just a
-                    <code>&#36; </code> is shown in your command prompt.
-                </p>
-            </div>
-            <pre><code>PS1='$ '</code></pre>
         </div>
     </div>
 </div>
