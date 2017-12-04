@@ -93,10 +93,10 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"tdl-test-iuli01", 
+            "username":"tdl-test-cpython01", 
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO", "CHK" ],
-            "codingDurationLabel": "3 hours"}' \
+            "codingDurationLabel": "3-4 hours"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
@@ -109,12 +109,12 @@ aws lambda invoke \
 --function-name tdl-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"TEV", 
-            "sponsorName": "Julian", 
-            "username":"tdl-live-demo01", 
-            "validityDays": 10, 
+--payload '{"mainChallengeTitle":"Checkout", 
+            "sponsorName": "iwoca", 
+            "username":"tdl-live-ewdk01", 
+            "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO", "CHK" ],
-            "codingDurationLabel": "3-4 hours"}' \
+            "codingDurationLabel": "4 hours"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
@@ -129,7 +129,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Deluxe", 
             "sponsorName": "Masabi", 
-            "username":"tdl-live-wbif01", 
+            "username":"tdl-live-upgk01", 
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO", "FIZ" ],
             "codingDurationLabel": "1 hour"}' \
