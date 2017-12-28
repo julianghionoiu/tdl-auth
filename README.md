@@ -93,16 +93,16 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"tdl-test-cpython01", 
+            "username":"tdl-test-chris01", 
             "validityDays": 14, 
-            "challengeIds": [ "SUM", "HLO", "CHK" ],
-            "codingDurationLabel": "3-4 hours"}' \
+            "challengeIds": [ "SUM", "HLO"],
+            "codingDurationLabel": "1 hour"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
 
-Live Checkout link generator lambda [LIVE]
+[LIVE] Checkout link generator lambda [LIVE]
 ```bash
 aws lambda invoke \
 --invocation-type RequestResponse \
@@ -110,8 +110,8 @@ aws lambda invoke \
 --region eu-west-2 \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout", 
-            "sponsorName": "iwoca", 
-            "username":"tdl-live-ewdk01", 
+            "sponsorName": "Julian", 
+            "username":"tdl-live-scwt01", 
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO", "CHK" ],
             "codingDurationLabel": "4 hours"}' \
@@ -120,7 +120,25 @@ cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
 
-Live FizzDeluxe link generator lambda [LIVE]
+[LIVE] Checkout LITE generator lambda [LIVE]
+```bash
+aws lambda invoke \
+--invocation-type RequestResponse \
+--function-name tdl-generate-intro \
+--region eu-west-2 \
+--log-type Tail \
+--payload '{"mainChallengeTitle":"Checkout", 
+            "sponsorName": "Masabi", 
+            "username":"tdl-live-tttv01", 
+            "validityDays": 14, 
+            "challengeIds": [ "SUM", "HLO", "CHL" ],
+            "codingDurationLabel": "2-3 hours"}' \
+./build/outputfile.txt 
+cat ./build/outputfile.txt
+cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
+```
+
+[LIVE] FizzDeluxe link generator lambda [LIVE]
 ```bash
 aws lambda invoke \
 --invocation-type RequestResponse \
