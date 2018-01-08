@@ -84,7 +84,7 @@ Test credentials endpoint
 curl -XPOST https://w62n5pnu7k.execute-api.eu-west-2.amazonaws.com/production/verify --data '{"username": "X", "token":"SGVsbG8gV29ybGQh"}'
 ```
 
-Test link generator lambda [TESTING]
+*Test link generator lambda [TESTING]*
 ```bash
 aws lambda invoke \
 --invocation-type RequestResponse \
@@ -93,7 +93,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"tdl-test-chris01", 
+            "username":"tdl-test-egor0107", 
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO"],
             "codingDurationLabel": "1 hour"}' \
@@ -102,7 +102,7 @@ cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
 
-[LIVE] Checkout link generator lambda [LIVE]
+*[LIVE] Checkout link generator lambda [LIVE]*
 ```bash
 aws lambda invoke \
 --invocation-type RequestResponse \
@@ -120,7 +120,43 @@ cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
 
-[LIVE] Checkout LITE generator lambda [LIVE]
+*[LIVE] Checkout LITE generator lambda [LIVE]*
+```bash
+aws lambda invoke \
+--invocation-type RequestResponse \
+--function-name tdl-generate-intro \
+--region eu-west-2 \
+--log-type Tail \
+--payload '{"mainChallengeTitle":"Checkout", 
+            "sponsorName": "Julian", 
+            "username":"tdl-live-frlx01", 
+            "validityDays": 14, 
+            "challengeIds": [ "SUM", "HLO", "CHK" ],
+            "codingDurationLabel": "3-4 hours"}' \
+./build/outputfile.txt 
+cat ./build/outputfile.txt
+cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
+```
+
+*[LIVE] FizzDeluxe link generator lambda [LIVE]*
+```bash
+aws lambda invoke \
+--invocation-type RequestResponse \
+--function-name tdl-generate-intro \
+--region eu-west-2 \
+--log-type Tail \
+--payload '{"mainChallengeTitle":"Deluxe",
+            "sponsorName": "Masabi",
+            "username":"tdl-live-dvqc01",
+            "validityDays": 14,
+            "challengeIds": [ "SUM", "HLO", "FIZ" ],
+            "codingDurationLabel": "1 hour"}' \
+./build/outputfile.txt
+cat ./build/outputfile.txt
+cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
+```
+
+*[LIVE] Checkout LITE generator lambda [LIVE]*
 ```bash
 aws lambda invoke \
 --invocation-type RequestResponse \
@@ -129,7 +165,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout", 
             "sponsorName": "Masabi", 
-            "username":"tdl-live-tttv01", 
+            "username":"tdl-live-palv01",
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO", "CHL" ],
             "codingDurationLabel": "2-3 hours"}' \
@@ -138,25 +174,8 @@ cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
 
-[LIVE] FizzDeluxe link generator lambda [LIVE]
-```bash
-aws lambda invoke \
---invocation-type RequestResponse \
---function-name tdl-generate-intro \
---region eu-west-2 \
---log-type Tail \
---payload '{"mainChallengeTitle":"Deluxe", 
-            "sponsorName": "Masabi", 
-            "username":"tdl-live-upgk01", 
-            "validityDays": 14, 
-            "challengeIds": [ "SUM", "HLO", "FIZ" ],
-            "codingDurationLabel": "1 hour"}' \
-./build/outputfile.txt 
-cat ./build/outputfile.txt
-cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
-```
 
-Error
+*Error*
 ```bash
 echo "base64error"  | base64 --decode
 ```
