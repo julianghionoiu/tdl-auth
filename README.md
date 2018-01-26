@@ -2,7 +2,7 @@
 [![Codeship Status for julianghionoiu/tdl-auth](https://img.shields.io/codeship/b4770d30-2797-0135-63f7-5ee2fc56bc0c/master.svg)](https://codeship.com/projects/222984)
 [![Coverage Status](https://coveralls.io/repos/github/julianghionoiu/tdl-auth/badge.svg?branch=master)](https://coveralls.io/github/julianghionoiu/tdl-auth?branch=master)
 
-## The Auth flow
+# The Auth flow
 
 ### 1. Using a private key you securely generate and sign a user token
 
@@ -93,7 +93,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"tdl-test-egor0107", 
+            "username":"tdl-test-iuli0126",
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO"],
             "codingDurationLabel": "1 hour"}' \
@@ -147,7 +147,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Deluxe",
             "sponsorName": "Masabi",
-            "username":"tdl-live-dvqc01",
+            "username":"tdl-live-xrwq01",
             "validityDays": 14,
             "challengeIds": [ "SUM", "HLO", "FIZ" ],
             "codingDurationLabel": "1 hour"}' \
@@ -165,7 +165,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout", 
             "sponsorName": "Masabi", 
-            "username":"tdl-live-palv01",
+            "username":"tdl-live-qlzf01",
             "validityDays": 14, 
             "challengeIds": [ "SUM", "HLO", "CHL" ],
             "codingDurationLabel": "2-3 hours"}' \
