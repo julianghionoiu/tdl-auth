@@ -95,7 +95,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"iuli0126",
+            "username":"iuli0127",
             "validityDays": 14, 
             "warmupChallenges": [ "SUM" ],
             "officialChallenge": "HLO",
@@ -114,32 +114,16 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout", 
             "sponsorName": "Julian", 
-            "username":"tdl-live-scwt01", 
-            "validityDays": 14, 
-            "challengeIds": [ "SUM", "HLO", "CHK" ],
+            "username":"scwt01",
+            "validityDays": 14,
+            "warmupChallenges": [ "SUM", "HLO" ],
+            "officialChallenge": "CHK",
             "codingDurationLabel": "4 hours"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
 
-*[LIVE] Checkout LITE generator lambda [LIVE]*
-```bash
-aws lambda invoke \
---invocation-type RequestResponse \
---function-name tdl-generate-intro \
---region eu-west-2 \
---log-type Tail \
---payload '{"mainChallengeTitle":"Checkout", 
-            "sponsorName": "Julian", 
-            "username":"tdl-live-frlx01", 
-            "validityDays": 14, 
-            "challengeIds": [ "SUM", "HLO", "CHK" ],
-            "codingDurationLabel": "3-4 hours"}' \
-./build/outputfile.txt 
-cat ./build/outputfile.txt
-cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
-```
 
 *[LIVE] FizzDeluxe link generator lambda [LIVE]*
 ```bash
@@ -150,9 +134,10 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Deluxe",
             "sponsorName": "Masabi",
-            "username":"tdl-live-xrwq01",
+            "username":"iuli0127",
             "validityDays": 14,
-            "challengeIds": [ "SUM", "HLO", "FIZ" ],
+            "warmupChallenges": [ "SUM", "HLO" ],
+            "officialChallenge": "FIZ",
             "codingDurationLabel": "1 hour"}' \
 ./build/outputfile.txt
 cat ./build/outputfile.txt
@@ -168,9 +153,10 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout", 
             "sponsorName": "Masabi", 
-            "username":"tdl-live-qlzf01",
-            "validityDays": 14, 
-            "challengeIds": [ "SUM", "HLO", "CHL" ],
+            "username":"qlzf01",
+            "validityDays": 14,
+            "warmupChallenges": [ "SUM", "HLO" ],
+            "officialChallenge": "CHL",
             "codingDurationLabel": "2-3 hours"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
