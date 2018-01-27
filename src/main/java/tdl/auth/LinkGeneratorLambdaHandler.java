@@ -50,7 +50,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
     }
 
     @SuppressWarnings({"unused", "WeakerAccess"})
-    public LinkGeneratorLambdaHandler() throws IOException, TemplateException {
+    public LinkGeneratorLambdaHandler() throws IOException {
         this(
                 getEnv("AUTH_REGION"),
                 getEnv("JWT_ENCRYPT_KEY_ARN"),
@@ -133,7 +133,9 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
         String pageContents = introPageTemplate.generateContent(
                 request.getMainChallengeTitle(),
                 request.getSponsorName(),
-                request.getCodingDurationLabel(), request.getUsername(),
+                request.getCodingDurationLabel(),
+                request.getUsername(),
+                request.getOfficialChallenge(),
                 token,
                 authVerifyEndpointURL,
                 expirationDate, journeyId

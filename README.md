@@ -98,7 +98,7 @@ aws lambda invoke \
             "username":"iuli0126",
             "validityDays": 14, 
             "warmupChallenges": [ "SUM" ],
-            "officialChallenge": [ "HLO" ],
+            "officialChallenge": "HLO",
             "codingDurationLabel": "1 hour"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt

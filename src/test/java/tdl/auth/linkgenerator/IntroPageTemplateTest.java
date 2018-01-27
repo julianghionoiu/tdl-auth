@@ -16,6 +16,7 @@ public class IntroPageTemplateTest {
         String challengeTitle = "challengeTitle";
         String sponsorName = "sponsorName";
         String username = "myUsername";
+        String challenge = "myChallenge";
         String codingSessionDurationLabel = "3hours";
         String token = "myToken";
         String journeyId = "myJourneyId";
@@ -26,6 +27,7 @@ public class IntroPageTemplateTest {
                 sponsorName,
                 codingSessionDurationLabel,
                 username,
+                challenge,
                 token,
                 url,
                 new Date(),
@@ -33,6 +35,7 @@ public class IntroPageTemplateTest {
         assertThat(content, containsString(challengeTitle));
         assertThat(content, containsString(sponsorName));
         assertThat(content, containsString(username));
+        assertThat(content, containsString(challenge));
         assertThat(content, containsString(codingSessionDurationLabel));
         assertThat(content, containsString(token));
         assertThat(content, containsString(url));

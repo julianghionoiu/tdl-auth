@@ -26,7 +26,9 @@ public class IntroPageTemplate {
 
     public String generateContent(String mainChallengeTitle,
                                   String sponsorName,
-                                  String codingSessionDurationLabel, String username,
+                                  String codingSessionDurationLabel,
+                                  String username,
+                                  String challenge,
                                   String token,
                                   String authVerifyEndpointUrl,
                                   Date expirationDate,
@@ -40,6 +42,7 @@ public class IntroPageTemplate {
         contentParams.put("CODING_SESSION_DURATION", codingSessionDurationLabel);
         contentParams.put("API_VERIFY_ENDPOINT", authVerifyEndpointUrl);
         contentParams.put("USERNAME", username);
+        contentParams.put("CHALLENGE", challenge);
         contentParams.put("TOKEN", token);
         contentParams.put("JOURNEY_ID", journeyId);
         template.process(contentParams, stringWriter);

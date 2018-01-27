@@ -2,6 +2,7 @@
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
 <#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
 <#-- @ftlvariable name="USERNAME" type="java.lang.String" -->
+<#-- @ftlvariable name="CHALLENGE" type="java.lang.String" -->
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
 <#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
 <#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.String" -->
@@ -219,6 +220,7 @@
                         <code>config</code> directory:</p>
                     <form action="${API_VERIFY_ENDPOINT}" method="post">
                         <input type="hidden" name="username" value="${USERNAME}">
+                        <input type="hidden" name="challenge" value="${CHALLENGE}">
                         <input type="hidden" name="token" value="${TOKEN}">
                         <input type="submit" class="btn btn-primary" value="Download credentials">
                     </form>
