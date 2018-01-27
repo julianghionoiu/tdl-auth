@@ -17,17 +17,20 @@ public class FederatedUserCredentialsProvider {
     private final String bucket;
 
     private final String region;
+    private final String scope;
 
-    public FederatedUserCredentialsProvider(String region, String bucket) {
+    public FederatedUserCredentialsProvider(String region, String bucket, String scope) {
         tokenService = AWSSecurityTokenServiceClientBuilder
                 .standard()
                 .withRegion(region)
                 .build();
         this.bucket = bucket;
         this.region = region;
+        this.scope = scope;
     }
     
-    public FederatedUserCredentialsProvider(String region, String bucket, AWSCredentialsProvider credentialsProvider) {
+    public FederatedUserCredentialsProvider(String region, String bucket, String scope,
+                                            AWSCredentialsProvider credentialsProvider) {
         tokenService = AWSSecurityTokenServiceClientBuilder
                 .standard()
                 .withCredentials(credentialsProvider)
@@ -35,16 +38,18 @@ public class FederatedUserCredentialsProvider {
                 .build();
         this.bucket = bucket;
         this.region = region;
+        this.scope = scope;
     }
 
-    public FederatedUserCredentials getFederatedTokenFor(String username) {
-        Policy policy = DefaultS3FolderPolicy.getForUser(bucket, username);
+    public FederatedUserCredentials getFederatedTokenFor(String challenge, String username) {
+        String s3Prefix = challenge + "/" + username;
+        Policy policy = DefaultS3FolderPolicy.allowAccessToPath(bucket, s3Prefix);
         GetFederationTokenRequest getFederationTokenRequest = new GetFederationTokenRequest()
-                .withName(username)
+                .withName(String.format("tdl-%s-%s", scope, username))
                 .withDurationSeconds(TEMPORARY_CREDENTIALS_VALIDITY)
                 .withPolicy(policy.toJson());
         GetFederationTokenResult federationTokenResult = tokenService.getFederationToken(getFederationTokenRequest);
-        return new FederatedUserCredentials(region, bucket, username, federationTokenResult.getCredentials());
+        return new FederatedUserCredentials(region, bucket, s3Prefix, federationTokenResult.getCredentials());
     }
 
     public String getBucket() {

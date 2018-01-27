@@ -15,21 +15,20 @@ import ro.ghionoiu.kmsjwt.key.KeyOperationException;
 import tdl.auth.helpers.JWTTdlTokenUtils;
 import tdl.auth.helpers.JourneyIdUtils;
 import tdl.auth.helpers.LambdaExceptionLogger;
-import tdl.auth.linkgenerator.LinkGeneratorRequest;
 import tdl.auth.linkgenerator.IntroPageTemplate;
+import tdl.auth.linkgenerator.LinkGeneratorRequest;
+import tdl.auth.linkgenerator.PageUploader;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Predicate;
-
-import tdl.auth.linkgenerator.PageUploader;
 
 /**
  * This handler receives JSON containing email, username, challengeId, validity.
  */
 public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorRequest, String> {
 
-    public static Configuration templateConfiguration;
+    private static Configuration templateConfiguration;
     private final IntroPageTemplate introPageTemplate;
 
     private KMSEncrypt kmsEncrypt;
@@ -62,7 +61,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
     }
 
     LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authVerifyEndpointURL,
-                               AWSCredentialsProvider awsCredential, String introPageTemplateName) throws IOException, TemplateException {
+                               AWSCredentialsProvider awsCredential, String introPageTemplateName) throws IOException {
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withCredentials(awsCredential)
                 .withRegion(region)
@@ -94,10 +93,10 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
 
     static String getLambdaExceptionTypeLabel(Exception ex) {
         Map<Class, String> map = new HashMap<Class, String>() {{
-                put(IllegalArgumentException.class, "Input");
-                put(KeyOperationException.class, "Token");
-                put(TemplateException.class, "Email");
-                put(IOException.class, "UnknownException");
+            put(IllegalArgumentException.class, "Input");
+            put(KeyOperationException.class, "Token");
+            put(TemplateException.class, "Email");
+            put(IOException.class, "UnknownException");
         }};
         return map.getOrDefault(ex.getClass(), "UnknownException");
     }
@@ -115,17 +114,22 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
         Predicate<LinkGeneratorRequest> positiveValidity = req -> req.getValidityDays() > 0;
         if (!positiveValidity.test(request)) throw new IllegalArgumentException("Incorrect validity");
 
-        Predicate<LinkGeneratorRequest> nonNullChallenges = req -> req.getChallengeIds() != null && req.getChallengeIds().size() > 0;
-        if (!nonNullChallenges.test(request)) throw new IllegalArgumentException("Challenge IDs null or empty");
+        Predicate<LinkGeneratorRequest> nonNullChallenges = req -> req.getWarmupChallenges() != null;
+        if (!nonNullChallenges.test(request)) throw new IllegalArgumentException("Warmup challenges is null");
+
+        Predicate<LinkGeneratorRequest> validChallenge = req -> req.getOfficialChallenge() != null;
+        if (!validChallenge.test(request)) throw new IllegalArgumentException("Not a valid official challenge");
 
         Predicate<LinkGeneratorRequest> codingDurationLabel = req -> req.getCodingDurationLabel() != null;
         if (!codingDurationLabel.test(request)) throw new IllegalArgumentException("Not a valid coding duration label");
 
 
         Date expirationDate = getExpirationDate(request.getValidityDays());
-        String token = JWTTdlTokenUtils.generate(kmsEncrypt, request.getUsername(), request.getChallengeIds(), expirationDate);
-        String journeyId = JourneyIdUtils.encode(request.getUsername(), request.getChallengeIds());
-        context.getLogger().log("username: " + request.getUsername() + ", token: " + token + ", pageStorageBucket: " + pageStorageBucket + ", authVerifyEndpointURL: " + authVerifyEndpointURL);
+        String token = JWTTdlTokenUtils.generate(kmsEncrypt, request.getUsername(), request.getWarmupChallenges(),
+                request.getOfficialChallenge(), expirationDate);
+        String journeyId = JourneyIdUtils.encode(request.getUsername(), request.getWarmupChallenges(), request.getOfficialChallenge());
+        context.getLogger().log(String.format("username: %s, challenge: %s, token: %s, pageStorageBucket: %s, authVerifyEndpointURL: %s",
+                request.getUsername(), request.getOfficialChallenge(), token, pageStorageBucket, authVerifyEndpointURL));
         String pageContents = introPageTemplate.generateContent(
                 request.getMainChallengeTitle(),
                 request.getSponsorName(),

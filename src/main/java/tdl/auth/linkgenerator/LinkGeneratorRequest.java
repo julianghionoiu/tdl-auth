@@ -13,6 +13,7 @@ public class LinkGeneratorRequest {
     private String sponsorName;
     private String username;
     private Integer validityDays;
-    private List<String> challengeIds;
+    private List<String> warmupChallenges;
+    private String officialChallenge;
     private String codingDurationLabel;
 }

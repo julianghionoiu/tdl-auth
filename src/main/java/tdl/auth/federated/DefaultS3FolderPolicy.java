@@ -9,30 +9,30 @@ import java.util.Arrays;
 
 class DefaultS3FolderPolicy {
 
-    static Policy getForUser(String bucket, String userName) {
-        Statement creatingObjectsStatement = getObjectCreatingStatement(bucket, userName);
-        Statement multipartUploadStatement = getMultipartUploadStatement(bucket, userName);
-        Statement listBucketStatement = getListBucketStatement(bucket, userName);
+    static Policy allowAccessToPath(String bucket, String s3BucketKey) {
+        Statement creatingObjectsStatement = getObjectCreatingStatement(bucket, s3BucketKey);
+        Statement multipartUploadStatement = getMultipartUploadStatement(bucket);
+        Statement listBucketStatement = getListBucketStatement(bucket, s3BucketKey);
 
         return new Policy("PerUserFileUploadingPolicy", Arrays.asList(multipartUploadStatement, creatingObjectsStatement, listBucketStatement));
     }
 
-    private static Statement getObjectCreatingStatement(String bucket, String userName) {
+    private static Statement getObjectCreatingStatement(String bucket, String key) {
         return new Statement(Statement.Effect.Allow)
                 .withActions(
                         () -> "s3:PutObject",
                         () -> "s3:GetObject"
                 )
-                .withResources(new Resource("arn:aws:s3:::" + bucket + "/" + userName + "/*"));
+                .withResources(new Resource("arn:aws:s3:::" + bucket + "/" + key + "/*"));
     }
 
-    private static Statement getMultipartUploadStatement(String bucket, String userName) {
+    private static Statement getMultipartUploadStatement(String bucket) {
         return new Statement(Statement.Effect.Allow)
                 .withActions(() -> "s3:ListBucketMultipartUploads")
                 .withResources(new Resource("arn:aws:s3:::" + bucket));
     }
 
-    private static Statement getListBucketStatement(String bucket, String userName) {
+    private static Statement getListBucketStatement(String bucket, String key) {
         return new Statement(Statement.Effect.Allow)
                 .withActions(
                         () -> "s3:ListBucket"
@@ -42,7 +42,7 @@ class DefaultS3FolderPolicy {
                         new Condition()
                                 .withType("StringEquals")
                                 .withConditionKey("s3:prefix")
-                                .withValues(userName+"/")
+                                .withValues(key+"/")
                 );
     }
 }

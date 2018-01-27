@@ -35,7 +35,7 @@ public class AuthLambdaHandlerTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         temporaryCredentialsProvider = mock(FederatedUserCredentialsProvider.class);
         lambdaAuthorizer = mock(LambdaAuthorizer.class);
         lambdaHandler = new AuthLambdaHandler(temporaryCredentialsProvider, lambdaAuthorizer);
@@ -46,18 +46,19 @@ public class AuthLambdaHandlerTest {
 
     @Test
     public void generates_credentials_file_for_valid_token() throws Exception {
-        when(lambdaAuthorizer.getClaims(eq("test-user"), eq("token")))
+        when(lambdaAuthorizer.getClaims(eq("test-user"), eq("test-challenge"), eq("token")))
                 .thenReturn(new DefaultClaims());
-        when(temporaryCredentialsProvider.getFederatedTokenFor(eq("test-user")))
+        when(temporaryCredentialsProvider.getFederatedTokenFor(eq("test-challenge"), eq("test-user")))
                 .thenReturn(validCredentials());
 
-        lambdaHandler.handleRequest(jsonPayloadAsStream("test-user", "token"),
+        lambdaHandler.handleRequest(jsonPayloadAsStream("test-user",
+                "test-challenge", "token"),
                 outputStream, context);
 
         String credentialsFile = outputStream.toString();
         assertThat(credentialsFile, containsString("expectedRegion"));
         assertThat(credentialsFile, containsString("expectedBucket"));
-        assertThat(credentialsFile, containsString("expectedUser"+"/"));
+        assertThat(credentialsFile, containsString("expectedS3Prefix" + "/"));
         assertThat(credentialsFile, containsString("expectedKeyId"));
         assertThat(credentialsFile, containsString("expectedSecretKey"));
         assertThat(credentialsFile, containsString("expectedSessionToken"));
@@ -66,19 +67,22 @@ public class AuthLambdaHandlerTest {
     @Test
     public void detects_authentication_error() throws Exception {
         doThrow(new AuthenticationException("failed", new Exception()))
-                .when(lambdaAuthorizer).getClaims(anyString(), anyString());
+                .when(lambdaAuthorizer).getClaims(anyString(), anyString(), anyString());
 
         expectedException.expectMessage(containsString("[Authentication]"));
-        lambdaHandler.handleRequest(jsonPayloadAsStream("test-user", "token"),
+        lambdaHandler.handleRequest(jsonPayloadAsStream("test-user",
+                "test-challenge", "token"),
                 outputStream, context);
     }
 
     @Test
     public void detects_authorization_error() throws Exception {
-        when(lambdaAuthorizer.getClaims(anyString(), anyString())).thenThrow(new AuthorizationException("Not allowed"));
+        when(lambdaAuthorizer.getClaims(anyString(), anyString(), anyString()))
+                .thenThrow(new AuthorizationException("Not allowed"));
 
         expectedException.expectMessage(containsString("[Authorization]"));
-        lambdaHandler.handleRequest(jsonPayloadAsStream("test-user", "token"),
+        lambdaHandler.handleRequest(jsonPayloadAsStream("test-user",
+                "test-challenge", "token"),
                 outputStream, context);
     }
 
@@ -93,7 +97,7 @@ public class AuthLambdaHandlerTest {
         return new FederatedUserCredentials(
                 "expectedRegion",
                 "expectedBucket",
-                "expectedUser",
+                "expectedS3Prefix",
                 new Credentials("expectedKeyId",
                         "expectedSecretKey",
                         "expectedSessionToken",
@@ -102,10 +106,11 @@ public class AuthLambdaHandlerTest {
 
 
     @SuppressWarnings("SameParameterValue")
-    private ByteArrayInputStream jsonPayloadAsStream(String username, String token) {
+    private ByteArrayInputStream jsonPayloadAsStream(String username, String challenge, String token) {
         HashMap<String, Object> input = new HashMap<>();
         input.put("token", token);
         input.put("username", username);
+        input.put("challenge", challenge);
         JSONObject json = new JSONObject(input);
         return asStream(json.toString());
     }

@@ -23,6 +23,8 @@ Resources:
                         Ref: LambdaEnvRegion
                     BUCKET:
                         Ref: AuthLambdaEnvVideoStorageBucket
+                    TDL_SCOPE:
+                        Ref: AuthLambdaEnvTDLScope
                     JWT_DECRYPT_KEY_ARN:
                         Ref: AuthLambdaEnvJwtDecryptKeyArn
                     #TODO: Remove the hack below!
@@ -209,6 +211,8 @@ Parameters:
     AuthLambdaFunctionRole:
         Type: String
     AuthLambdaEnvVideoStorageBucket:
+        Type: String
+    AuthLambdaEnvTDLScope:
         Type: String
     AuthLambdaEnvJwtDecryptKeyArn:
         Type: String

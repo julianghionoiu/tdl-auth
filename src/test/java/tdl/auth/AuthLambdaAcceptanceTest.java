@@ -38,12 +38,12 @@ public class AuthLambdaAcceptanceTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         context = mock(Context.class);
         when(context.getLogger()).thenReturn(System.out::println);
 
         handler = new AuthLambdaHandler(TEST_AWS_REGION, TEST_JWT_KEY_ARN, TEST_VIDEO_STORAGE_BUCKET,
-                TEST_USER_ACCESS_KEY_ID, TEST_USER_SECRET_ACCESS_KEY);
+                TEST_TDL_SCOPE, TEST_USER_ACCESS_KEY_ID, TEST_USER_SECRET_ACCESS_KEY);
 
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withRegion(TEST_AWS_REGION)
@@ -55,19 +55,21 @@ public class AuthLambdaAcceptanceTest {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private String getValidToken(String username, List<String> challengeIds) throws KeyOperationException {
+    private String getValidToken(String username, List<String> challengeIds, String officialChallenge) throws KeyOperationException {
         return JWTEncoder.builder(kmsEncrypt)
                 .claim("usr", username)
-                .claim("tdl_chx", challengeIds)
+                .claim("tdl_chx", officialChallenge)
+                .claim("tdl_wrm", challengeIds)
                 .compact();
     }
 
     @Test
     public void obtain_temporary_credentials_for_user() throws Exception {
         HashMap<String, Object> input = new HashMap<>();
-        List<String> challengeIds = Arrays.asList("SUM", "HLO");
-        input.put("token", getValidToken(TEST_USERNAME, challengeIds));
+        List<String> warmupChallenges = Arrays.asList("SUM", "HLO");
         input.put("username", TEST_USERNAME);
+        input.put("challenge", TEST_CHALLENGE);
+        input.put("token", getValidToken(TEST_USERNAME, warmupChallenges, TEST_CHALLENGE));
         JSONObject json = new JSONObject(input);
         //Logger.getLogger("Test").log(Level.INFO, json.toString());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -76,7 +78,7 @@ public class AuthLambdaAcceptanceTest {
         String credentialsFile = outputStream.toString();
 
         assertThat(credentialsFile, containsString(" Auto-generated credentials file"));
-        assertThat(credentialsFile, containsString("s3_prefix=" + TEST_USERNAME + "/"));
+        assertThat(credentialsFile, containsString("s3_prefix=" + TEST_CHALLENGE +"/" + TEST_USERNAME + "/"));
         assertThat(credentialsFile, containsString("aws_secret_access_key"));
         assertThat(credentialsFile, containsString("aws_access_key_id"));
         assertThat(credentialsFile, containsString("aws_session_token"));
@@ -86,7 +88,7 @@ public class AuthLambdaAcceptanceTest {
         assertThat(credentialsFile, containsString("tdl_hostname=run.befaster.io"));
         assertThat(credentialsFile, containsString("tdl_require_rec=true"));
         assertThat(credentialsFile, containsString("tdl_journey_id="
-                + asProperty(JourneyIdUtils.encode(TEST_USERNAME, challengeIds))));
+                + asProperty(JourneyIdUtils.encode(TEST_USERNAME, warmupChallenges, TEST_CHALLENGE))));
         assertThat(credentialsFile, containsString("tdl_use_coloured_output=true"));
         assertThat(credentialsFile, containsString("tdl_enable_experimental=true"));
     }

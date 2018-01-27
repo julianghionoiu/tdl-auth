@@ -8,6 +8,7 @@ import ro.ghionoiu.kmsjwt.key.KMSDecrypt;
 import ro.ghionoiu.kmsjwt.key.KeyDecrypt;
 import ro.ghionoiu.kmsjwt.token.JWTDecoder;
 import ro.ghionoiu.kmsjwt.token.JWTVerificationException;
+import tdl.auth.helpers.JWTTdlTokenUtils;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -30,12 +31,12 @@ public class JWTKMSAuthorizer implements LambdaAuthorizer {
     }
 
     @Override
-    public Claims getClaims(String requestedPrincipal, String authToken) throws AuthenticationException, AuthorizationException {
+    public Claims getClaims(String username, String officialChallenge, String authToken) throws AuthenticationException, AuthorizationException {
         Claims claims;
         try {
             claims = jwtDecoder.decodeAndVerify(authToken);
-            String principalIdFromToken = claims.get("usr", String.class);
-            if (!Objects.equals(requestedPrincipal, principalIdFromToken)) {
+            boolean claimsMatching = JWTTdlTokenUtils.isClaimsMatching(username, officialChallenge, claims);
+            if (!claimsMatching) {
                 throw new AuthorizationException("User not authorized to perform action");
             }
 

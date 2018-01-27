@@ -17,6 +17,12 @@ public class CredentialsApp {
     @Parameter(names = {"-b", "--bucket"}, description = "Name of the bucket to generate permissions for", required = true)
     private String bucket;
 
+    @Parameter(names = {"-s", "--scope"}, description = "Name scope of the bucket, username restriction (test/live)", required = true)
+    private String scope;
+
+    @Parameter(names = {"-c", "--challenge"}, description = "Challenge to generate permissions for", required = true)
+    private String challenge;
+
     @Parameter(names = {"-u", "--username"}, description = "Username to generate permissions for", required = true)
     private String username;
 
@@ -33,9 +39,9 @@ public class CredentialsApp {
 
     private void run() {
         try {
-            FederatedUserCredentialsProvider credentialsProvider = new FederatedUserCredentialsProvider(region, bucket);
+            FederatedUserCredentialsProvider credentialsProvider = new FederatedUserCredentialsProvider(region, bucket, scope);
 
-            FederatedUserCredentials credentials = credentialsProvider.getFederatedTokenFor(username);
+            FederatedUserCredentials credentials = credentialsProvider.getFederatedTokenFor(challenge, username);
 
             try (FileOutputStream output = new FileOutputStream(fileToSave)) {
                 credentials.saveTo(output);

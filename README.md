@@ -34,12 +34,14 @@ Normally this file will be saved in a location accessible by the consumer applic
 
 ### Build and run as command-line app
 ```bash
-./gradlew shadowJar
+./gradlew clean shadowJar -i
 java -Dlogback.configurationFile=`pwd`/logback.xml  \
-    -jar ./build/libs/tld-auth-0.0.1-all.jar \
+    -jar ./build/libs/tdl-auth-0.0.1-all.jar \
     --region eu-west-2 \
     --bucket tdl-test \
-    --username tdl-test-fed01 \
+    --scope test \
+    --username fed01 \
+    --challenge HLX \
     --file ./build/aws-test-secrets
     
 cat ./build/aws-test-secrets | pbcopy
@@ -93,9 +95,10 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"tdl-test-iuli0126",
+            "username":"iuli0126",
             "validityDays": 14, 
-            "challengeIds": [ "SUM", "HLO"],
+            "warmupChallenges": [ "SUM" ],
+            "officialChallenge": [ "HLO" ],
             "codingDurationLabel": "1 hour"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt

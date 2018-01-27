@@ -50,6 +50,7 @@ public class LinkGeneratorLambdaAcceptanceTest {
                 TEST_USERNAME,
                 10,
                 Arrays.asList("SUM", "UPR"),
+                "CHK",
                 "0 seconds");
         String url = handler.handleRequest(request, createMockContext());
         assertThat(url, containsString(TEST_PUBLIC_PAGE_BUCKET));

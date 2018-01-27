@@ -4,5 +4,5 @@ import io.jsonwebtoken.Claims;
 
 public interface LambdaAuthorizer {
 
-    Claims getClaims(String requestedPrincipal, String authToken) throws AuthenticationException, AuthorizationException;
+    Claims getClaims(String requestedPrincipal, String officialChallenge, String authToken) throws AuthenticationException, AuthorizationException;
 }

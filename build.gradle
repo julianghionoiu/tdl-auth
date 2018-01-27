@@ -84,7 +84,7 @@ jacocoTestReport {
 }
 
 task buildZip(type: Zip) {
-    baseName = "tld-auth-lambda"
+    baseName = "tdl-auth-lambda"
     from compileJava
     from processResources
     into('lib') {

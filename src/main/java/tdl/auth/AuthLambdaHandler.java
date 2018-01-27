@@ -40,6 +40,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
                 getEnv("REGION"),
                 getEnv("JWT_DECRYPT_KEY_ARN"),
                 getEnv("BUCKET"),
+                getEnv("TDL_SCOPE"),
                 getEnv("ACCESS_KEY"),
                 getEnv("SECRET_KEY") //TODO: Encrypt this using KMS.
         );
@@ -49,10 +50,10 @@ public class AuthLambdaHandler implements RequestStreamHandler {
      * A Lambda has temporary credentials obtained by calling AssumeRole on the
      * Execution Role, so we need to use IAM user.
      */
-    AuthLambdaHandler(String region, String jwtDecryptKeyARN, String bucket, String accessKey, String secretKey) {
+    AuthLambdaHandler(String region, String jwtDecryptKeyARN, String bucket, String scope, String accessKey, String secretKey) {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
         AWSCredentialsProvider awsCredential = new AWSStaticCredentialsProvider(awsCreds);
-        temporaryCredentialsProvider = new FederatedUserCredentialsProvider(region, bucket, awsCredential);
+        temporaryCredentialsProvider = new FederatedUserCredentialsProvider(region, bucket, scope, awsCredential);
         lambdaAuthorizer = new JWTKMSAuthorizer(region, jwtDecryptKeyARN, awsCredential);
     }
 
@@ -92,24 +93,23 @@ public class AuthLambdaHandler implements RequestStreamHandler {
         // Parse JSON
         JSONObject json = new JSONObject(inputJson);
         String username = json.getString("username");
+        String officialChallenge = json.getString("challenge");
         String token = json.getString("token");
-        context.getLogger().log("username:" + username + ", token:" + token);
+        context.getLogger().log(String.format("challenge:%s, username:%s, token:%s", officialChallenge, username, token));
 
-        // Authorize
-        Claims claims = lambdaAuthorizer.getClaims(username, token);
+        // Authorize and get claims
+        Claims claims = lambdaAuthorizer.getClaims(username, officialChallenge, token);
+        List<String> warmupChallenges = JWTTdlTokenUtils.getWarmupChallenges(claims);
 
         // Generate credentials
         context.getLogger().log("providers:" + temporaryCredentialsProvider.getBucket() + " " + temporaryCredentialsProvider.getRegion());
 
-        FederatedUserCredentials temporaryCredentials = temporaryCredentialsProvider.getFederatedTokenFor(username);
+        FederatedUserCredentials temporaryCredentials = temporaryCredentialsProvider.getFederatedTokenFor(officialChallenge, username);
         context.getLogger().log("temporary credentials generated:" + temporaryCredentials);
 
-        // Write AWS credentials to file
+        // Write Config file
         temporaryCredentials.saveTo(outputStream);
-
-        // Write Configuration to file
-        List<String> challengeIds = JWTTdlTokenUtils.getChallengeIds(claims);
-        RunnerConfiguration.of(username, challengeIds).saveTo(outputStream);
+        RunnerConfiguration.of(username, warmupChallenges, officialChallenge).saveTo(outputStream);
     }
 
     private static String getStringInput(InputStream inputStream) {
@@ -120,15 +120,17 @@ public class AuthLambdaHandler implements RequestStreamHandler {
 
     private static class RunnerConfiguration {
         private final String username;
-        private final List<String> challengeIds;
+        private final List<String> warmupChallenges;
+        private final String officialChallenge;
 
-        RunnerConfiguration(String username, List<String> challengeIds) {
+        RunnerConfiguration(String username, List<String> warmupChallenges, String officialChallenge) {
             this.username = username;
-            this.challengeIds = challengeIds;
+            this.warmupChallenges = warmupChallenges;
+            this.officialChallenge = officialChallenge;
         }
 
-        static RunnerConfiguration of(String username, List<String> challengeIds) {
-            return new RunnerConfiguration(username, challengeIds);
+        static RunnerConfiguration of(String username, List<String> warmupChallenges, String officialChallenge) {
+            return new RunnerConfiguration(username, warmupChallenges, officialChallenge);
         }
 
         void saveTo(OutputStream outputStream) throws IOException {
@@ -136,7 +138,7 @@ public class AuthLambdaHandler implements RequestStreamHandler {
             properties.setProperty("tdl_username", username);
             properties.setProperty("tdl_hostname", "run.befaster.io");
             properties.setProperty("tdl_require_rec", "true");
-            properties.setProperty("tdl_journey_id", JourneyIdUtils.encode(username, challengeIds));
+            properties.setProperty("tdl_journey_id", JourneyIdUtils.encode(username, warmupChallenges, officialChallenge));
             properties.setProperty("tdl_use_coloured_output", "true");
             properties.setProperty("tdl_enable_experimental", "true");
             properties.store(outputStream, " Runner specific configuration ");

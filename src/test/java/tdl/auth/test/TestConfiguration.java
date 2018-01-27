@@ -11,11 +11,13 @@ public class TestConfiguration {
     public static final String TEST_AWS_REGION;
     public static final String TEST_PUBLIC_PAGE_BUCKET;
     public static final String TEST_VIDEO_STORAGE_BUCKET;
+    public static final String TEST_TDL_SCOPE;
     public static final String TEST_ROOT_USER_ACCESS_KEY_ID;
     public static final String TEST_ROOT_USER_SECRET_ACCESS_KEY;
     public static final String TEST_USER_ACCESS_KEY_ID;
     public static final String TEST_USER_SECRET_ACCESS_KEY;
     public static final String TEST_USERNAME;
+    public static final String TEST_CHALLENGE;
 
     public static final String TEST_JWT_KEY_ARN;
 
@@ -24,11 +26,13 @@ public class TestConfiguration {
         TEST_AWS_REGION = getConfig("TEST_AWS_REGION");
         TEST_PUBLIC_PAGE_BUCKET = getConfig("TEST_PUBLIC_PAGE_BUCKET");
         TEST_VIDEO_STORAGE_BUCKET = getConfig("TEST_VIDEO_STORAGE_BUCKET");
+        TEST_TDL_SCOPE = getConfig("TEST_TDL_SCOPE");
         TEST_ROOT_USER_ACCESS_KEY_ID = getConfig("TEST_ROOT_USER_ACCESS_KEY_ID");
         TEST_ROOT_USER_SECRET_ACCESS_KEY = getConfig("TEST_ROOT_USER_SECRET_ACCESS_KEY");
         TEST_USER_ACCESS_KEY_ID = getConfig("TEST_USER_ACCESS_KEY_ID");
         TEST_USER_SECRET_ACCESS_KEY = getConfig("TEST_USER_SECRET_ACCESS_KEY");
         TEST_JWT_KEY_ARN = getConfig("TEST_JWT_KEY_ARN");
+        TEST_CHALLENGE = getConfig("TEST_CHALLENGE");
         TEST_USERNAME = getConfig("TEST_USERNAME");
 
     }

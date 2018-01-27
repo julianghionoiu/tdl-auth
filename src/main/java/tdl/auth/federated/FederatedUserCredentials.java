@@ -9,14 +9,14 @@ public class FederatedUserCredentials {
 
     private final String region;
     private final String bucket;
-    private final String username;
+    private final String s3Prefix;
     private final Credentials credentials;
 
 
-    public FederatedUserCredentials(String region, String bucket, String username, Credentials credentials) {
+    public FederatedUserCredentials(String region, String bucket, String s3Prefix, Credentials credentials) {
         this.region = region;
         this.bucket = bucket;
-        this.username = username;
+        this.s3Prefix = s3Prefix;
         this.credentials = credentials;
     }
 
@@ -31,7 +31,7 @@ public class FederatedUserCredentials {
         properties.setProperty("aws_session_token", credentials.getSessionToken());
         properties.setProperty("s3_region", region);
         properties.setProperty("s3_bucket", bucket);
-        properties.setProperty("s3_prefix", username + "/");
+        properties.setProperty("s3_prefix", s3Prefix + "/");
         properties.store(outputStream, " Auto-generated credentials file ");
     }
 
@@ -39,7 +39,7 @@ public class FederatedUserCredentials {
     @Override
     public String toString() {
         return "FederatedUserCredentials{" +
-                "username='" + username + '\'' +
+                "s3Prefix='" + s3Prefix + '\'' +
                 ", credentials=<secret>" +
                 ", region='" + region + '\'' +
                 ", bucket='" + bucket + '\'' +
