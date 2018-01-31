@@ -278,14 +278,14 @@
             <p>The challenge has the following flow. Do not worry about the details, the Warmup will guide you through
                 the process.</p>
             <div class="row">
-                <div class="col-sm-12 col-md-5">
+                <div class="col-sm-6 col-md-5">
                     <img src="../000common/img/start-challenge.png" alt="Start challenge." class="img-responsive">
                     <p>1. Start the challenge</p>
                     <div class="horizontal-arrow">
                         <span class="glyphicon glyphicon-arrow-right hidden-sm hidden-xs"></span>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-5">
+                <div class="col-sm-6 col-md-5">
                     <img src="../000common/img/read-instructionsv3.png" alt="Get challenge instructions"
                          class="img-responsive">
                     <p>2. Read the challenge instructions</p>
@@ -293,18 +293,20 @@
                         <span class="glyphicon glyphicon-arrow-down hidden-sm hidden-xs"></span>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-5">
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-5">
+                    <img src="../000common/img/write-a-solution.png" alt="Example of challenge instructions"
+                         class="img-responsive">
+                    <p>3. Write a solution</p>
+                </div>
+                <div class="col-sm-6 col-md-5">
                     <img src="../000common/img/check-resultsv2.png" alt="Deploy your solution to production."
                          class="img-responsive">
                     <p>4. Deploy and get feedback</p>
                     <div class="horizontal-arrow">
                         <span class="glyphicon glyphicon-arrow-left hidden-sm hidden-xs"></span>
                     </div>
-                </div>
-                <div class="col-sm-12 col-md-5">
-                    <img src="../000common/img/write-a-solution.png" alt="Example of challenge instructions"
-                         class="img-responsive">
-                    <p>3. Write a solution</p>
                 </div>
             </div>
         </div>
