@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
 <#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
@@ -7,7 +8,6 @@
 <#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
 <#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.String" -->
 <#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
-<!DOCTYPE html>
 <html>
     <body>
         <div class="text-center">

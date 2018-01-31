@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
 <#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
@@ -7,8 +8,6 @@
 <#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
 <#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.String" -->
 <#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
-<!DOCTYPE html>
-<!--suppress HtmlUnknownTarget -->
 <html lang="en">
 <head>
     <title>BeFaster</title>
@@ -214,8 +213,8 @@
                     </div>
                 </div>
                 <div>
-                    <p>To securely connect to the server you need to download and save the following credentials to the
-                        <code>config</code> directory:</p>
+                    <p>To securely connect to the server you need to download a pair of credentials <b>before each coding session</b>.
+                        Download and save the credentials to the <code>config</code> directory:</p>
                     <form action="${API_VERIFY_ENDPOINT}" method="post">
                         <input type="hidden" name="username" value="${USERNAME}">
                         <input type="hidden" name="challenge" value="${CHALLENGE}">
@@ -337,8 +336,7 @@
                     You see the following error message on starting the screen recording:
                 </p>
                 <div class="alert alert-danger">
-                    ERROR [main] - User does not have enough permissions to upload. Reason: The credentials have
-                    expired. Solution: Download new credentials from the challenge link.
+                    ERROR [main] - User does not have enough permissions to upload. Reason: The provided token has expired.
                 </div>
                 <p><strong>Causes:</strong> The credentials you have for uploading your screen recording have expired.
                 </p>
