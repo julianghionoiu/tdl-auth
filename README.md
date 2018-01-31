@@ -95,7 +95,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"iuli0127",
+            "username":"iuli0131",
             "validityDays": 14, 
             "warmupChallenges": [ "SUM" ],
             "officialChallenge": "HLO",

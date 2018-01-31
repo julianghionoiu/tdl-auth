@@ -104,7 +104,7 @@
                 <div class="col-md-4">
                     <img src="../000common/img/ic_settings_black_24dp_2x.png">
                     <h3>Set up</h3>
-                    <h4>20 mins</h4>
+                    <h4>15 mins</h4>
                     <p>
                         You will clone a github repo, install some libraries and will then be ready
                         to write code in your own IDE using your choice of frameworks and tools.
@@ -152,7 +152,7 @@
             <h2>Before you start</h2>
             You will need:
             <ul>
-                <li>20 minute for Preparation + Warmup</li>
+                <li>15 minutes for Preparation + Warmup</li>
                 <li>${CODING_SESSION_DURATION} challenge time, can be done in multiple coding sessions</li>
                 <li>your laptop + your IDE and a connection to the internet</li>
             </ul>
@@ -161,9 +161,7 @@
                 focus on
                 the challenge.
             </div>
-            <p>Only people who have completed the challenge or spent at least ${CODING_SESSION_DURATION} working on the
-                challenge will have
-                access to the other results and recordings.</p>
+            <p>People who have completed the challenge will have access to the other results and recordings.</p>
             <p>If you are not ready you can come back to this page whenever you have
                 enough time. The link will expire on: <b>${EXPIRATION_DATE}</b></p>
             <p>The challenge can pe paused and resumed, you are in control of your time. You can do it one go or multiple sessions.</p>
@@ -247,10 +245,12 @@
                 <p>
                     <ul>
                         <li>
-                            <p>Requires Java 8. If you do not have Java 8 <a
+                            Requires Java 8. If you do not have Java 8 <a
                                     href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">download</a>
                                 and install it.
-                            </p>
+                        </li>
+                        <li>
+                            If you have multiple screens attached, please only use the laptop screen for coding.
                         </li>
                         <li>
                             <p>Start the screen recorder in a new terminal tab/window.</p>
@@ -319,16 +319,14 @@
                     D</code>).</p>
                 <p>After finishing, your recording will be reviewed by ${SPONSOR} and you will be contacted with
                     feedback.</p>
-                <p>If you completed the challenge or spent at least ${CODING_SESSION_DURATION} working on the challenge,
-                    you will receive links to video recordings of other developers taking the challenge and an
-                    anonymised leader board with time data. This will be a great opportunity to see how you rank, to see
-                    how other approaches to the challenge played out and to identify areas for improvement.</p>
+                <p>If you have completed the challenge, ${SPONSOR} will give you access to the performance report and all the other solutions. This will be a great opportunity to see how you rank, to see
+                    how other approaches to the challenge played out.</p>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
-            <h2>Common problems</h2>
+            <h2>Possible problems</h2>
         </div>
         <div class="col-md-offset-1 col-md-10">
             <div id="problems-credentials-have-expired">
@@ -337,8 +335,8 @@
                     You see the following error message on starting the screen recording:
                 </p>
                 <div class="alert alert-danger">
-                    ERROR [main] - User does not have enough permissions to upload. Reason: The provided token has
-                    expired.
+                    ERROR [main] - User does not have enough permissions to upload. Reason: The credentials have
+                    expired. Solution: Download new credentials from the challenge link.
                 </div>
                 <p><strong>Causes:</strong> The credentials you have for uploading your screen recording have expired.
                 </p>
@@ -346,6 +344,18 @@
                     <strong>Actions:</strong> You need to download new credentials. See the <a
                         href="#clone-repo-section">"Clone repo and download credentials"</a> section
                     above.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-10">
+            <div id="technical-issues">
+                <h3>Other technical issues</h3>
+                <p>
+                    If, for any technical reason, you are not able to go through the challenge please email:
+                </p>
+                <pre><code>participant@exocode.co.uk</code></pre>
+                <p>
+                    We can provide you with alternative ways of completing the challenge.
                 </p>
             </div>
         </div>
