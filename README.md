@@ -132,10 +132,10 @@ aws lambda invoke \
 --function-name tdl-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"Checkout", 
+--payload '{"mainChallengeTitle":"Insights",
             "sponsorName": "iwoca",
             "username":"yhyu01",
-            "validityDays": 10,
+            "validityDays": 14,
             "warmupChallenges": [ "SUM", "HLO" ],
             "officialChallenge": "CHK",
             "codingDurationLabel": "3-4 hours"}' \
