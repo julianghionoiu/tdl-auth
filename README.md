@@ -132,17 +132,38 @@ aws lambda invoke \
 --function-name tdl-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"Insights",
+--payload '{"mainChallengeTitle":"Checkout",
             "sponsorName": "iwoca",
-            "username":"yhyu01",
+            "username":"hqvw01",
             "validityDays": 14,
             "warmupChallenges": [ "SUM", "HLO" ],
             "officialChallenge": "CHK",
-            "codingDurationLabel": "3-4 hours"}' \
+            "codingDurationLabel": "2-4 hours"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
+
+*[LIVE] Insights link generator lambda [LIVE]*
+```bash
+aws lambda invoke \
+--invocation-type RequestResponse \
+--function-name tdl-generate-intro \
+--region eu-west-2 \
+--log-type Tail \
+--payload '{"mainChallengeTitle":"Insights",
+            "sponsorName": "Julian",
+            "username":"hied01",
+            "validityDays": 7,
+            "warmupChallenges": [ "SUM", "HLO" ],
+            "officialChallenge": "CHK",
+            "codingDurationLabel": "2-4 hours"}' \
+./build/outputfile.txt
+cat ./build/outputfile.txt
+cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
+```
+
+
 
 
 *Error*
