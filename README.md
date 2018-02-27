@@ -134,11 +134,11 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout",
             "sponsorName": "iwoca",
-            "username":"hqvw01",
+            "username":"dzih01",
             "validityDays": 14,
             "warmupChallenges": [ "SUM", "HLO" ],
             "officialChallenge": "CHK",
-            "codingDurationLabel": "2-4 hours"}' \
+            "codingDurationLabel": "can be solved in 2 hours"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy

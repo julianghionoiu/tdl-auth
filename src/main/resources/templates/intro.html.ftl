@@ -103,7 +103,7 @@
                 <div class="col-md-4">
                     <img src="../000common/img/ic_settings_black_24dp_2x.png">
                     <h3>Set up</h3>
-                    <h4>15 mins</h4>
+                    <h4>in minutes</h4>
                     <p>
                         You will clone a github repo, install some libraries and will then be ready
                         to write code in your own IDE using your choice of frameworks and tools.
@@ -112,7 +112,7 @@
                 <div class="col-md-4">
                     <img src="../000common/img/ic_whatshot_black_24dp_2x.png">
                     <h3>Challenge</h3>
-                    <h4>~${CODING_SESSION_DURATION}</h4>
+                    <h4>${CODING_SESSION_DURATION}</h4>
                     <p>
                         A realistic coding challenge designed to measure code quality. Code through multiple incremental requirements.
                     </p>
