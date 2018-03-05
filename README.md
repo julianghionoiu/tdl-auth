@@ -95,7 +95,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"egor0201",
+            "username":"iuli0305",
             "validityDays": 14, 
             "warmupChallenges": [ "SUM" ],
             "officialChallenge": "HLO",
@@ -114,7 +114,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout",
             "sponsorName": "Julian",
-            "username":"iuli0131_1",
+            "username":"iuli0305",
             "validityDays": 10,
             "warmupChallenges": [ "SUM" ],
             "officialChallenge": "HLO",
@@ -134,7 +134,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout",
             "sponsorName": "iwoca",
-            "username":"dzih01",
+            "username":"lmez01",
             "validityDays": 14,
             "warmupChallenges": [ "SUM", "HLO" ],
             "officialChallenge": "CHK",
@@ -154,7 +154,7 @@ aws lambda invoke \
 --payload '{"mainChallengeTitle":"Insights",
             "sponsorName": "Julian",
             "username":"hied01",
-            "validityDays": 7,
+            "validityDays": 14,
             "warmupChallenges": [ "SUM", "HLO" ],
             "officialChallenge": "CHK",
             "codingDurationLabel": "2-4 hours"}' \
