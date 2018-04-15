@@ -155,7 +155,7 @@
                 <li>${CODING_SESSION_DURATION} challenge time, can be done in multiple coding sessions</li>
                 <li>your laptop + your IDE and a connection to the internet</li>
             </ul>
-            <div class="alert alert-success">
+            <div class="alert alert-info">
                 We encourage you put aside some time in a quiet environment where you won't be interrupted so you can
                 focus on
                 the challenge.
@@ -230,17 +230,16 @@
         <div class="col-md-offset-1 col-md-5">
             <div id="setup-screen-recording">
                 <h2>2. Start recording</h2>
-                <p>While working on the main challenge you are going to record your screen and stream this to a storage
-                    server.</p>
-                <p>After you perform the challenge you get to see (anonymously) how the
-                    other participants tackled the same challenge.</p>
+                <p>The development technique is as important as the final solution. It is very informative to see
+                    how the source code evolved over time and this is why we ask participants to record screen and source code.</p>
+                <p>This also means that you get access to all the data. After you perform the challenge you get to see (anonymously) how the
+                    other participants tackled the same challenge. This includes video and source code.</p>
                 <div class="alert alert-danger" role="alert">
                     <span class="glyphicon glyphicon-warning-sign"></span>
-                    Close all the tabs that contain <strong>personal identifiable information</strong> (email, social
-                    media)
-                    before
-                    you start recording.
+                    We do not collect <strong>personal identifiable information</strong> (email, social
+                    media), so please close all other tabs that contain these before you start recording.
                 </div>
+                <p>Although very useful, if recording video makes you uncomfortable, you can disable it by adding the <code>--no-video</code> option to the recorder command line.</p>
                 <p>
                     <ul>
                         <li>
@@ -252,7 +251,7 @@
                             If you have multiple screens attached, please only use the laptop screen for coding.
                         </li>
                         <li>
-                            <p>Start the screen recorder in a new terminal tab/window.</p>
+                            <p>Start the recorder in a new terminal tab/window.</p>
                             <p>Windows:</p>
                             <pre><code>./record_screen_and_upload.bat</code></pre>
                             <p>OSX/Linux:</p>
@@ -338,7 +337,7 @@
                 <div class="alert alert-danger">
                     ERROR [main] - User does not have enough permissions to upload. Reason: The provided token has expired.
                 </div>
-                <p><strong>Causes:</strong> The credentials you have for uploading your screen recording have expired.
+                <p><strong>Causes:</strong> The credentials you have for uploading your recordinghave expired.
                 </p>
                 <p>
                     <strong>Actions:</strong> You need to download new credentials. See the <a
