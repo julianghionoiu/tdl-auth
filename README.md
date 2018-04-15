@@ -95,7 +95,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Secret", 
             "sponsorName": "Julian", 
-            "username":"iuli0305",
+            "username":"iuli0327",
             "validityDays": 14, 
             "warmupChallenges": [ "SUM" ],
             "officialChallenge": "HLO",
@@ -114,7 +114,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout",
             "sponsorName": "Julian",
-            "username":"iuli0305",
+            "username":"iuli0409",
             "validityDays": 10,
             "warmupChallenges": [ "SUM" ],
             "officialChallenge": "HLO",
@@ -134,7 +134,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout",
             "sponsorName": "iwoca",
-            "username":"lmez01",
+            "username":"qpct01",
             "validityDays": 14,
             "warmupChallenges": [ "SUM", "HLO" ],
             "officialChallenge": "CHK",
@@ -157,7 +157,7 @@ aws lambda invoke \
             "validityDays": 14,
             "warmupChallenges": [ "SUM", "HLO" ],
             "officialChallenge": "CHK",
-            "codingDurationLabel": "2-4 hours"}' \
+            "codingDurationLabel": "can be solved in 2 hours"}' \
 ./build/outputfile.txt
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
