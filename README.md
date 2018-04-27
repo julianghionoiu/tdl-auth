@@ -134,7 +134,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout",
             "sponsorName": "iwoca",
-            "username":"qpct01",
+            "username":"bwqf01",
             "validityDays": 14,
             "warmupChallenges": [ "SUM", "HLO" ],
             "officialChallenge": "CHK",
@@ -151,13 +151,13 @@ aws lambda invoke \
 --function-name tdl-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"Insights",
-            "sponsorName": "Julian",
-            "username":"hied01",
-            "validityDays": 14,
+--payload '{"mainChallengeTitle":"Deluxe",
+            "sponsorName": "8th Light",
+            "username":"kmph01",
+            "validityDays": 17,
             "warmupChallenges": [ "SUM", "HLO" ],
-            "officialChallenge": "CHK",
-            "codingDurationLabel": "can be solved in 2 hours"}' \
+            "officialChallenge": "FIZ",
+            "codingDurationLabel": "can be solved in 45 mins"}' \
 ./build/outputfile.txt
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
