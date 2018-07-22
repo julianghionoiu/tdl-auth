@@ -114,7 +114,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout",
             "sponsorName": "Julian",
-            "username":"iuli0409",
+            "username":"iuli0716",
             "validityDays": 10,
             "warmupChallenges": [ "SUM" ],
             "officialChallenge": "HLO",
@@ -134,7 +134,7 @@ aws lambda invoke \
 --log-type Tail \
 --payload '{"mainChallengeTitle":"Checkout",
             "sponsorName": "iwoca",
-            "username":"bwqf01",
+            "username":"ybvs01",
             "validityDays": 14,
             "warmupChallenges": [ "SUM", "HLO" ],
             "officialChallenge": "CHK",
@@ -151,13 +151,13 @@ aws lambda invoke \
 --function-name tdl-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"Deluxe",
-            "sponsorName": "8th Light",
-            "username":"kmph01",
-            "validityDays": 17,
+--payload '{"mainChallengeTitle":"Checkout",
+            "sponsorName": "Valtech",
+            "username":"qjrr01",
+            "validityDays": 60,
             "warmupChallenges": [ "SUM", "HLO" ],
-            "officialChallenge": "FIZ",
-            "codingDurationLabel": "can be solved in 45 mins"}' \
+            "officialChallenge": "CHK",
+            "codingDurationLabel": "can be solved in 2-3 hours"}' \
 ./build/outputfile.txt
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
