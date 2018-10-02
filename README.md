@@ -14,17 +14,17 @@ Token contains:
 ### 2. User receives token via mail
  
 A URL will be generated with the token contained in the http GET parameters.
-The URL will take the user to a webpage with instruction on how to use generate and use the credentials.
+The URL will take the user to a webpage containing instructions on how to generate and use the credentials.
 
 ### 3. User exchanges token for temporary credentials.
 
-When user clicks the download button a request will be send to the AWS Lambda responsible for generating temporary credentials.
+When a user clicks the download button a request will be sent to the AWS Lambda responsible for generating temporary credentials.
 
 The Lambda does the following:
-  - Verifies request signature using public key
-  - Generated temporary credentials using STS
-  - Creates the credentials files
-  - The Lambda will sit behind API Gateway and will be accessed via Http
+  - Verifies the request signature by using the public key
+  - Generates temporary credentials using STS
+  - Creates the credential files
+  - The Lambda will sit behind the API Gateway and will be accessed via the secure http protocol
   
 ### 4. User will be instructed to save the credentials file
 
