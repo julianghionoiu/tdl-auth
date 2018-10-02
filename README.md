@@ -35,6 +35,10 @@ Normally this file will be saved in a location accessible by the consumer applic
 ### Build and run as command-line app
 ```bash
 ./gradlew clean shadowJar -i
+
+export AWS_ACCESS_KEY_ID="local_test_access_key"
+export AWS_SECRET_ACCESS_KEY="local_test_secret_key"
+
 java -Dlogback.configurationFile=`pwd`/logback.xml  \
     -jar ./build/libs/tdl-auth-0.0.1-all.jar \
     --region eu-west-2 \
