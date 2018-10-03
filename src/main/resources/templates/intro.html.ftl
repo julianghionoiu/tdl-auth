@@ -12,7 +12,7 @@
 <#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
 <html lang="en">
 <head>
-    <title>${SPONSOR} Coding Challenge</title>
+    <title>${SPONSOR} - Coding Challenge</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link
