@@ -12,7 +12,7 @@
 <#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
 <html lang="en">
 <head>
-    <title>BeFaster</title>
+    <title>Accelerate.io</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link
@@ -20,7 +20,10 @@
             rel="stylesheet"
             integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
             crossorigin="anonymous">
-    <link rel='shortcut icon' href='img/favicon.ico' type='image/x-icon'>
+    <link rel="apple-touch-icon" sizes="57x57" href="../000common/img/logo_favicon_apple.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="../000common/img/logo_favicon.png"/>
+
+
     <style>
         div {
             height: 100%;
