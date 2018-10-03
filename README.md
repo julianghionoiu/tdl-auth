@@ -93,13 +93,15 @@ aws lambda invoke \
 --function-name tdl-testing-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"Secret", 
-            "sponsorName": "Julian", 
-            "username":"iuli0327",
+--payload '{"headerImageName": "mountain.jpg",
+            "mainChallengeTitle":"Secret",
+            "sponsorName": "Julian",
+            "codingDurationLabel": "1 hour",
+            "allowNoVideoOption": true,
+            "username":"mani0310",
             "validityDays": 14, 
             "warmupChallenges": [ "SUM" ],
-            "officialChallenge": "HLO",
-            "codingDurationLabel": "1 hour"}' \
+            "officialChallenge": "HLO"}' \
 ./build/outputfile.txt 
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
@@ -112,58 +114,19 @@ aws lambda invoke \
 --function-name tdl-generate-intro \
 --region eu-west-2 \
 --log-type Tail \
---payload '{"mainChallengeTitle":"Checkout",
+--payload '{"headerImageName": "mountain.jpg",
+            "mainChallengeTitle":"Checkout",
             "sponsorName": "Julian",
-            "username":"iuli0716",
+            "codingDurationLabel": "10 minutes",
+            "allowNoVideoOption": true,
+            "username":"iuli0831",
             "validityDays": 10,
             "warmupChallenges": [ "SUM" ],
-            "officialChallenge": "HLO",
-            "codingDurationLabel": "10 minutes"}' \
+            "officialChallenge": "HLO"}' \
 ./build/outputfile.txt
 cat ./build/outputfile.txt
 cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 ```
-
-
-*[LIVE] Checkout link generator lambda [LIVE]*
-```bash
-aws lambda invoke \
---invocation-type RequestResponse \
---function-name tdl-generate-intro \
---region eu-west-2 \
---log-type Tail \
---payload '{"mainChallengeTitle":"Checkout",
-            "sponsorName": "iwoca",
-            "username":"ybvs01",
-            "validityDays": 14,
-            "warmupChallenges": [ "SUM", "HLO" ],
-            "officialChallenge": "CHK",
-            "codingDurationLabel": "can be solved in 2 hours"}' \
-./build/outputfile.txt 
-cat ./build/outputfile.txt
-cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
-```
-
-*[LIVE] Insights link generator lambda [LIVE]*
-```bash
-aws lambda invoke \
---invocation-type RequestResponse \
---function-name tdl-generate-intro \
---region eu-west-2 \
---log-type Tail \
---payload '{"mainChallengeTitle":"Checkout",
-            "sponsorName": "Valtech",
-            "username":"qjrr01",
-            "validityDays": 60,
-            "warmupChallenges": [ "SUM", "HLO" ],
-            "officialChallenge": "CHK",
-            "codingDurationLabel": "can be solved in 2-3 hours"}' \
-./build/outputfile.txt
-cat ./build/outputfile.txt
-cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
-```
-
-
 
 
 *Error*

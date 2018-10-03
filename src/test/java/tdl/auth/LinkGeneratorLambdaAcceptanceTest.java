@@ -45,13 +45,15 @@ public class LinkGeneratorLambdaAcceptanceTest {
     @Test
     public void should_generate_link() {
         LinkGeneratorRequest request = new LinkGeneratorRequest(
+                "mountain.jpg",
                 "AcceptanceTest",
                 "CI",
+                "0 seconds",
+                true,
                 TEST_USERNAME,
                 10,
                 Arrays.asList("SUM", "UPR"),
-                "CHK",
-                "0 seconds");
+                "CHK");
         String url = handler.handleRequest(request, createMockContext());
         assertThat(url, containsString(TEST_PUBLIC_PAGE_BUCKET));
         assertThat(url, not(containsString("&Signature="))); //assert that this is from public read bucket

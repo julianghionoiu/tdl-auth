@@ -1,5 +1,6 @@
 group 'ro.ghionoiu'
-version '0.0.1'
+//DEBT Remember to also change the version in ./deploy.sh
+version '0.0.2'
 
 buildscript {
     repositories {

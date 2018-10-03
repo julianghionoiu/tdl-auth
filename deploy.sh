@@ -11,7 +11,7 @@ PROFILE=$1
 source ./configs/deploy/env-${PROFILE}.sh
 STACK_OPT="--stack-name ${STACK_NAME}"
 AWS_CF_EXEC="aws ${AWS_CONFIG} cloudformation"
-LAMBDA_CODE=tdl-auth-lambda-0.0.1.zip
+LAMBDA_CODE=tdl-auth-lambda-0.0.2.zip
 
 echo "Uploading Zip to S3..."
 SYNC_OUTPUT=$(aws ${AWS_CONFIG} s3 sync \

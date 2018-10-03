@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+<#-- @ftlvariable name="HEADER_IMAGE_NAME" type="java.lang.String" -->
 <#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
 <#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
+<#-- @ftlvariable name="ALLOW_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
 <#-- @ftlvariable name="USERNAME" type="java.lang.String" -->
 <#-- @ftlvariable name="CHALLENGE" type="java.lang.String" -->
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
@@ -47,7 +49,7 @@
         }
 
         .jumbotron {
-            background-image: url('../000common/img/mountain-largev2.jpg');
+            background-image: url('../000common/img/header/${HEADER_IMAGE_NAME}');
             background-position: top center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -239,7 +241,9 @@
                     We do not collect <strong>personal identifiable information</strong> (email, social
                     media), so please close all other tabs that contain these before you start recording.
                 </div>
+                <#if ALLOW_NO_VIDEO_OPTION>
                 <p>Although very useful, if recording video makes you uncomfortable, you can disable it by adding the <code>--no-video</code> option to the recorder command line.</p>
+                </#if>
                 <p>
                     <ul>
                         <li>

@@ -24,9 +24,11 @@ public class IntroPageTemplate {
         dateFormatter = DateFormat.getDateInstance(DateFormat.FULL);
     }
 
-    public String generateContent(String mainChallengeTitle,
+    public String generateContent(String headerImageName,
+                                  String mainChallengeTitle,
                                   String sponsorName,
                                   String codingSessionDurationLabel,
+                                  Boolean allowNoVideoOption,
                                   String username,
                                   String challenge,
                                   String token,
@@ -35,11 +37,13 @@ public class IntroPageTemplate {
                                   String journeyId)
             throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
-        Map<String, String> contentParams = new HashMap<>();
+        Map<String, Object> contentParams = new HashMap<>();
+        contentParams.put("HEADER_IMAGE_NAME", headerImageName);
         contentParams.put("MAIN_CHALLENGE_TITLE", mainChallengeTitle);
         contentParams.put("SPONSOR", sponsorName);
         contentParams.put("EXPIRATION_DATE", dateFormatter.format(expirationDate));
         contentParams.put("CODING_SESSION_DURATION", codingSessionDurationLabel);
+        contentParams.put("ALLOW_NO_VIDEO_OPTION", allowNoVideoOption);
         contentParams.put("API_VERIFY_ENDPOINT", authVerifyEndpointUrl);
         contentParams.put("USERNAME", username);
         contentParams.put("CHALLENGE", challenge);

@@ -13,6 +13,7 @@ public class IntroPageTemplateTest {
 
     @Test
     public void generate() throws IOException, TemplateException {
+        String headerImageName = "headerImageName.jpg";
         String challengeTitle = "challengeTitle";
         String sponsorName = "sponsorName";
         String username = "myUsername";
@@ -23,20 +24,24 @@ public class IntroPageTemplateTest {
         String url = "https://www.example.com/production/verify";
         IntroPageTemplate introPageTemplate = new IntroPageTemplate("test-intro.html.ftl");
         String content = introPageTemplate.generateContent(
+                headerImageName,
                 challengeTitle,
                 sponsorName,
                 codingSessionDurationLabel,
+                true,
                 username,
                 challenge,
                 token,
                 url,
                 new Date(),
                 journeyId);
+        assertThat(content, containsString(headerImageName));
         assertThat(content, containsString(challengeTitle));
         assertThat(content, containsString(sponsorName));
         assertThat(content, containsString(username));
         assertThat(content, containsString(challenge));
         assertThat(content, containsString(codingSessionDurationLabel));
+        assertThat(content, containsString("no video option enabled"));
         assertThat(content, containsString(token));
         assertThat(content, containsString(url));
         assertThat(content, containsString(journeyId));

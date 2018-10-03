@@ -131,9 +131,11 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
         context.getLogger().log(String.format("username: %s, challenge: %s, token: %s, pageStorageBucket: %s, authVerifyEndpointURL: %s",
                 request.getUsername(), request.getOfficialChallenge(), token, pageStorageBucket, authVerifyEndpointURL));
         String pageContents = introPageTemplate.generateContent(
+                request.getHeaderImageName(),
                 request.getMainChallengeTitle(),
                 request.getSponsorName(),
                 request.getCodingDurationLabel(),
+                request.getAllowNoVideoOption(),
                 request.getUsername(),
                 request.getOfficialChallenge(),
                 token,

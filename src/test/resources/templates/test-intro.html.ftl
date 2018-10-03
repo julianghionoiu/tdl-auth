@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+<#-- @ftlvariable name="HEADER_IMAGE_NAME" type="java.lang.String" -->
 <#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
 <#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
+<#-- @ftlvariable name="ALLOW_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
 <#-- @ftlvariable name="USERNAME" type="java.lang.String" -->
 <#-- @ftlvariable name="CHALLENGE" type="java.lang.String" -->
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
@@ -10,6 +12,7 @@
 <#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
 <html>
     <body>
+        <p>Using custom header image name: ${HEADER_IMAGE_NAME}</p>
         <div class="text-center">
             <h1>Welcome to the ${MAIN_CHALLENGE_TITLE} challenge</h1>
             <h2>Sponsored by ${SPONSOR}</h2>
@@ -18,6 +21,9 @@
         This link will expire on: ${EXPIRATION_DATE}
         You will get ${CODING_SESSION_DURATION} of uninterrupted coding challenge
 
+        <#if ALLOW_NO_VIDEO_OPTION>
+        <p>no video option enabled</p>
+        </#if>
 
         <!--suppress HtmlUnknownTarget -->
         <form action="${API_VERIFY_ENDPOINT}" method="post">
