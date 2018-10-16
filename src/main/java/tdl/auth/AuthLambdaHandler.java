@@ -136,6 +136,8 @@ public class AuthLambdaHandler implements RequestStreamHandler {
         void saveTo(OutputStream outputStream) throws IOException {
             Properties properties = new Properties();
             properties.setProperty("tdl_username", username);
+            properties.setProperty("tdl_request_queue_name", username+".req");
+            properties.setProperty("tdl_response_queue_name", username+".resp");
             properties.setProperty("tdl_hostname", "run.befaster.io");
             properties.setProperty("tdl_require_rec", "true");
             properties.setProperty("tdl_journey_id", JourneyIdUtils.encode(username, warmupChallenges, officialChallenge));

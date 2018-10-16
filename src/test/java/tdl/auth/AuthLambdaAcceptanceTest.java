@@ -85,6 +85,8 @@ public class AuthLambdaAcceptanceTest {
 
         assertThat(credentialsFile, containsString(" Runner specific configuration"));
         assertThat(credentialsFile, containsString("tdl_username=" + TEST_USERNAME));
+        assertThat(credentialsFile, containsString("tdl_request_queue_name=" + TEST_USERNAME+".req"));
+        assertThat(credentialsFile, containsString("tdl_response_queue_name=" + TEST_USERNAME+".resp"));
         assertThat(credentialsFile, containsString("tdl_hostname=run.befaster.io"));
         assertThat(credentialsFile, containsString("tdl_require_rec=true"));
         assertThat(credentialsFile, containsString("tdl_journey_id="
