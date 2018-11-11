@@ -56,18 +56,17 @@
             background-position: top center;
             background-repeat: no-repeat;
             background-size: cover;
+            color: #fff;
             margin-bottom: 0;
             padding-bottom: 75px;
             padding-top: 80px;
         }
 
         .jumbotron h1 {
-            color: #fff;
             text-shadow: 2px 2px 0 #333;
         }
 
         .jumbotron h2 {
-            color: #fff;
             text-shadow: 1px 1px 0 #333;
         }
 
