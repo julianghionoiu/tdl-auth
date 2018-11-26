@@ -14,7 +14,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "codingDurationLabel": "can be solved in 45 minutes",
   "allowNoVideoOption": true,
   "username":"${USERNAME}",
-  "validityDays": 14,
+  "validityDays": 7,
   "warmupChallenges": [ "SUM", "HLO" ],
   "officialChallenge": "FIZ"
 }
