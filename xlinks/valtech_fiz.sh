@@ -28,4 +28,4 @@ aws lambda invoke \
 --payload "file://${PAYLOAD_FILE}" \
 ./build/outputfile.txt
 cat ./build/outputfile.txt
-cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
+cat ./build/outputfile.txt | tr -d "\"" | sed  's/intro.befaster.io.s3.eu-west-2.amazonaws.com/intro.accelerate.io/' | pbcopy
