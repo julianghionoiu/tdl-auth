@@ -18,11 +18,12 @@ public class IntroPageManualRender {
     public static void main(String[] args) throws IOException, TemplateException {
         IntroPageTemplate template = new IntroPageTemplate(
                 "intro.html.ftl",
-                "../000common", "https://www.example.com/production/verify");
+                "../staticResources",
+                "https://www.example.com/production/verify");
         String content = template.generateContent(
-                "headerImageName.jpg",
+                "accelerate.jpg",
                 "challengeTitle",
-                "sponsorName",
+                "LongName Company",
                 "3hours",
                 true,
                 "myUsername",

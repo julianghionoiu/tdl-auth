@@ -53,7 +53,7 @@
         }
 
         .jumbotron {
-            background-image: url('${RESOURCES_WEB_PATH}/img/header/${HEADER_IMAGE_NAME}');
+            background-image: url("${RESOURCES_WEB_PATH}/img/header/${HEADER_IMAGE_NAME}");
             background-position: top center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -79,7 +79,6 @@
             position: absolute;
             left: 100%;
             top: 40%;
-        "
         }
 
         #challenge-flow .glyphicon {
@@ -96,7 +95,7 @@
 <body>
 
 <div class="jumbotron text-center">
-    <h1>Welcome to the ${SPONSOR} challenge</h1>
+    <h1>The ${SPONSOR} challenge</h1>
     <h2>${MAIN_CHALLENGE_TITLE}</h2>
 </div>
 
