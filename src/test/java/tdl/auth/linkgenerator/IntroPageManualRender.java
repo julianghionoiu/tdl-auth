@@ -4,6 +4,7 @@ import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Date;
@@ -24,15 +25,16 @@ public class IntroPageManualRender {
                 "accelerate.jpg",
                 "challengeTitle",
                 "LongName Company",
-                "3hours",
+                "3 hours",
                 true,
                 "myUsername",
                 "myChallenge",
                 "myToken",
                 new Date(),
                 "myJourneyId");
-        String path = "./build/intro.html";
-        Files.write( Paths.get(path), content.getBytes(), StandardOpenOption.CREATE);
+        Files.write(Paths.get("./build/intro.html"), content.getBytes(),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING);
     }
 
 }
