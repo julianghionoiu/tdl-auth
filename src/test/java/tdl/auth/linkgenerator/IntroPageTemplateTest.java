@@ -13,6 +13,7 @@ public class IntroPageTemplateTest {
 
     @Test
     public void generate() throws IOException, TemplateException {
+        String resourcesWebPath = "webPath";
         String headerImageName = "headerImageName.jpg";
         String challengeTitle = "challengeTitle";
         String sponsorName = "sponsorName";
@@ -21,8 +22,11 @@ public class IntroPageTemplateTest {
         String codingSessionDurationLabel = "3hours";
         String token = "myToken";
         String journeyId = "myJourneyId";
-        String url = "https://www.example.com/production/verify";
-        IntroPageTemplate introPageTemplate = new IntroPageTemplate("test-intro.html.ftl");
+        String authUrl = "https://www.example.com/production/verify";
+        IntroPageTemplate introPageTemplate = new IntroPageTemplate(
+                "test-intro.html.ftl",
+                resourcesWebPath,
+                authUrl);
         String content = introPageTemplate.generateContent(
                 headerImageName,
                 challengeTitle,
@@ -32,10 +36,9 @@ public class IntroPageTemplateTest {
                 username,
                 challenge,
                 token,
-                url,
                 new Date(),
                 journeyId);
-        assertThat(content, containsString(headerImageName));
+        assertThat(content, containsString(resourcesWebPath+"/"+headerImageName));
         assertThat(content, containsString(challengeTitle));
         assertThat(content, containsString(sponsorName));
         assertThat(content, containsString(username));
@@ -43,7 +46,7 @@ public class IntroPageTemplateTest {
         assertThat(content, containsString(codingSessionDurationLabel));
         assertThat(content, containsString("no video option enabled"));
         assertThat(content, containsString(token));
-        assertThat(content, containsString(url));
+        assertThat(content, containsString(authUrl));
         assertThat(content, containsString(journeyId));
     }
 

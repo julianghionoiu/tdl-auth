@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<#-- @ftlvariable name="RESOURCES_WEB_PATH" type="java.lang.String" -->
 <#-- @ftlvariable name="HEADER_IMAGE_NAME" type="java.lang.String" -->
 <#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
@@ -20,8 +21,8 @@
             rel="stylesheet"
             integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
             crossorigin="anonymous">
-    <link rel="apple-touch-icon" sizes="57x57" href="../000common/img/logo_favicon_apple.png"/>
-    <link rel="icon" type="image/png" sizes="32x32" href="../000common/img/logo_favicon.png"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="${RESOURCES_WEB_PATH}/img/logo_favicon_apple.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="${RESOURCES_WEB_PATH}/img/logo_favicon.png"/>
 
 
     <style>
@@ -52,7 +53,7 @@
         }
 
         .jumbotron {
-            background-image: url('../000common/img/header/${HEADER_IMAGE_NAME}');
+            background-image: url('${RESOURCES_WEB_PATH}/img/header/${HEADER_IMAGE_NAME}');
             background-position: top center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -95,8 +96,8 @@
 <body>
 
 <div class="jumbotron text-center">
-    <h1>Welcome to the ${MAIN_CHALLENGE_TITLE} challenge</h1>
-    <h2>Sponsored by ${SPONSOR}</h2>
+    <h1>Welcome to the ${SPONSOR} challenge</h1>
+    <h2>${MAIN_CHALLENGE_TITLE}</h2>
 </div>
 
 <div class="container-fluid">
@@ -105,7 +106,7 @@
             <h2>How does this work?</h2>
             <div class="row text-center">
                 <div class="col-md-4">
-                    <img src="../000common/img/ic_settings_black_24dp_2x.png">
+                    <img src="${RESOURCES_WEB_PATH}/img/ic_settings_black_24dp_2x.png">
                     <h3>Set up</h3>
                     <h4>in minutes</h4>
                     <p>
@@ -114,7 +115,7 @@
                     </p>
                 </div>
                 <div class="col-md-4">
-                    <img src="../000common/img/ic_whatshot_black_24dp_2x.png">
+                    <img src="${RESOURCES_WEB_PATH}/img/ic_whatshot_black_24dp_2x.png">
                     <h3>Challenge</h3>
                     <h4>${CODING_SESSION_DURATION}</h4>
                     <p>
@@ -122,7 +123,7 @@
                     </p>
                 </div>
                 <div class="col-md-4">
-                    <img src="../000common/img/ic_timer_black_48px.svg">
+                    <img src="${RESOURCES_WEB_PATH}/img/ic_timer_black_48px.svg">
                     <h3>Pause/Resume</h3>
                     <h4>anytime</h4>
                     <p>
@@ -146,7 +147,7 @@
                 people have approached this problem. You might be able to learn something from them.</p>
         </div>
         <div class="col-md-5">
-            <img src="../000common/img/leaderboard-transparent-bg.png" class="img-responsive"/>
+            <img src="${RESOURCES_WEB_PATH}/img/leaderboard-transparent-bg.png" class="img-responsive"/>
         </div>
     </div>
 
@@ -268,7 +269,7 @@
             </div>
         </div>
         <div class="col-md-5">
-            <img src="../000common/img/hello-challenge.gif" class="img-responsive">
+            <img src="${RESOURCES_WEB_PATH}/img/hello-challenge.gif" class="img-responsive">
         </div>
     </div>
 
@@ -283,14 +284,14 @@
                 the process.</p>
             <div class="row">
                 <div class="col-sm-6 col-md-5">
-                    <img src="../000common/img/start-challenge.png" alt="Start challenge." class="img-responsive">
+                    <img src="${RESOURCES_WEB_PATH}/img/start-challenge.png" alt="Start challenge." class="img-responsive">
                     <p>1. Start the challenge</p>
                     <div class="horizontal-arrow">
                         <span class="glyphicon glyphicon-arrow-right hidden-sm hidden-xs"></span>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-5">
-                    <img src="../000common/img/read-instructionsv3.png" alt="Get challenge instructions"
+                    <img src="${RESOURCES_WEB_PATH}/img/read-instructionsv3.png" alt="Get challenge instructions"
                          class="img-responsive">
                     <p>2. Read the challenge instructions</p>
                     <div class="horizontal-arrow">
@@ -300,12 +301,12 @@
             </div>
             <div class="row">
                 <div class="col-sm-6 col-md-5">
-                    <img src="../000common/img/write-a-solution.png" alt="Example of challenge instructions"
+                    <img src="${RESOURCES_WEB_PATH}/img/write-a-solution.png" alt="Example of challenge instructions"
                          class="img-responsive">
                     <p>3. Write a solution</p>
                 </div>
                 <div class="col-sm-6 col-md-5">
-                    <img src="../000common/img/check-resultsv2.png" alt="Deploy your solution to production."
+                    <img src="${RESOURCES_WEB_PATH}/img/check-resultsv2.png" alt="Deploy your solution to production."
                          class="img-responsive">
                     <p>4. Deploy and get feedback</p>
                     <div class="horizontal-arrow">

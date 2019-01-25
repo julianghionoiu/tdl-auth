@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<#-- @ftlvariable name="RESOURCES_WEB_PATH" type="java.lang.String" -->
 <#-- @ftlvariable name="HEADER_IMAGE_NAME" type="java.lang.String" -->
 <#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
@@ -12,7 +13,7 @@
 <#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
 <html>
     <body>
-        <p>Using custom header image name: ${HEADER_IMAGE_NAME}</p>
+        <p>Using custom header image name: ${RESOURCES_WEB_PATH}/${HEADER_IMAGE_NAME}</p>
         <div class="text-center">
             <h1>Welcome to the ${MAIN_CHALLENGE_TITLE} challenge</h1>
             <h2>Sponsored by ${SPONSOR}</h2>

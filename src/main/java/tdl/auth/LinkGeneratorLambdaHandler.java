@@ -57,11 +57,12 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
                 getEnv("PAGE_STORAGE_BUCKET"),
                 getEnv("AUTH_ENDPOINT_URL"),
                 DefaultAWSCredentialsProviderChain.getInstance(),
-                "intro.html.ftl");
+                "intro.html.ftl",
+                "../000common");
     }
 
     LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authVerifyEndpointURL,
-                               AWSCredentialsProvider awsCredential, String introPageTemplateName) throws IOException {
+                               AWSCredentialsProvider awsCredential, String introPageTemplateName, String resourcesWebPath) throws IOException {
         AWSKMS kmsClient = AWSKMSClientBuilder.standard()
                 .withCredentials(awsCredential)
                 .withRegion(region)
@@ -76,8 +77,10 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
         this.authVerifyEndpointURL = authVerifyEndpointURL;
         this.pageUploader = new PageUploader(s3client, pageStorageBucket);
 
-
-        this.introPageTemplate = new IntroPageTemplate(introPageTemplateName);
+        this.introPageTemplate = new IntroPageTemplate(
+                introPageTemplateName,
+                resourcesWebPath,
+                authVerifyEndpointURL);
     }
 
     @Override
@@ -139,7 +142,6 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
                 request.getUsername(),
                 request.getOfficialChallenge(),
                 token,
-                authVerifyEndpointURL,
                 expirationDate, journeyId
         );
         return pageUploader.uploadPage(pageContents);

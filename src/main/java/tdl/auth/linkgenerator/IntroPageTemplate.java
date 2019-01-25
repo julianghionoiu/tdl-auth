@@ -16,12 +16,20 @@ public class IntroPageTemplate {
     private final Template template;
     private final DateFormat dateFormatter;
 
+    private final String resourcesWebPath;
+    private final String authVerifyEndpointUrl;
 
-    public IntroPageTemplate(String templateName) throws IOException {
+
+    public IntroPageTemplate(String templateName,
+                             String resourcesWebPath,
+                             String authVerifyEndpointUrl) throws IOException {
         Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(IntroPageTemplate.class, "/templates/");
         template = configuration.getTemplate(templateName);
         dateFormatter = DateFormat.getDateInstance(DateFormat.FULL);
+
+        this.resourcesWebPath = resourcesWebPath;
+        this.authVerifyEndpointUrl = authVerifyEndpointUrl;
     }
 
     public String generateContent(String headerImageName,
@@ -32,12 +40,12 @@ public class IntroPageTemplate {
                                   String username,
                                   String challenge,
                                   String token,
-                                  String authVerifyEndpointUrl,
                                   Date expirationDate,
                                   String journeyId)
             throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> contentParams = new HashMap<>();
+        contentParams.put("RESOURCES_WEB_PATH", resourcesWebPath);
         contentParams.put("HEADER_IMAGE_NAME", headerImageName);
         contentParams.put("MAIN_CHALLENGE_TITLE", mainChallengeTitle);
         contentParams.put("SPONSOR", sponsorName);

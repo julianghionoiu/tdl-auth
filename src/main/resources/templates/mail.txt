@@ -1,6 +1,0 @@
-Dear,
-
-Here's the URL:
-${PAGE_URL}
-
-Regards,
