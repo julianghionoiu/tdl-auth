@@ -157,14 +157,13 @@
             background-color: transparent;
             border-radius: 0;
         }
-        .os-list-tab{
-            margin-bottom: 20px;
+        .os-list-tab, .lang-list-tab{
             border-bottom: none
         }
-        .os-list-tab .nav-link{
+        .os-list-tab .nav-link, .lang-list-tab .nav-link{
             border-radius: 0.25rem;
         }
-        .os-list-tab .nav-link.active{
+        .os-list-tab .nav-link.active, .lang-list-tab .nav-link.active{
             border-color: #dee2e6;
         }
         .btn-primary {
@@ -173,7 +172,38 @@
             border-color: #2e6da4;
         }
         .container-half{
-            width: 50%;
+            width: 70%;
+        }
+        .card-body #languagesTabContent{
+            height: auto;
+        }
+        .card-body {
+            padding: 0 1.25rem;
+        }
+        #languagesTab, #osTab, #languagesTabContent{
+            padding: 18px 0;
+        }
+        .step-title{
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+        }
+        p.step{
+            border: 1px solid #337ab7;
+            border-radius: 50%;
+            padding: 5px 6px 5px 8px;
+            text-decoration: none;
+            margin: 0 -5px 0 0;
+            color: #337ab7;
+        }
+        .step-title .btn-link {
+            font-weight: 400;
+            color: #337ab7;
+            text-align: left;
+        }
+        p.step:hover{
+            text-decoration: none;
         }
         @media only screen and (max-width: 767px) {
             img {
@@ -277,68 +307,130 @@
             <div>
                 <h3>1. Download runner project</h3>
                 <p>Clone the git repository for the language of your choice.</p>
-                <div class="container-half">
 
-                    <ul class="nav nav-tabs os-list-tab" id="myTab" role="tablist">
-                        <li class="nav-item os-list">
-                            <a class="nav-link" id="home-tab" data-toggle="tab" href="#windowsos" role="tab" aria-selected="false">Windows</a>
-                        </li>
-                        <li class="nav-item os-list">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#macos" role="tab" aria-selected="false">Mac</a>
-                        </li>
-                        <li class="nav-item os-list">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#linuxos" role="tab" aria-selected="true">Linux</a>
-                        </li>
-                    </ul>
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h2 class="mb-0 mt-0 step-title">
+                                <p class="step">1.</p>
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Select your operating system
+                                </button>
+                            </h2>
+                        </div>
 
-                    <ul class="nav nav-tabs" id="languagesTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link" id="home-tab" data-toggle="tab" href="#csharp" role="tab" aria-selected="false">C#</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#fsharp" role="tab" aria-selected="false">F#</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#java" role="tab" aria-selected="true">Java</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#nodejs" role="tab" aria-selected="false">Node.js</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#python" role="tab" aria-selected="false">Python</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#ruby" role="tab" aria-selected="false">Ruby</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#scala" role="tab" aria-selected="false">Scala</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#vbnet" role="tab" aria-selected="false">VB.Net</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="languagesTabContent">
-                        <div class="tab-pane fade" id="csharp" role="tabpanel" aria-labelledby="home-tab"><pre><code>https://get.accelerate.io/v0/runner-for-csharp-windowsos.zip</code></pre></div>
-                        <div class="tab-pane fade" id="fsharp" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-fsharp-windowsos.zip</code></pre></div>
-                        <div class="tab-pane fade show active" id="java" role="tabpanel" aria-labelledby="contact-tab"><pre><code>https://get.accelerate.io/v0/runner-for-java-windowsos.zip</code></pre></div>
-                        <div class="tab-pane fade" id="nodejs" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-nodejs-windowsos.zip</code></pre></div>
-                        <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-python-windowsos.zip</code></pre></div>
-                        <div class="tab-pane fade" id="ruby" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-ruby-windowsos.zip</code></pre></div>
-                        <div class="tab-pane fade" id="scala" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-scala-windowsos.zip</code></pre></div>
-                        <div class="tab-pane fade" id="vbnet" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-vbnet-windowsos.zip</code></pre></div>
-
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs os-list-tab" id="osTab" role="tablist">
+                                    <li class="nav-item os-list">
+                                        <a class="nav-link" id="windows-tab" data-toggle="tab" href="#windows" role="tab" aria-selected="false">Windows</a>
+                                    </li>
+                                    <li class="nav-item os-list">
+                                        <a class="nav-link" id="macos-tab" data-toggle="tab" href="#macos" role="tab" aria-selected="false">Mac</a>
+                                    </li>
+                                    <li class="nav-item os-list">
+                                        <a class="nav-link" id="linux-tab" data-toggle="tab" href="#linux" role="tab" aria-selected="true">Linux</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-
-                </div>
-                <div  class="container-half">
-                    <p>To securely connect to the server you need to download a pair of credentials <b>before each coding session</b>.
-                        Download and save the credentials to the <code>config</code> directory:</p>
-                    <form action="${API_VERIFY_ENDPOINT}" method="post">
-                        <input type="hidden" name="username" value="${USERNAME}">
-                        <input type="hidden" name="challenge" value="${CHALLENGE}">
-                        <input type="hidden" name="token" value="${TOKEN}">
-                        <input type="submit" class="btn btn-primary" value="Download credentials">
-                    </form>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h2 class="mb-0 mt-0 step-title">
+                                <p class="step">2.</p>
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Select your preferred language
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs lang-list-tab" id="languagesTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="csharp-tab" data-toggle="tab" href="#csharp" role="tab" aria-selected="false">C#</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="fsharp-tab" data-toggle="tab" href="#fsharp" role="tab" aria-selected="false">F#</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="java-tab" data-toggle="tab" href="#java" role="tab" aria-selected="true">Java</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="nodejs-tab" data-toggle="tab" href="#nodejs" role="tab" aria-selected="false">Node.js</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="python-tab" data-toggle="tab" href="#python" role="tab" aria-selected="false">Python</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="ruby-tab" data-toggle="tab" href="#ruby" role="tab" aria-selected="false">Ruby</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="scala-tab" data-toggle="tab" href="#scala" role="tab" aria-selected="false">Scala</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="vbnet-tab" data-toggle="tab" href="#vbnet" role="tab" aria-selected="false">VB.Net</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h2 class="mb-0 mt-0 step-title">
+                                <p class="step">3.</p>
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Download and extract the runner project.
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="tab-content" id="languagesTabContent">
+                                    <div class="tab-pane fade" id="csharp" role="tabpanel" aria-labelledby="home-tab">
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-csharp-windows.zip; unzip runner-for-csharp-windows.zip</code></pre>
+                                        <p>OR</p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-csharp-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                    </div>
+                                    <div class="tab-pane fade" id="fsharp" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-fsharp-windows.zip; unzip runner-for-fsharp-windows.zip</code></pre>
+                                        <p>OR</p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-fsharp-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                    </div>
+                                    <div class="tab-pane fade show active" id="java" role="tabpanel" aria-labelledby="contact-tab">
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-java-windows.zip; unzip runner-for-java-windows.zip</code></pre>
+                                        <p>OR</p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-java-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                    </div>
+                                    <div class="tab-pane fade" id="nodejs" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-nodejs-windows.zip; unzip runner-for-nodejs-windows.zip</code></pre>
+                                        <p>OR</p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-nodejs-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                    </div>
+                                    <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-python-windows.zip; unzip runner-for-python-windows.zip</code></pre>
+                                        <p>OR</p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-python-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                    </div>
+                                    <div class="tab-pane fade" id="ruby" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-ruby-windows.zip; unzip runner-for-ruby-windows.zip</code></pre>
+                                        <p>OR</p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-ruby-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                    </div>
+                                    <div class="tab-pane fade" id="scala" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-scala-windows.zip; unzip runner-for-scala-windows.zip</code></pre>
+                                        <p>OR</p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-scala-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                    </div>
+                                    <div class="tab-pane fade" id="vbnet" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-vbnet-windows.zip; unzip runner-for-vbnet-windows.zip</code></pre>
+                                        <p>OR</p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-vbnet-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -501,17 +593,17 @@
 
 
         if(userOS.indexOf("Win") >= 0){
-            os = 'windowsos';
+            os = 'windows';
         }
         if(userOS.indexOf("Linux") >= 0){
-            os = 'linuxos';
+            os = 'linux';
         }
         if(userOS.indexOf("Mac") >= 0){
             os = 'macos';
         }
 
         if(os === ''){
-            os = 'windowsos';
+            os = 'windows';
         }
 
         $.each(osList, function( index, value ) {
@@ -524,12 +616,16 @@
 
         $.each(languagesTabContentDivs, function( index, value ) {
             var codeContent = $(value).find('code').text();
-
-            codeContent = codeContent.replace("windowsos", os);
-
+            codeContent = codeContent.replace(/\windows/g, os);
             $(value).find('code').text(codeContent);
 
+            var buttonHref = $(value).find('a').attr('href');
+            buttonHref = buttonHref.replace(/\windows/g, os);
+            $(value).find('a').attr('href', buttonHref);
+
         });
+
+
 
         osList.click(function (event) {
             event.preventDefault();
@@ -540,11 +636,18 @@
             $.each(languagesTabContentDivs, function( index, value ) {
                 var codeContent = $(value).find('code').text();
 
-                codeContent = codeContent.replace("linuxos", targetHrefValue);
-                codeContent = codeContent.replace("windowsos", targetHrefValue);
-                codeContent = codeContent.replace("macos", targetHrefValue);
+                codeContent = codeContent.replace(/\linux/g, targetHrefValue);
+                codeContent = codeContent.replace(/\windows/g, targetHrefValue);
+                codeContent = codeContent.replace(/\macos/g, targetHrefValue);
 
                 $(value).find('code').text(codeContent);
+
+
+                var buttonHref = $(value).find('a').attr('href');
+                buttonHref = buttonHref.replace(/\linux/g, targetHrefValue);
+                buttonHref = buttonHref.replace(/\windows/g, targetHrefValue);
+                buttonHref = buttonHref.replace(/\macos/g, targetHrefValue);
+                $(value).find('a').attr('href', buttonHref);
 
             });
         });
