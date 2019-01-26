@@ -17,7 +17,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="apple-touch-icon" sizes="57x57" href="${RESOURCES_WEB_PATH}/img/logo_favicon_apple.png"/>
     <link rel="icon" type="image/png" sizes="32x32" href="${RESOURCES_WEB_PATH}/img/logo_favicon.png"/>
 
@@ -190,20 +190,20 @@
             -webkit-align-items: center;
         }
         p.step-text{
-            color: #337ab7;
+            color: #4C5675;
             margin: 0 0 0 10px;
         }
         p.step{
-            border: 1px solid #337ab7;
+            border: 1px solid #4C5675;
             border-radius: 50%;
             padding: 5px 6px 5px 8px;
             text-decoration: none;
             margin: 0;
-            color: #337ab7;
+            color: #4C5675;
         }
         .step-title .btn-link {
             font-weight: 400;
-            color: #337ab7;
+            color: #4C5675;
             text-align: left;
         }
         p.step:hover{
@@ -212,9 +212,23 @@
         .step-title .btn-link:hover {
             text-decoration: none;
         }
+        .btn-primary-darkBlue{
+            background-color: #4C5675;
+            border-color: #4C5675;
+        }
+        .btn-primary-darkBlue:hover, .btn-primary-darkBlue:focus, .btn-primary-darkBlue:visited{
+            background-color: #6b769f;
+            border-color: #4C5675;
+        }
+        .copy-text{
+
+        }
         @media only screen and (max-width: 767px) {
             img {
                 margin: 0;
+            }
+            .horizontal-arrow{
+                display: none;
             }
         }
         @media only screen and (max-width: 1360px) {
@@ -397,68 +411,79 @@
                                     <div class="tab-pane fade" id="csharp" role="tabpanel" aria-labelledby="home-tab">
                                         <pre><code>wget https://get.accelerate.io/v0/runner-for-csharp-windows.zip;
 unzip runner-for-csharp-windows.zip</code></pre>
+                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-csharp-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-csharp-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="fsharp" role="tabpanel" aria-labelledby="profile-tab">
                                         <pre><code>wget https://get.accelerate.io/v0/runner-for-fsharp-windows.zip;
 unzip runner-for-fsharp-windows.zip</code></pre>
+                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-fsharp-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-fsharp-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade show active" id="java" role="tabpanel" aria-labelledby="contact-tab">
                                         <pre><code>wget https://get.accelerate.io/v0/runner-for-java-windows.zip;
 unzip runner-for-java-windows.zip</code></pre>
+                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-java-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-java-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="nodejs" role="tabpanel" aria-labelledby="profile-tab">
                                         <pre><code>wget https://get.accelerate.io/v0/runner-for-nodejs-windows.zip;
 unzip runner-for-nodejs-windows.zip</code></pre>
+                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-nodejs-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-nodejs-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="profile-tab">
                                         <pre><code>wget https://get.accelerate.io/v0/runner-for-python-windows.zip;
 unzip runner-for-python-windows.zip</code></pre>
+                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-python-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-python-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="ruby" role="tabpanel" aria-labelledby="profile-tab">
                                         <pre><code>wget https://get.accelerate.io/v0/runner-for-ruby-windows.zip;
 unzip runner-for-ruby-windows.zip</code></pre>
+                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-ruby-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-ruby-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="scala" role="tabpanel" aria-labelledby="profile-tab">
                                         <pre><code>wget https://get.accelerate.io/v0/runner-for-scala-windows.zip;
 unzip runner-for-scala-windows.zip</code></pre>
+                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-scala-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-scala-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="vbnet" role="tabpanel" aria-labelledby="profile-tab">
                                         <pre><code>wget https://get.accelerate.io/v0/runner-for-vbnet-windows.zip;
 unzip runner-for-vbnet-windows.zip</code></pre>
+                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-vbnet-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-vbnet-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div  class="mt-5">
-                    <p>To securely connect to the server you need to download a pair of credentials <b>before each coding session</b>.
-                        Download and save the credentials to the <code>config</code> directory:</p>
-                    <form action="${API_VERIFY_ENDPOINT}" method="post">
-                        <input type="hidden" name="username" value="${USERNAME}">
-                        <input type="hidden" name="challenge" value="${CHALLENGE}">
-                        <input type="hidden" name="token" value="${TOKEN}">
-                        <input type="submit" class="btn btn-primary" value="Download credentials">
-                    </form>
-                </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row dark-background">
+        <div class="col-md-10 mb-5 container-centered">
+            <h3>2. Download credentials</h3>
+            <p>To securely connect to the server you need to download a pair of credentials <b>before each coding session</b>.
+                Download and save the credentials to the <code>config</code> directory:</p>
+            <form action="${API_VERIFY_ENDPOINT}" method="post">
+                <input type="hidden" name="username" value="${USERNAME}">
+                <input type="hidden" name="challenge" value="${CHALLENGE}">
+                <input type="hidden" name="token" value="${TOKEN}">
+                <input type="submit" class="btn btn-primary" value="Download credentials">
+            </form>
         </div>
     </div>
 
@@ -467,7 +492,7 @@ unzip runner-for-vbnet-windows.zip</code></pre>
             <div class="row text-left">
                 <div class="col-md-6">
                     <div id="setup-screen-recording">
-                        <h2>2. Start recording</h2>
+                        <h2>3. Start recording</h2>
                         <p>The development technique is as important as the final solution. It is very informative to see
                             how the source code evolved over time and this is why we ask participants to record screen and source code.</p>
                         <p>This also means that you get access to all the data. After you perform the challenge you get to see (anonymously) how the
@@ -510,7 +535,7 @@ unzip runner-for-vbnet-windows.zip</code></pre>
 
     <div class="row">
         <div id="challenge-flow" class="col-md-10 container-centered">
-            <h2>3. Start the warmup</h2>
+            <h2>4. Start the warmup</h2>
             <p>In your IDE of choice, open up the <code>README.md</code> file of the repo that you cloned.</p>
             <p>To get started, follow the instructions provided in the README.md and source code comments.</p>
             <br/>
@@ -522,7 +547,8 @@ unzip runner-for-vbnet-windows.zip</code></pre>
                     <img src="${RESOURCES_WEB_PATH}/img/start-challenge.png" alt="Start challenge." class="img-fluid">
                     <p>1. Start the challenge</p>
                     <div class="horizontal-arrow">
-                        <span class="glyphicon glyphicon-arrow-right hidden-sm hidden-xs"></span>
+                        <span class="glyphicon glyphicon-arrow-right hidden-sm hidden-xs"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+</span>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-5">
@@ -530,7 +556,8 @@ unzip runner-for-vbnet-windows.zip</code></pre>
                          class="img-fluid">
                     <p>2. Read the challenge instructions</p>
                     <div class="horizontal-arrow">
-                        <span class="glyphicon glyphicon-arrow-down hidden-sm hidden-xs"></span>
+                        <span class="glyphicon glyphicon-arrow-down hidden-sm hidden-xs"><i class="fa fa-arrow-down" aria-hidden="true"></i>
+</span>
                     </div>
                 </div>
             </div>
@@ -545,7 +572,8 @@ unzip runner-for-vbnet-windows.zip</code></pre>
                          class="img-fluid">
                     <p>4. Deploy and get feedback</p>
                     <div class="horizontal-arrow">
-                        <span class="glyphicon glyphicon-arrow-left hidden-sm hidden-xs"></span>
+                        <span class="glyphicon glyphicon-arrow-left hidden-sm hidden-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+</span>
                     </div>
                 </div>
             </div>
@@ -555,7 +583,7 @@ unzip runner-for-vbnet-windows.zip</code></pre>
     <div class="row bottom-border dark-background">
         <div class="col-md-10 container-centered">
             <div>
-                <h3>4. Finishing</h3>
+                <h3>5. Finishing</h3>
                 <p>You can stop any time you want. We will consider the progress you have made so far.</p>
                 <p>When you have finished, you simply have to stop the recorder (<code>CTRL + C</code> or <code>CTRL +
                     D</code>).</p>
@@ -676,6 +704,20 @@ unzip runner-for-vbnet-windows.zip</code></pre>
                 $(value).find('a').attr('href', buttonHref);
 
             });
+        });
+
+        $('.copy-text').click(function (event) {
+            event.preventDefault();
+
+            var target = event.target;
+            var parentDiv = $(target).parent().parent();
+            var codeText = parentDiv.find('code').text();
+
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val(codeText).select();
+            document.execCommand("copy");
+            $temp.remove();
         });
 
 
