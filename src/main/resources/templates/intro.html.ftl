@@ -16,11 +16,8 @@
     <title>${SPONSOR} - Coding Challenge</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-            crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
     <link rel="apple-touch-icon" sizes="57x57" href="${RESOURCES_WEB_PATH}/img/logo_favicon_apple.png"/>
     <link rel="icon" type="image/png" sizes="32x32" href="${RESOURCES_WEB_PATH}/img/logo_favicon.png"/>
 
@@ -65,10 +62,29 @@
 
         .jumbotron h1 {
             text-shadow: 2px 2px 0 #333;
+            font-size: 63px;
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
 
-        .jumbotron h2 {
-            text-shadow: 1px 1px 0 #333;
+        h2 {
+            font-size: 30px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        h3 {
+            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        h4 {
+            font-size: 18px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        p{
+            font-size: 14px;
+            margin: 0 0 10px;
         }
 
         #challenge-flow .glyphicon {
@@ -90,6 +106,77 @@
             border-bottom-color: #b1afaf;
             border-bottom-style: solid;
         }
+        .container-centered{
+            margin: 0 auto;
+        }
+        ul li{
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #333;
+        }
+        .alert-info {
+            color: #31708f;
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+        }
+        .alert-danger {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+        a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+        pre {
+            display: block;
+            padding: 9.5px;
+            margin: 0 0 10px;
+            font-size: 13px;
+            line-height: 1.42857143;
+            color: #333;
+            word-break: break-all;
+            word-wrap: break-word;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        code {
+            padding: 2px 4px;
+            font-size: 90%;
+            color: #c7254e;
+            background-color: #f9f2f4;
+            border-radius: 4px;
+        }
+        pre code {
+            padding: 0;
+            font-size: inherit;
+            color: inherit;
+            white-space: pre-wrap;
+            background-color: transparent;
+            border-radius: 0;
+        }
+        .os-list-tab{
+            margin-bottom: 20px;
+            border-bottom: none
+        }
+        .os-list-tab .nav-link{
+            border-radius: 0.25rem;
+        }
+        .os-list-tab .nav-link.active{
+            border-color: #dee2e6;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+        @media only screen and (max-width: 767px) {
+            img {
+                margin: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -101,7 +188,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-offset-1 col-md-10">
+        <div class="col-md-10 container-centered">
             <h2>How does this work?</h2>
             <div class="row text-center">
                 <div class="col-md-4">
@@ -134,26 +221,30 @@
     </div>
 
     <div class="row dark-background">
-        <div class="col-md-offset-1 col-md-5">
-            <h2>It is not just a coding exercise</h2>
-            <p>You go through a realistic coding challenge designed to put your core software development skills to the
-                test.</p>
-            <p>We promise that you will learn a lot by just going through this challenge.</p>
+        <div class="col-md-10 container-centered">
+            <div class="row text-left">
+                <div class="col-md-6">
+                    <h2>It is not just a coding exercise</h2>
+                    <p>You go through a realistic coding challenge designed to put your core software development skills to the
+                        test.</p>
+                    <p>We promise that you will learn a lot by just going through this challenge.</p>
 
-            <p>Focus on your development technique and see how well it plays out. You will be able to compare metrics
-                afterwards.</p>
-            <p>Each screen gets recorded so after the challenge you get the opportunity to see (anonymously) how other
-                people have approached this problem. You might be able to learn something from them.</p>
-        </div>
-        <div class="col-md-5">
-            <img src="${RESOURCES_WEB_PATH}/img/leaderboard-transparent-bg.png" class="img-responsive"/>
+                    <p>Focus on your development technique and see how well it plays out. You will be able to compare metrics
+                        afterwards.</p>
+                    <p>Each screen gets recorded so after the challenge you get the opportunity to see (anonymously) how other
+                        people have approached this problem. You might be able to learn something from them.</p>
+                </div>
+                <div class="col-md-6">
+                    <img src="${RESOURCES_WEB_PATH}/img/leaderboard-transparent-bg.png" class="img-fluid"/>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-offset-1 col-md-10">
+        <div class="col-md-10 container-centered">
             <h2>Before you start</h2>
-            You will need:
+            <p class="mb-0">You will need:</p>
             <ul>
                 <li>15 minutes for Preparation + Warmup</li>
                 <li>${CODING_SESSION_DURATION} challenge time, can be done in multiple coding sessions</li>
@@ -174,49 +265,64 @@
 
 
     <div class="row dark-background" id="clone-repo-section">
-        <div class="col-md-offset-1 col-md-6">
+        <div class="col-md-10 container-centered">
             <div>
-                <h3>1. Clone repo and download credentials</h3>
+                <h3>1. Download runner project</h3>
                 <p>Clone the git repository for the language of your choice.</p>
-                <div>
-                    <ul class="nav nav-tabs">
-                        <li><a data-toggle="tab" href="#csharp-warmup">C#</a></li>
-                        <li><a data-toggle="tab" href="#fsharp-warmup">F#</a></li>
-                        <li class="active"><a data-toggle="tab" href="#java-warmup">Java</a></li>
-                        <li><a data-toggle="tab" href="#nodejs-warmup">Node.js</a></li>
-                        <li><a data-toggle="tab" href="#python-warmup">Python</a></li>
-                        <li><a data-toggle="tab" href="#ruby-warmup">Ruby</a></li>
-                        <li><a data-toggle="tab" href="#scala-warmup">Scala</a></li>
-                        <li><a data-toggle="tab" href="#vb-warmup">VB.Net</a></li>
+                <div class="w-50">
+
+                    <ul class="nav nav-tabs os-list-tab" id="myTab" role="tablist">
+                        <li class="nav-item os-list">
+                            <a class="nav-link" id="home-tab" data-toggle="tab" href="#windowsos" role="tab" aria-selected="false">Windows</a>
+                        </li>
+                        <li class="nav-item os-list">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#macos" role="tab" aria-selected="false">Mac</a>
+                        </li>
+                        <li class="nav-item os-list">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#linuxos" role="tab" aria-selected="true">Linux</a>
+                        </li>
                     </ul>
-                    <div class="tab-content">
-                        <div id="csharp-warmup" class="tab-pane fade">
-                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-csharp</code></pre>
-                        </div>
-                        <div id="fsharp-warmup" class="tab-pane fade">
-                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-fsharp</code></pre>
-                        </div>
-                        <div id="java-warmup" class="tab-pane fade in active">
-                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-java</code></pre>
-                        </div>
-                        <div id="nodejs-warmup" class="tab-pane fade">
-                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-nodejs</code></pre>
-                        </div>
-                        <div id="python-warmup" class="tab-pane fade">
-                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-python</code></pre>
-                        </div>
-                        <div id="ruby-warmup" class="tab-pane fade">
-                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-ruby</code></pre>
-                        </div>
-                        <div id="scala-warmup" class="tab-pane fade">
-                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-scala</code></pre>
-                        </div>
-                        <div id="vb-warmup" class="tab-pane fade">
-                            <pre><code>git clone https://github.com/julianghionoiu/tdl-runner-vbnet</code></pre>
-                        </div>
+
+                    <ul class="nav nav-tabs" id="languagesTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" id="home-tab" data-toggle="tab" href="#csharp" role="tab" aria-selected="false">C#</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#fsharp" role="tab" aria-selected="false">F#</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#java" role="tab" aria-selected="true">Java</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#nodejs" role="tab" aria-selected="false">Node.js</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#python" role="tab" aria-selected="false">Python</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#ruby" role="tab" aria-selected="false">Ruby</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#scala" role="tab" aria-selected="false">Scala</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#vbnet" role="tab" aria-selected="false">VB.Net</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="languagesTabContent">
+                        <div class="tab-pane fade" id="csharp" role="tabpanel" aria-labelledby="home-tab"><pre><code>https://get.accelerate.io/v0/runner-for-csharp-{os}.zip</code></pre></div>
+                        <div class="tab-pane fade" id="fsharp" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-fsharp-{os}.zip</code></pre></div>
+                        <div class="tab-pane fade show active" id="java" role="tabpanel" aria-labelledby="contact-tab"><pre><code>https://get.accelerate.io/v0/runner-for-java-{os}.zip</code></pre></div>
+                        <div class="tab-pane fade" id="nodejs" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-nodejs-{os}.zip</code></pre></div>
+                        <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-python-{os}.zip</code></pre></div>
+                        <div class="tab-pane fade" id="ruby" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-ruby-{os}.zip</code></pre></div>
+                        <div class="tab-pane fade" id="scala" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-scala-{os}.zip</code></pre></div>
+                        <div class="tab-pane fade" id="vbnet" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-vbnet-{os}.zip</code></pre></div>
+
                     </div>
+
                 </div>
-                <div>
+                <div  class="w-50">
                     <p>To securely connect to the server you need to download a pair of credentials <b>before each coding session</b>.
                         Download and save the credentials to the <code>config</code> directory:</p>
                     <form action="${API_VERIFY_ENDPOINT}" method="post">
@@ -231,49 +337,53 @@
     </div>
 
     <div class="row">
-        <div class="col-md-offset-1 col-md-5">
-            <div id="setup-screen-recording">
-                <h2>2. Start recording</h2>
-                <p>The development technique is as important as the final solution. It is very informative to see
-                    how the source code evolved over time and this is why we ask participants to record screen and source code.</p>
-                <p>This also means that you get access to all the data. After you perform the challenge you get to see (anonymously) how the
-                    other participants tackled the same challenge. This includes video and source code.</p>
-                <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-warning-sign"></span>
-                    We do not collect <strong>personal identifiable information</strong> (email, social
-                    media), so please close all other tabs that contain these before you start recording.
+        <div class="col-md-10 container-centered">
+            <div class="row text-left">
+                <div class="col-md-6">
+                    <div id="setup-screen-recording">
+                        <h2>2. Start recording</h2>
+                        <p>The development technique is as important as the final solution. It is very informative to see
+                            how the source code evolved over time and this is why we ask participants to record screen and source code.</p>
+                        <p>This also means that you get access to all the data. After you perform the challenge you get to see (anonymously) how the
+                            other participants tackled the same challenge. This includes video and source code.</p>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-warning-sign"></span>
+                            We do not collect <strong>personal identifiable information</strong> (email, social
+                            media), so please close all other tabs that contain these before you start recording.
+                        </div>
+                        <#if ALLOW_NO_VIDEO_OPTION>
+                        <p>Although very useful, if recording video makes you uncomfortable, you can disable it by adding the <code>--no-video</code> option to the recorder command line.</p>
+                        </#if>
+                        <p>
+                            <ul>
+                                <li>
+                                    Requires Java 8. If you do not have Java 8 <a
+                                            href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">download</a>
+                                        and install it.
+                                </li>
+                                <li>
+                                    If you have multiple screens attached, please only use the laptop screen for coding.
+                                </li>
+                                <li>
+                                    <p>Start the recorder in a new terminal tab/window.</p>
+                                    <p>Windows:</p>
+                                    <pre><code>./record_screen_and_upload.bat</code></pre>
+                                    <p>OSX/Linux:</p>
+                                    <pre><code>./record_screen_and_upload.sh</code></pre>
+                                </li>
+                            </ul>
+                        </p>
+                    </div>
                 </div>
-                <#if ALLOW_NO_VIDEO_OPTION>
-                <p>Although very useful, if recording video makes you uncomfortable, you can disable it by adding the <code>--no-video</code> option to the recorder command line.</p>
-                </#if>
-                <p>
-                    <ul>
-                        <li>
-                            Requires Java 8. If you do not have Java 8 <a
-                                    href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">download</a>
-                                and install it.
-                        </li>
-                        <li>
-                            If you have multiple screens attached, please only use the laptop screen for coding.
-                        </li>
-                        <li>
-                            <p>Start the recorder in a new terminal tab/window.</p>
-                            <p>Windows:</p>
-                            <pre><code>./record_screen_and_upload.bat</code></pre>
-                            <p>OSX/Linux:</p>
-                            <pre><code>./record_screen_and_upload.sh</code></pre>
-                        </li>
-                    </ul>
-                </p>
+                <div class="col-md-6">
+                    <img src="${RESOURCES_WEB_PATH}/img/hello-challenge.gif" class="img-fluid">
+                </div>
             </div>
-        </div>
-        <div class="col-md-5">
-            <img src="${RESOURCES_WEB_PATH}/img/hello-challenge.gif" class="img-responsive">
         </div>
     </div>
 
     <div class="row">
-        <div id="challenge-flow" class="col-md-offset-1 col-md-10">
+        <div id="challenge-flow" class="col-md-10 container-centered">
             <h2>3. Start the warmup</h2>
             <p>In your IDE of choice, open up the <code>README.md</code> file of the repo that you cloned.</p>
             <p>To get started, follow the instructions provided in the README.md and source code comments.</p>
@@ -283,7 +393,7 @@
                 the process.</p>
             <div class="row">
                 <div class="col-sm-6 col-md-5">
-                    <img src="${RESOURCES_WEB_PATH}/img/start-challenge.png" alt="Start challenge." class="img-responsive">
+                    <img src="${RESOURCES_WEB_PATH}/img/start-challenge.png" alt="Start challenge." class="img-fluid">
                     <p>1. Start the challenge</p>
                     <div class="horizontal-arrow">
                         <span class="glyphicon glyphicon-arrow-right hidden-sm hidden-xs"></span>
@@ -291,7 +401,7 @@
                 </div>
                 <div class="col-sm-6 col-md-5">
                     <img src="${RESOURCES_WEB_PATH}/img/read-instructionsv3.png" alt="Get challenge instructions"
-                         class="img-responsive">
+                         class="img-fluid">
                     <p>2. Read the challenge instructions</p>
                     <div class="horizontal-arrow">
                         <span class="glyphicon glyphicon-arrow-down hidden-sm hidden-xs"></span>
@@ -301,12 +411,12 @@
             <div class="row">
                 <div class="col-sm-6 col-md-5">
                     <img src="${RESOURCES_WEB_PATH}/img/write-a-solution.png" alt="Example of challenge instructions"
-                         class="img-responsive">
+                         class="img-fluid">
                     <p>3. Write a solution</p>
                 </div>
                 <div class="col-sm-6 col-md-5">
                     <img src="${RESOURCES_WEB_PATH}/img/check-resultsv2.png" alt="Deploy your solution to production."
-                         class="img-responsive">
+                         class="img-fluid">
                     <p>4. Deploy and get feedback</p>
                     <div class="horizontal-arrow">
                         <span class="glyphicon glyphicon-arrow-left hidden-sm hidden-xs"></span>
@@ -317,7 +427,7 @@
     </div>
 
     <div class="row bottom-border dark-background">
-        <div class="col-md-offset-1 col-md-10">
+        <div class="col-md-10 container-centered">
             <div>
                 <h3>4. Finishing</h3>
                 <p>You can stop any time you want. We will consider the progress you have made so far.</p>
@@ -331,10 +441,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-offset-1 col-md-10">
+        <div class="col-md-10 container-centered">
             <h2>Possible problems</h2>
         </div>
-        <div class="col-md-offset-1 col-md-10">
+        <div class="col-md-10 container-centered">
             <div id="problems-credentials-have-expired">
                 <h3>Credentials to upload screen recording have expired</h3>
                 <p>
@@ -352,7 +462,7 @@
                 </p>
             </div>
         </div>
-        <div class="col-md-offset-1 col-md-10">
+        <div class="col-md-10 container-centered">
             <div id="technical-issues">
                 <h3>Other technical issues</h3>
                 <p>
@@ -370,6 +480,67 @@
     <p></p>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function(){
+        var osList = $('.os-list');
+        var userOS = navigator['oscpu'];
+        var languagesTabContentDivs = $('#languagesTabContent').find('div');
+
+        var os = '';
+
+
+        if(userOS.indexOf("Windows") >= 0){
+            os = 'windowsos';
+        }
+        if(userOS.indexOf("Linux") >= 0){
+            os = 'linuxos';
+        }
+        if(userOS.indexOf("Mac") >= 0){
+            os = 'macos';
+        }
+
+        $.each(osList, function( index, value ) {
+            var hrefValue = $(value).find('a').attr('href').split('#')[1];
+
+            if(hrefValue === os){
+                $(value).find('a').addClass('active');
+            }
+        });
+
+        $.each(languagesTabContentDivs, function( index, value ) {
+            var codeContent = $(value).find('code').text();
+
+            codeContent = codeContent.replace("{os}", os);
+
+            $(value).find('code').text(codeContent);
+
+        });
+
+        osList.click(function (event) {
+            event.preventDefault();
+
+            var target = event.target;
+            var targetHrefValue = $(target).attr('href').split('#')[1];
+
+            $.each(languagesTabContentDivs, function( index, value ) {
+                var codeContent = $(value).find('code').text();
+
+                codeContent = codeContent.replace("linuxos", targetHrefValue);
+                codeContent = codeContent.replace("windowsos", targetHrefValue);
+                codeContent = codeContent.replace("macos", targetHrefValue);
+
+                $(value).find('code').text(codeContent);
+
+            });
+        });
+
+
+    });
+</script>
+
+
 </body>
 </html>
