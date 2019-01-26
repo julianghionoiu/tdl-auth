@@ -172,9 +172,17 @@
             background-color: #337ab7;
             border-color: #2e6da4;
         }
+        .container-half{
+            width: 50%;
+        }
         @media only screen and (max-width: 767px) {
             img {
                 margin: 0;
+            }
+        }
+        @media only screen and (max-width: 1360px) {
+            .container-half{
+                width: 100%;
             }
         }
     </style>
@@ -269,7 +277,7 @@
             <div>
                 <h3>1. Download runner project</h3>
                 <p>Clone the git repository for the language of your choice.</p>
-                <div class="w-50">
+                <div class="container-half">
 
                     <ul class="nav nav-tabs os-list-tab" id="myTab" role="tablist">
                         <li class="nav-item os-list">
@@ -310,19 +318,19 @@
                         </li>
                     </ul>
                     <div class="tab-content" id="languagesTabContent">
-                        <div class="tab-pane fade" id="csharp" role="tabpanel" aria-labelledby="home-tab"><pre><code>https://get.accelerate.io/v0/runner-for-csharp-{os}.zip</code></pre></div>
-                        <div class="tab-pane fade" id="fsharp" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-fsharp-{os}.zip</code></pre></div>
-                        <div class="tab-pane fade show active" id="java" role="tabpanel" aria-labelledby="contact-tab"><pre><code>https://get.accelerate.io/v0/runner-for-java-{os}.zip</code></pre></div>
-                        <div class="tab-pane fade" id="nodejs" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-nodejs-{os}.zip</code></pre></div>
-                        <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-python-{os}.zip</code></pre></div>
-                        <div class="tab-pane fade" id="ruby" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-ruby-{os}.zip</code></pre></div>
-                        <div class="tab-pane fade" id="scala" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-scala-{os}.zip</code></pre></div>
-                        <div class="tab-pane fade" id="vbnet" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-vbnet-{os}.zip</code></pre></div>
+                        <div class="tab-pane fade" id="csharp" role="tabpanel" aria-labelledby="home-tab"><pre><code>https://get.accelerate.io/v0/runner-for-csharp-windowsos.zip</code></pre></div>
+                        <div class="tab-pane fade" id="fsharp" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-fsharp-windowsos.zip</code></pre></div>
+                        <div class="tab-pane fade show active" id="java" role="tabpanel" aria-labelledby="contact-tab"><pre><code>https://get.accelerate.io/v0/runner-for-java-windowsos.zip</code></pre></div>
+                        <div class="tab-pane fade" id="nodejs" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-nodejs-windowsos.zip</code></pre></div>
+                        <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-python-windowsos.zip</code></pre></div>
+                        <div class="tab-pane fade" id="ruby" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-ruby-windowsos.zip</code></pre></div>
+                        <div class="tab-pane fade" id="scala" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-scala-windowsos.zip</code></pre></div>
+                        <div class="tab-pane fade" id="vbnet" role="tabpanel" aria-labelledby="profile-tab"><pre><code>https://get.accelerate.io/v0/runner-for-vbnet-windowsos.zip</code></pre></div>
 
                     </div>
 
                 </div>
-                <div  class="w-50">
+                <div  class="container-half">
                     <p>To securely connect to the server you need to download a pair of credentials <b>before each coding session</b>.
                         Download and save the credentials to the <code>config</code> directory:</p>
                     <form action="${API_VERIFY_ENDPOINT}" method="post">
@@ -486,13 +494,13 @@
 <script>
     $(document).ready(function(){
         var osList = $('.os-list');
-        var userOS = navigator['oscpu'];
+        var userOS = navigator['platform'] || '';
         var languagesTabContentDivs = $('#languagesTabContent').find('div');
 
         var os = '';
 
 
-        if(userOS.indexOf("Windows") >= 0){
+        if(userOS.indexOf("Win") >= 0){
             os = 'windowsos';
         }
         if(userOS.indexOf("Linux") >= 0){
@@ -500,6 +508,10 @@
         }
         if(userOS.indexOf("Mac") >= 0){
             os = 'macos';
+        }
+
+        if(os === ''){
+            os = 'windowsos';
         }
 
         $.each(osList, function( index, value ) {
@@ -513,7 +525,7 @@
         $.each(languagesTabContentDivs, function( index, value ) {
             var codeContent = $(value).find('code').text();
 
-            codeContent = codeContent.replace("{os}", os);
+            codeContent = codeContent.replace("windowsos", os);
 
             $(value).find('code').text(codeContent);
 
