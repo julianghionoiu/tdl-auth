@@ -189,12 +189,16 @@
             align-items: center;
             -webkit-align-items: center;
         }
+        p.step-text{
+            color: #337ab7;
+            margin: 0 0 0 10px;
+        }
         p.step{
             border: 1px solid #337ab7;
             border-radius: 50%;
             padding: 5px 6px 5px 8px;
             text-decoration: none;
-            margin: 0 -5px 0 0;
+            margin: 0;
             color: #337ab7;
         }
         .step-title .btn-link {
@@ -203,6 +207,9 @@
             text-align: left;
         }
         p.step:hover{
+            text-decoration: none;
+        }
+        .step-title .btn-link:hover {
             text-decoration: none;
         }
         @media only screen and (max-width: 767px) {
@@ -308,18 +315,18 @@
                 <h3>1. Download runner project</h3>
                 <p>Clone the git repository for the language of your choice.</p>
 
-                <div class="accordion" id="accordionExample">
+                <div class="accordion mt-3" id="accordionExample">
                     <div class="card">
                         <div class="card-header" id="headingOne">
                             <h2 class="mb-0 mt-0 step-title">
                                 <p class="step">1.</p>
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <p class="step-text">
                                     Select your operating system
-                                </button>
+                                </p>
                             </h2>
                         </div>
 
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div id="" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div class="card-body">
                                 <ul class="nav nav-tabs os-list-tab" id="osTab" role="tablist">
                                     <li class="nav-item os-list">
@@ -339,12 +346,12 @@
                         <div class="card-header" id="headingTwo">
                             <h2 class="mb-0 mt-0 step-title">
                                 <p class="step">2.</p>
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <p class="step-text">
                                     Select your preferred language
-                                </button>
+                                </p>
                             </h2>
                         </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div id="" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
                             <div class="card-body">
                                 <ul class="nav nav-tabs lang-list-tab" id="languagesTab" role="tablist">
                                     <li class="nav-item">
@@ -379,58 +386,77 @@
                         <div class="card-header" id="headingThree">
                             <h2 class="mb-0 mt-0 step-title">
                                 <p class="step">3.</p>
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <p class="step-text">
                                     Download and extract the runner project.
-                                </button>
+                                </p>
                             </h2>
                         </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div id="" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
                             <div class="card-body">
                                 <div class="tab-content" id="languagesTabContent">
                                     <div class="tab-pane fade" id="csharp" role="tabpanel" aria-labelledby="home-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-csharp-windows.zip; unzip runner-for-csharp-windows.zip</code></pre>
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-csharp-windows.zip;
+unzip runner-for-csharp-windows.zip</code></pre>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-csharp-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-csharp-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="fsharp" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-fsharp-windows.zip; unzip runner-for-fsharp-windows.zip</code></pre>
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-fsharp-windows.zip;
+unzip runner-for-fsharp-windows.zip</code></pre>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-fsharp-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-fsharp-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade show active" id="java" role="tabpanel" aria-labelledby="contact-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-java-windows.zip; unzip runner-for-java-windows.zip</code></pre>
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-java-windows.zip;
+unzip runner-for-java-windows.zip</code></pre>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-java-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-java-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="nodejs" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-nodejs-windows.zip; unzip runner-for-nodejs-windows.zip</code></pre>
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-nodejs-windows.zip;
+unzip runner-for-nodejs-windows.zip</code></pre>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-nodejs-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-nodejs-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-python-windows.zip; unzip runner-for-python-windows.zip</code></pre>
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-python-windows.zip;
+unzip runner-for-python-windows.zip</code></pre>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-python-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-python-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="ruby" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-ruby-windows.zip; unzip runner-for-ruby-windows.zip</code></pre>
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-ruby-windows.zip;
+unzip runner-for-ruby-windows.zip</code></pre>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-ruby-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-ruby-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="scala" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-scala-windows.zip; unzip runner-for-scala-windows.zip</code></pre>
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-scala-windows.zip;
+unzip runner-for-scala-windows.zip</code></pre>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-scala-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-scala-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane fade" id="vbnet" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-vbnet-windows.zip; unzip runner-for-vbnet-windows.zip</code></pre>
+                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-vbnet-windows.zip;
+unzip runner-for-vbnet-windows.zip</code></pre>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-vbnet-windows.zip" class="btn btn-primary" target="_blank">Download credentials</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-vbnet-windows.zip" class="btn btn-primary" target="_blank">Download runner project</a></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div  class="mt-5">
+                    <p>To securely connect to the server you need to download a pair of credentials <b>before each coding session</b>.
+                        Download and save the credentials to the <code>config</code> directory:</p>
+                    <form action="${API_VERIFY_ENDPOINT}" method="post">
+                        <input type="hidden" name="username" value="${USERNAME}">
+                        <input type="hidden" name="challenge" value="${CHALLENGE}">
+                        <input type="hidden" name="token" value="${TOKEN}">
+                        <input type="submit" class="btn btn-primary" value="Download credentials">
+                    </form>
                 </div>
             </div>
         </div>
