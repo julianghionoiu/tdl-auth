@@ -100,7 +100,6 @@
         #challenge-flow .glyphicon {
             font-size: 150%;
         }
-
         .bottom-border {
             border-bottom-width: 2px;
             border-bottom-color: #b1afaf;
@@ -238,15 +237,15 @@
         }
         .form-input-readonly input{
             color: #b1afaf;
-            background: white;
-            border: 1px solid #b1afaf;
+            background: transparent;
+            border: 0px solid #b1afaf;
             border-radius: 3px;
             padding: 5px;
             width: 250px;
         }
         .form-input-readonly input:focus{
             box-shadow: none;
-            border: 1px solid #b1afaf;
+            border: 0px solid #b1afaf;
         }
         .my-alert-danger{
             display: none;
@@ -267,22 +266,42 @@
         .copy-block-line pre{
             width: 100%;
         }
+        .copy-block-line {
+            width: 50%;
+        }
         .img-margins{
-            margin-top: 95px;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: 4px;
+            padding: 0;
+            margin: 0;
+            max-width: 740px;
+            width: 100%;
         }
         .img-margins2{
             margin-top: 68px;
         }
-        @media only screen and (max-width: 1360px) {
-            .container-half{
-                width: 100%;
+        .accelerate_runner{
+            margin-top: 50px;
+        }
+        #challenge-flow img{
+            width: 96%;
+        }
+        @media only screen and (max-width: 1700px) {
+            .copy-block-line {
+                width: 85%;
             }
         }
         @media only screen and (max-width: 990px) {
             .margins-mobile {
                 padding: 0;
             }
-            .margins-mobile img {
+            .copy-block-line {
+                width: 100%;
+            }
+            .img-margins{
+                max-width: 100%;
+            }
+            .img-margins2{
                 margin-top: 20px;
             }
         }
@@ -384,7 +403,7 @@
     <div class="row dark-background margins-mobile" id="clone-repo-section">
         <div class="col-md-10 container-centered">
             <div class="row text-left">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div>
                         <h3>1. Download runner project</h3>
                         <p>Clone the git repository for the language of your choice.</p>
@@ -508,9 +527,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 text-center">
-                    <img src="${RESOURCES_WEB_PATH}/img/download_runner_project.png" class="img-fluid img-margins">
-                </div>
             </div>
         </div>
     </div>
@@ -521,12 +537,17 @@
             <p>To securely connect to the server you need to download a pair of credentials <b>before each coding session</b>.
                 Download and save the credentials to the <code>config</code> directory:</p>
             <form action="${API_VERIFY_ENDPOINT}" method="post">
-                <p class="form-input-readonly"><input type="text" name="username" value="${USERNAME}" readonly></p>
+                <p class="form-input-readonly">Your user ID: <input type="text" name="username" value="${USERNAME}" readonly></p>
                 <input type="hidden" name="challenge" value="${CHALLENGE}">
                 <input type="hidden" name="token" value="${TOKEN}">
                 <input type="submit" class="btn btn-primary" id="download_credentials" value="Download credentials">
             </form>
             <p class="alert-danger my-alert-danger">The link is expired on: <span class="exp-date font-weight-bold">${EXPIRATION_DATE}</span></p>
+
+            <div class="accelerate_runner"">
+                <p class="text-left">If the steps are successful you should see a folder called "accelerate_runner" which contains all the libraries required to connect to the server and run the coding challenge.</p>
+                <img src="${RESOURCES_WEB_PATH}/img/download_runner_project.png" class="img-fluid img-margins">
+            </div>
         </div>
     </div>
 
@@ -569,7 +590,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-lg-6 text-center">
+                <div class="col-lg-6">
                     <img src="${RESOURCES_WEB_PATH}/img/hello-challenge.gif" class="img-fluid img-margins2">
                 </div>
             </div>
