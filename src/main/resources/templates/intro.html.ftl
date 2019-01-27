@@ -174,6 +174,27 @@
             background-color: #337ab7;
             border-color: #2e6da4;
         }
+        .btn-primary-darkBlue{
+            background-color: #4C5675;
+            border-color: #4C5675;
+        }
+        .btn-primary-darkBlue:hover{
+            background-color: #6b769f;
+            border-color: #4C5675;
+        }
+        .btn-primary.disabled, .btn-primary:disabled {
+            color: #fff;
+            background-color: #b1afaf;
+            border-color: #b1afaf;
+        }
+        .copy-btn{
+            text-decoration: none;
+            border: 1px solid gray;
+            padding: 7px 7px 9px 7px;
+            margin: 0 0 0 10px;
+            border-radius: 3px;
+            display: inline-block;
+        }
         .container-half{
             width: 70%;
         }
@@ -183,7 +204,7 @@
         .card-body {
             padding: 0 1.25rem;
         }
-        #languagesTab, #osTab, #languagesTabContent{
+        #languagesTab, #osTab, #languagesTabContent, #unzipTabContent{
             padding: 18px 0;
         }
         .step-title{
@@ -215,14 +236,6 @@
         .step-title .btn-link:hover {
             text-decoration: none;
         }
-        .btn-primary-darkBlue{
-            background-color: #4C5675;
-            border-color: #4C5675;
-        }
-        .btn-primary-darkBlue:hover{
-            background-color: #6b769f;
-            border-color: #4C5675;
-        }
         .form-input-readonly input{
             color: #b1afaf;
             background: white;
@@ -230,11 +243,6 @@
             border-radius: 3px;
             padding: 5px;
             width: 250px;
-        }
-        .btn-primary.disabled, .btn-primary:disabled {
-            color: #fff;
-            background-color: #b1afaf;
-            border-color: #b1afaf;
         }
         .form-input-readonly input:focus{
             box-shadow: none;
@@ -244,6 +252,20 @@
             display: none;
             padding: 2px 5px;
             margin-top: 10px;
+        }
+        .start-rec p{
+            text-transform:capitalize;
+        }
+        .copy-block-line{
+            display: flex;
+            display: -webkit-flex;
+            width: 100%;
+            justify-content: space-between;
+            -webkit-justify-content: space-between;
+            height: auto;
+        }
+        .copy-block-line pre{
+            width: 100%;
         }
         @media only screen and (max-width: 767px) {
             img {
@@ -338,7 +360,7 @@
             </div>
             <p>People who have completed the challenge will have access to the other results and recordings.</p>
             <p>If you are not ready you can come back to this page whenever you have
-                enough time. The link will expire on: <b>${EXPIRATION_DATE}</b></p>
+                enough time. The link will expire on: <span class="exp-date font-weight-bold">${EXPIRATION_DATE}</span></p>
             <p>The challenge can pe paused and resumed, you are in control of your time. You can do it one go or multiple sessions.</p>
             <p>Ready? Let's get started.</p>
         </div>
@@ -430,54 +452,14 @@
                         <div id="" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
                             <div class="card-body">
                                 <div class="tab-content" id="languagesTabContent">
-                                    <div class="tab-pane" id="csharp" role="tabpanel" aria-labelledby="home-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-csharp-windows.zip</code></pre>
-                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
-                                        <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-csharp-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
-                                    </div>
-                                    <div class="tab-pane" id="fsharp" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-fsharp-windows.zip</code></pre>
-                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
-                                        <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-fsharp-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
-                                    </div>
-                                    <div class="tab-pane show active" id="java" role="tabpanel" aria-labelledby="contact-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-java-windows.zip</code></pre>
-                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
+                                    <div class="copy-block" id="download" role="tabpanel" aria-labelledby="down-tab">
+                                        <div class="copy-block-line">
+                                            <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-java-windows.zip</code></pre>
+                                            <p><a href="#" class="copy-btn copy-text"><svg class="octicon octicon-clippy" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 13h4v1H2v-1zm5-6H2v1h5V7zm2 3V8l-3 3 3 3v-2h5v-2H9zM4.5 9H2v1h2.5V9zM2 12h2.5v-1H2v1zm9 1h1v2c-.02.28-.11.52-.3.7-.19.18-.42.28-.7.3H1c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h3c0-1.11.89-2 2-2 1.11 0 2 .89 2 2h3c.55 0 1 .45 1 1v5h-1V6H1v9h10v-2zM2 5h8c0-.55-.45-1-1-1H8c-.55 0-1-.45-1-1s-.45-1-1-1-1 .45-1 1-.45 1-1 1H3c-.55 0-1 .45-1 1z"></path></svg></a></p>
+                                        </div>
                                         <p>OR</p>
                                         <p><a href="https://get.accelerate.io/v0/runner-for-java-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
-                                    </div>
-                                    <div class="tab-pane" id="nodejs" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-nodejs-windows.zip</code></pre>
-                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
-                                        <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-nodejs-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
-                                    </div>
-                                    <div class="tab-pane" id="python" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-python-windows.zip</code></pre>
-                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
-                                        <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-python-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
-                                    </div>
-                                    <div class="tab-pane" id="ruby" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-ruby-windows.zip</code></pre>
-                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
-                                        <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-ruby-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
-                                    </div>
-                                    <div class="tab-pane" id="scala" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-scala-windows.zip</code></pre>
-                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
-                                        <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-scala-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
-                                    </div>
-                                    <div class="tab-pane" id="vbnet" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-vbnet-windows.zip</code></pre>
-                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
-                                        <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-vbnet-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
-                                    </div>
+                                       </div>
                                 </div>
                             </div>
                         </div>
@@ -494,11 +476,14 @@
                         </div>
                         <div id="" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
                             <div class="card-body">
-                                <div class="tab-content" id="languagesTabContent">
-                                    <div id="unzip" role="tabpanel" aria-labelledby="unzip-tab">
-                                        <pre><code class="copy-code">unzip runner-for-java-windows.zip</code></pre>
+                                <div class="tab-content" id="unzipTabContent">
+                                    <div id="unzip" class="copy-block" role="tabpanel" aria-labelledby="unzip-tab">
+                                        <div class="copy-block-line">
+                                            <pre><code class="copy-code">unzip runner-for-java-windows.zip</code></pre>
+                                            <p><a href="#" class="copy-btn copy-text"><svg class="octicon octicon-clippy" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 13h4v1H2v-1zm5-6H2v1h5V7zm2 3V8l-3 3 3 3v-2h5v-2H9zM4.5 9H2v1h2.5V9zM2 12h2.5v-1H2v1zm9 1h1v2c-.02.28-.11.52-.3.7-.19.18-.42.28-.7.3H1c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h3c0-1.11.89-2 2-2 1.11 0 2 .89 2 2h3c.55 0 1 .45 1 1v5h-1V6H1v9h10v-2zM2 5h8c0-.55-.45-1-1-1H8c-.55 0-1-.45-1-1s-.45-1-1-1-1 .45-1 1-.45 1-1 1H3c-.55 0-1 .45-1 1z"></path></svg></a></p>
+                                        </div>
                                         <p>The <code>accelerate_runner</code> will be created, which represents the root of your project.</p>
-                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
+
                                     </div>
                                 </div>
                             </div>
@@ -520,7 +505,7 @@
                 <input type="hidden" name="token" value="${TOKEN}">
                 <input type="submit" class="btn btn-primary" id="download_credentials" value="Download credentials">
             </form>
-            <p class="alert-danger my-alert-danger">The link is expired on: <b>${EXPIRATION_DATE}</b></p>
+            <p class="alert-danger my-alert-danger">The link is expired on: <span class="exp-date font-weight-bold">${EXPIRATION_DATE}</span></p>
         </div>
     </div>
 
@@ -554,10 +539,10 @@
                                 </li>
                                 <li>
                                     <p>Start the recorder in a new terminal tab/window.</p>
-                                    <p>Windows:</p>
-                                    <pre><code>./record_screen_and_upload.bat</code></pre>
-                                    <p>OSX/Linux:</p>
-                                    <pre><code>./record_screen_and_upload.sh</code></pre>
+                                    <div class="start-rec">
+                                        <p>Windows:</p>
+                                        <pre><code>./record_screen_and_upload.bat</code></pre>
+                                    </div>
                                 </li>
                             </ul>
                         </p>
@@ -678,11 +663,23 @@
     $(document).ready(function(){
         var osList = $('.os-list');
         var userOS = navigator['platform'] || '';
-        var languagesTabContentDivs = $('#languagesTabContent').find('div');
+
+        var downloadTabContentDiv = $('#download');
+        var downloadTabContentDivCode = downloadTabContentDiv.find('code.copy-code');
+        var downloadTabContentDivCodeText = downloadTabContentDivCode.text();
+        var downloadTabContentDivLink = downloadTabContentDiv.find('a.download-link');
+        var downloadTabContentDivLinkHref = downloadTabContentDivLink.attr('href');
+
+        var unzipEl = $('#unzip');
+        var unzipCodeEl = unzipEl.find('code.copy-code');
+        var unzipElText = unzipCodeEl.text();
+
+        var startRecTextLinuxMac = './record_screen_and_upload.sh';
+        var startRecTextWindows = './record_screen_and_upload.bat';
 
         var os = '';
 
-
+        // default values
         if(userOS.indexOf("Win") >= 0){
             os = 'windows';
         }
@@ -705,23 +702,16 @@
             }
         });
 
-        $.each(languagesTabContentDivs, function( index, value ) {
-            var codeContent = $(value).find('code').text();
-            codeContent = codeContent.replace(/\windows/g, os);
-            $(value).find('code').text(codeContent);
+        downloadTabContentDivCodeText = downloadTabContentDivCodeText.replace(/\windows/g, os);
+        downloadTabContentDivCode.text(downloadTabContentDivCodeText);
 
-            var buttonHref = $(value).find('a.download-link').attr('href');
-            buttonHref = buttonHref.replace(/\windows/g, os);
-            $(value).find('a.download-link').attr('href', buttonHref);
-        });
-
-        var unzipEl = $('#unzip');
-        var unzipCodeEl = unzipEl.find('code.copy-code');
-        var unzipElText = unzipCodeEl.text();
+        downloadTabContentDivLinkHref = downloadTabContentDivLinkHref.replace(/\windows/g, os);
+        downloadTabContentDivLink.attr('href', downloadTabContentDivLinkHref);
 
         unzipElText = unzipElText.replace('windows', os);
         unzipCodeEl.text(unzipElText);
 
+        startRec(os);
 
 
 
@@ -734,45 +724,65 @@
             var targetHrefValue = $(target).attr('href').split('#')[1];
 
             // default values are changed to particular os
-            $.each(languagesTabContentDivs, function( index, value ) {
-                var codeContent = $(value).find('code').text();
+            downloadTabContentDivCodeText = replaceOSText(downloadTabContentDivCodeText, targetHrefValue);
+            downloadTabContentDivCode.text(downloadTabContentDivCodeText);
 
-                codeContent = codeContent.replace(/\linux/g, targetHrefValue);
-                codeContent = codeContent.replace(/\windows/g, targetHrefValue);
-                codeContent = codeContent.replace(/\macos/g, targetHrefValue);
+            downloadTabContentDivLinkHref = replaceOSText(downloadTabContentDivLinkHref, targetHrefValue);
+            downloadTabContentDivLink.attr('href', downloadTabContentDivLinkHref);
 
-                $(value).find('code').text(codeContent);
-
-
-                var buttonHref = $(value).find('a.download-link').attr('href');
-                buttonHref = buttonHref.replace(/\linux/g, targetHrefValue);
-                buttonHref = buttonHref.replace(/\windows/g, targetHrefValue);
-                buttonHref = buttonHref.replace(/\macos/g, targetHrefValue);
-                $(value).find('a.download-link').attr('href', buttonHref);
-            });
-
-            // if you click on os button, unzip code text is changed to particular os
-            unzipElText = unzipElText.replace('linux', targetHrefValue);
-            unzipElText = unzipElText.replace('windows', targetHrefValue);
-            unzipElText = unzipElText.replace('macos', targetHrefValue);
-
+            unzipElText = replaceOSText(unzipElText, targetHrefValue);
             unzipCodeEl.text(unzipElText);
-        });
 
-        // if you click on languages, unzip code text is changed to particular language
+            startRec(targetHrefValue);
+
+         });
+
+        function startRec(op_syst) {
+
+            if(op_syst === 'macos'){
+                op_syst = 'Mac';
+            }
+
+            $('.start-rec p').text(op_syst + ':');
+            if(op_syst === 'windows'){
+                $('.start-rec code').text(startRecTextWindows);
+            }else{
+                $('.start-rec code').text(startRecTextLinuxMac);
+            }
+        }
+
+        function replaceOSText(text, newText){
+            text = text.replace(/\linux/g, newText);
+            text = text.replace(/\windows/g, newText);
+            text = text.replace(/\macos/g, newText);
+
+            return text;
+        }
+
+        // if you click on languages button
         $('#languagesTab').on('click', '.nav-link', function (event) {
             event.preventDefault();
 
             var target = event.target;
             var targetHrefValue = $(target).attr('href').split('#')[1];
 
-            var unzipCodeElArr = unzipElText.split('-');
-            unzipCodeElArr[2] = targetHrefValue;
+            downloadTabContentDivCodeText = changeText(downloadTabContentDivCodeText, targetHrefValue);
+            downloadTabContentDivCode.text(downloadTabContentDivCodeText);
 
-            unzipElText = unzipCodeElArr.join('-');
+            downloadTabContentDivLinkHref = changeText(downloadTabContentDivLinkHref, targetHrefValue);
+            downloadTabContentDivLink.attr('href', downloadTabContentDivLinkHref);
 
+            unzipElText = changeText(unzipElText, targetHrefValue);
             unzipCodeEl.text(unzipElText);
         });
+
+        function changeText(text, newText){
+            var textArr = text.split('-');
+            textArr[2] = newText;
+            text = textArr.join('-');
+
+            return text;
+        }
 
 
         // copy text to the clipboar
@@ -780,7 +790,7 @@
             event.preventDefault();
 
             var target = event.target;
-            var parentDiv = $(target).parent().parent();
+            var parentDiv = $(target).parents('div.copy-block');
             var codeText = parentDiv.find('code.copy-code').text();
 
             var $temp = $("<input>");
@@ -792,13 +802,44 @@
 
 
         // if expiration date is passed, the download button is disabled and alert message is shown
-        var expDate = '${EXPIRATION_DATE}';
+        var months = ["January", "February", "March", "April", "May", "Juny", "July", "August", "Septemper", "October", "November", "December"];
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+
+        var expDate = ${EXPIRATION_DATE};
         var date = new Date(expDate);
-        var expDateSeconds = date.getTime() / 1000;
-        var timeNow = new Date().getTime() / 1000;
 
+        var hr = date.getHours();
+        var ampm = "am ";
 
-        if (timeNow >= expDateSeconds){
+        var expDateSpan = $('span.exp-date');
+        var expDateText = '';
+        var minutes = date.getMinutes();
+
+        if(minutes < 10){
+            minutes = '0' + minutes;
+        }
+
+        if( hr > 12 ) {
+            hr -= 12;
+            ampm = "pm ";
+        }
+
+        if(hr < 10){
+            hr = '0' + hr;
+        }
+
+        expDateText = hr + ':' + minutes + ampm +
+            days[date.getDay()] + ', ' +
+            date.getDate() + ' ' +
+            months[date.getMonth()] + ' ' +
+            date.getFullYear();
+
+        expDateSpan.text(expDateText);
+
+        var timeNow = new Date();
+
+        if (timeNow >= expDate){
             $('#download_credentials').attr('disabled', 'disabled');
             $('.my-alert-danger').css('display', 'inline-block');
         }
