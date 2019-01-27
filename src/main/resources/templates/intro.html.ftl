@@ -165,6 +165,9 @@
         }
         .os-list-tab .nav-link.active, .lang-list-tab .nav-link.active{
             border-color: #dee2e6;
+            font-weight: 700;
+            background-color: orange;
+            color: white;
         }
         .btn-primary {
             color: #fff;
@@ -216,12 +219,31 @@
             background-color: #4C5675;
             border-color: #4C5675;
         }
-        .btn-primary-darkBlue:hover, .btn-primary-darkBlue:focus, .btn-primary-darkBlue:visited{
+        .btn-primary-darkBlue:hover{
             background-color: #6b769f;
             border-color: #4C5675;
         }
-        .copy-text{
-
+        .form-input-readonly input{
+            color: #b1afaf;
+            background: white;
+            border: 1px solid #b1afaf;
+            border-radius: 3px;
+            padding: 5px;
+            width: 250px;
+        }
+        .btn-primary.disabled, .btn-primary:disabled {
+            color: #fff;
+            background-color: #b1afaf;
+            border-color: #b1afaf;
+        }
+        .form-input-readonly input:focus{
+            box-shadow: none;
+            border: 1px solid #b1afaf;
+        }
+        .my-alert-danger{
+            display: none;
+            padding: 2px 5px;
+            margin-top: 10px;
         }
         @media only screen and (max-width: 767px) {
             img {
@@ -401,68 +423,82 @@
                             <h2 class="mb-0 mt-0 step-title">
                                 <p class="step">3.</p>
                                 <p class="step-text">
-                                    Download and extract the runner project.
+                                    Download the runner project.
                                 </p>
                             </h2>
                         </div>
                         <div id="" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
                             <div class="card-body">
                                 <div class="tab-content" id="languagesTabContent">
-                                    <div class="tab-pane fade" id="csharp" role="tabpanel" aria-labelledby="home-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-csharp-windows.zip;
-unzip runner-for-csharp-windows.zip</code></pre>
+                                    <div class="tab-pane" id="csharp" role="tabpanel" aria-labelledby="home-tab">
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-csharp-windows.zip;</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-csharp-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-csharp-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
-                                    <div class="tab-pane fade" id="fsharp" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-fsharp-windows.zip;
-unzip runner-for-fsharp-windows.zip</code></pre>
+                                    <div class="tab-pane" id="fsharp" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-fsharp-windows.zip;</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-fsharp-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-fsharp-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
-                                    <div class="tab-pane fade show active" id="java" role="tabpanel" aria-labelledby="contact-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-java-windows.zip;
-unzip runner-for-java-windows.zip</code></pre>
+                                    <div class="tab-pane show active" id="java" role="tabpanel" aria-labelledby="contact-tab">
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-java-windows.zip;</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-java-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-java-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
-                                    <div class="tab-pane fade" id="nodejs" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-nodejs-windows.zip;
-unzip runner-for-nodejs-windows.zip</code></pre>
+                                    <div class="tab-pane" id="nodejs" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-nodejs-windows.zip;</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-nodejs-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-nodejs-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
-                                    <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-python-windows.zip;
-unzip runner-for-python-windows.zip</code></pre>
+                                    <div class="tab-pane" id="python" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-python-windows.zip;</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-python-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-python-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
-                                    <div class="tab-pane fade" id="ruby" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-ruby-windows.zip;
-unzip runner-for-ruby-windows.zip</code></pre>
+                                    <div class="tab-pane" id="ruby" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-ruby-windows.zip;</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-ruby-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-ruby-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
-                                    <div class="tab-pane fade" id="scala" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-scala-windows.zip;
-unzip runner-for-scala-windows.zip</code></pre>
+                                    <div class="tab-pane" id="scala" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-scala-windows.zip;</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-scala-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-scala-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
-                                    <div class="tab-pane fade" id="vbnet" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code>wget https://get.accelerate.io/v0/runner-for-vbnet-windows.zip;
-unzip runner-for-vbnet-windows.zip</code></pre>
+                                    <div class="tab-pane" id="vbnet" role="tabpanel" aria-labelledby="profile-tab">
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-vbnet-windows.zip;</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
-                                        <p><a href="https://get.accelerate.io/v0/runner-for-vbnet-windows.zip" class="btn btn-primary btn-primary-darkBlue" target="_blank">Download runner project</a></p>
+                                        <p><a href="https://get.accelerate.io/v0/runner-for-vbnet-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h2 class="mb-0 mt-0 step-title">
+                                <p class="step">4.</p>
+                                <p class="step-text">
+                                    Extract archive - unzip
+                                </p>
+                            </h2>
+                        </div>
+                        <div id="" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="tab-content" id="languagesTabContent">
+                                    <div id="unzip" role="tabpanel" aria-labelledby="unzip-tab">
+                                        <pre><code class="copy-code">unzip runner-for-java-windows.zip</code></pre>
+                                        <p>The <code>accelerate_runner</code> will be created, which represents the root of your project.</p>
+                                        <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -479,11 +515,12 @@ unzip runner-for-vbnet-windows.zip</code></pre>
             <p>To securely connect to the server you need to download a pair of credentials <b>before each coding session</b>.
                 Download and save the credentials to the <code>config</code> directory:</p>
             <form action="${API_VERIFY_ENDPOINT}" method="post">
-                <input type="hidden" name="username" value="${USERNAME}">
+                <p class="form-input-readonly"><input type="text" name="username" value="${USERNAME}" readonly></p>
                 <input type="hidden" name="challenge" value="${CHALLENGE}">
                 <input type="hidden" name="token" value="${TOKEN}">
-                <input type="submit" class="btn btn-primary" value="Download credentials">
+                <input type="submit" class="btn btn-primary" id="download_credentials" value="Download credentials">
             </form>
+            <p class="alert-danger my-alert-danger">The link is expired on: <b>${EXPIRATION_DATE}</b></p>
         </div>
     </div>
 
@@ -673,20 +710,30 @@ unzip runner-for-vbnet-windows.zip</code></pre>
             codeContent = codeContent.replace(/\windows/g, os);
             $(value).find('code').text(codeContent);
 
-            var buttonHref = $(value).find('a').attr('href');
+            var buttonHref = $(value).find('a.download-link').attr('href');
             buttonHref = buttonHref.replace(/\windows/g, os);
-            $(value).find('a').attr('href', buttonHref);
-
+            $(value).find('a.download-link').attr('href', buttonHref);
         });
 
+        var unzipEl = $('#unzip');
+        var unzipCodeEl = unzipEl.find('code.copy-code');
+        var unzipElText = unzipCodeEl.text();
+
+        unzipElText = unzipElText.replace('windows', os);
+        unzipCodeEl.text(unzipElText);
 
 
+
+
+
+        // if you click on os button
         osList.click(function (event) {
             event.preventDefault();
 
             var target = event.target;
             var targetHrefValue = $(target).attr('href').split('#')[1];
 
+            // default values are changed to particular os
             $.each(languagesTabContentDivs, function( index, value ) {
                 var codeContent = $(value).find('code').text();
 
@@ -697,21 +744,44 @@ unzip runner-for-vbnet-windows.zip</code></pre>
                 $(value).find('code').text(codeContent);
 
 
-                var buttonHref = $(value).find('a').attr('href');
+                var buttonHref = $(value).find('a.download-link').attr('href');
                 buttonHref = buttonHref.replace(/\linux/g, targetHrefValue);
                 buttonHref = buttonHref.replace(/\windows/g, targetHrefValue);
                 buttonHref = buttonHref.replace(/\macos/g, targetHrefValue);
-                $(value).find('a').attr('href', buttonHref);
-
+                $(value).find('a.download-link').attr('href', buttonHref);
             });
+
+            // if you click on os button, unzip code text is changed to particular os
+            unzipElText = unzipElText.replace('linux', targetHrefValue);
+            unzipElText = unzipElText.replace('windows', targetHrefValue);
+            unzipElText = unzipElText.replace('macos', targetHrefValue);
+
+            unzipCodeEl.text(unzipElText);
         });
 
+        // if you click on languages, unzip code text is changed to particular language
+        $('#languagesTab').on('click', '.nav-link', function (event) {
+            event.preventDefault();
+
+            var target = event.target;
+            var targetHrefValue = $(target).attr('href').split('#')[1];
+
+            var unzipCodeElArr = unzipElText.split('-');
+            unzipCodeElArr[2] = targetHrefValue;
+
+            unzipElText = unzipCodeElArr.join('-');
+
+            unzipCodeEl.text(unzipElText);
+        });
+
+
+        // copy text to the clipboar
         $('.copy-text').click(function (event) {
             event.preventDefault();
 
             var target = event.target;
             var parentDiv = $(target).parent().parent();
-            var codeText = parentDiv.find('code').text();
+            var codeText = parentDiv.find('code.copy-code').text();
 
             var $temp = $("<input>");
             $("body").append($temp);
@@ -720,6 +790,18 @@ unzip runner-for-vbnet-windows.zip</code></pre>
             $temp.remove();
         });
 
+
+        // if expiration date is passed, the download button is disabled and alert message is shown
+        var expDate = '${EXPIRATION_DATE}';
+        var date = new Date(expDate);
+        var expDateSeconds = date.getTime() / 1000;
+        var timeNow = new Date().getTime() / 1000;
+
+
+        if (timeNow >= expDateSeconds){
+            $('#download_credentials').attr('disabled', 'disabled');
+            $('.my-alert-danger').css('display', 'inline-block');
+        }
 
     });
 </script>
