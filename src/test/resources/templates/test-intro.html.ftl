@@ -10,7 +10,6 @@
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
 <#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
 <#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.String" -->
-<#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
 <html>
     <body>
         <p>Using custom header image name: ${RESOURCES_WEB_PATH}/${HEADER_IMAGE_NAME}</p>

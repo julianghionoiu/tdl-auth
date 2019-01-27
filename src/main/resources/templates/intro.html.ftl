@@ -9,8 +9,8 @@
 <#-- @ftlvariable name="CHALLENGE" type="java.lang.String" -->
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
 <#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
-<#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.String" -->
-<#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
+<#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.Long" -->
+<#setting number_format="computer">
 <html lang="en">
 <head>
     <title>${SPONSOR} - Coding Challenge</title>
@@ -431,49 +431,49 @@
                             <div class="card-body">
                                 <div class="tab-content" id="languagesTabContent">
                                     <div class="tab-pane" id="csharp" role="tabpanel" aria-labelledby="home-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-csharp-windows.zip;</code></pre>
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-csharp-windows.zip</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
                                         <p><a href="https://get.accelerate.io/v0/runner-for-csharp-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane" id="fsharp" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-fsharp-windows.zip;</code></pre>
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-fsharp-windows.zip</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
                                         <p><a href="https://get.accelerate.io/v0/runner-for-fsharp-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane show active" id="java" role="tabpanel" aria-labelledby="contact-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-java-windows.zip;</code></pre>
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-java-windows.zip</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
                                         <p><a href="https://get.accelerate.io/v0/runner-for-java-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane" id="nodejs" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-nodejs-windows.zip;</code></pre>
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-nodejs-windows.zip</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
                                         <p><a href="https://get.accelerate.io/v0/runner-for-nodejs-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane" id="python" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-python-windows.zip;</code></pre>
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-python-windows.zip</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
                                         <p><a href="https://get.accelerate.io/v0/runner-for-python-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane" id="ruby" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-ruby-windows.zip;</code></pre>
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-ruby-windows.zip</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
                                         <p><a href="https://get.accelerate.io/v0/runner-for-ruby-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane" id="scala" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-scala-windows.zip;</code></pre>
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-scala-windows.zip</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
                                         <p><a href="https://get.accelerate.io/v0/runner-for-scala-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
                                     </div>
                                     <div class="tab-pane" id="vbnet" role="tabpanel" aria-labelledby="profile-tab">
-                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-vbnet-windows.zip;</code></pre>
+                                        <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-vbnet-windows.zip</code></pre>
                                         <p><a href="#" class="btn btn-primary btn-primary-darkBlue copy-text">Copy</a></p>
                                         <p>OR</p>
                                         <p><a href="https://get.accelerate.io/v0/runner-for-vbnet-windows.zip" class="btn btn-primary btn-primary-darkBlue download-link" target="_blank">Download runner project</a></p>
