@@ -267,6 +267,12 @@
         .copy-block-line pre{
             width: 100%;
         }
+        .img-margins{
+            margin-top: 95px;
+        }
+        .img-margins2{
+            margin-top: 68px;
+        }
         @media only screen and (max-width: 1360px) {
             .container-half{
                 width: 100%;
@@ -502,8 +508,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <img src="${RESOURCES_WEB_PATH}/img/download_runner_project.png" class="img-fluid"">
+                <div class="col-lg-6 text-center">
+                    <img src="${RESOURCES_WEB_PATH}/img/download_runner_project.png" class="img-fluid img-margins">
                 </div>
             </div>
         </div>
@@ -563,8 +569,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <img src="${RESOURCES_WEB_PATH}/img/hello-challenge.gif" class="img-fluid">
+                <div class="col-lg-6 text-center">
+                    <img src="${RESOURCES_WEB_PATH}/img/hello-challenge.gif" class="img-fluid img-margins2">
                 </div>
             </div>
         </div>
