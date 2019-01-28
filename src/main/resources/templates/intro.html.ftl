@@ -108,6 +108,9 @@
         .container-centered{
             margin: 0 auto;
         }
+        .row {
+            padding: 15px 0;
+        }
         ul li{
             font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
             font-size: 14px;
@@ -189,8 +192,7 @@
         .copy-btn{
             text-decoration: none;
             border: 1px solid gray;
-            padding: 7px 7px 9px 7px;
-            margin: 0 0 0 10px;
+            padding: 5px 8px 6px 8px;
             border-radius: 3px;
             display: inline-block;
         }
@@ -256,47 +258,33 @@
             text-transform:capitalize;
         }
         .copy-block-line{
-            display: flex;
-            display: -webkit-flex;
+            display: block;
             width: 100%;
-            justify-content: space-between;
-            -webkit-justify-content: space-between;
             height: auto;
         }
         .copy-block-line pre{
             width: 100%;
-        }
-        .copy-block-line {
-            width: 50%;
         }
         .img-margins{
             border: 1px solid rgba(0,0,0,.125);
             border-radius: 4px;
             padding: 0;
             margin: 0;
-            max-width: 740px;
+            max-width: 600px;
             width: 100%;
         }
         .img-margins2{
             margin-top: 68px;
         }
         .accelerate_runner{
-            margin-top: 50px;
+            margin-top: 20px;
         }
         #challenge-flow img{
             width: 96%;
         }
-        @media only screen and (max-width: 1700px) {
-            .copy-block-line {
-                width: 85%;
-            }
-        }
         @media only screen and (max-width: 990px) {
             .margins-mobile {
                 padding: 0;
-            }
-            .copy-block-line {
-                width: 100%;
             }
             .img-margins{
                 max-width: 100%;
@@ -544,7 +532,7 @@
             </form>
             <p class="alert-danger my-alert-danger">The link is expired on: <span class="exp-date font-weight-bold">${EXPIRATION_DATE}</span></p>
 
-            <div class="accelerate_runner"">
+            <div class="accelerate_runner">
                 <p class="text-left">If the steps are successful you should see a folder called "accelerate_runner" which contains all the libraries required to connect to the server and run the coding challenge.</p>
                 <img src="${RESOURCES_WEB_PATH}/img/download_runner_project.png" class="img-fluid img-margins">
             </div>
