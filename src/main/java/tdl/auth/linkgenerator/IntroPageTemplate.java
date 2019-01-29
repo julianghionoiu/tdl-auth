@@ -47,7 +47,7 @@ public class IntroPageTemplate {
         contentParams.put("HEADER_IMAGE_NAME", headerImageName);
         contentParams.put("MAIN_CHALLENGE_TITLE", mainChallengeTitle);
         contentParams.put("SPONSOR", sponsorName);
-        contentParams.put("EXPIRATION_DATE", toSeconds(expirationDate.getTime()));
+        contentParams.put("EXPIRATION_DATE", expirationDate.getTime());
         contentParams.put("CODING_SESSION_DURATION", codingSessionDurationLabel);
         contentParams.put("ALLOW_NO_VIDEO_OPTION", allowNoVideoOption);
         contentParams.put("API_VERIFY_ENDPOINT", authVerifyEndpointUrl);
