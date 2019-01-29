@@ -6,7 +6,6 @@ import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +13,6 @@ import java.util.Map;
 public class IntroPageTemplate {
 
     private final Template template;
-    private final DateFormat dateFormatter;
 
     private final String resourcesWebPath;
     private final String authVerifyEndpointUrl;
@@ -25,8 +23,8 @@ public class IntroPageTemplate {
                              String authVerifyEndpointUrl) throws IOException {
         Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(IntroPageTemplate.class, "/templates/");
+
         template = configuration.getTemplate(templateName);
-        dateFormatter = DateFormat.getDateInstance(DateFormat.FULL);
 
         this.resourcesWebPath = resourcesWebPath;
         this.authVerifyEndpointUrl = authVerifyEndpointUrl;
@@ -49,7 +47,7 @@ public class IntroPageTemplate {
         contentParams.put("HEADER_IMAGE_NAME", headerImageName);
         contentParams.put("MAIN_CHALLENGE_TITLE", mainChallengeTitle);
         contentParams.put("SPONSOR", sponsorName);
-        contentParams.put("EXPIRATION_DATE", dateFormatter.format(expirationDate));
+        contentParams.put("EXPIRATION_DATE", toSeconds(expirationDate.getTime()));
         contentParams.put("CODING_SESSION_DURATION", codingSessionDurationLabel);
         contentParams.put("ALLOW_NO_VIDEO_OPTION", allowNoVideoOption);
         contentParams.put("API_VERIFY_ENDPOINT", authVerifyEndpointUrl);
@@ -59,5 +57,9 @@ public class IntroPageTemplate {
         contentParams.put("JOURNEY_ID", journeyId);
         template.process(contentParams, stringWriter);
         return stringWriter.toString();
+    }
+
+    private long toSeconds(long time) {
+        return time/1000;
     }
 }
