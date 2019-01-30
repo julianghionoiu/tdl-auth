@@ -22,9 +22,9 @@ public class IntroPageManualRender {
                 "../staticResources",
                 "https://www.example.com/production/verify");
         String content = template.generateContent(
-                "accelerate.jpg",
+                "makers.jpg",
                 "Developer Insights",
-                "Valtech",
+                "Makers Academy",
                 "3 hours",
                 true,
                 "xwya01",
