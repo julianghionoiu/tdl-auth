@@ -320,7 +320,7 @@
                     <h3>Set up</h3>
                     <h4>in minutes</h4>
                     <p>
-                        You will clone a github repo, install some libraries and will then be ready
+                        You will download a project, install some libraries and will then be ready
                         to write code in your own IDE using your choice of frameworks and tools.
                     </p>
                 </div>
@@ -510,7 +510,7 @@
                                                         <a href="#" class="copy-btn copy-text"><svg class="octicon octicon-clippy" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 13h4v1H2v-1zm5-6H2v1h5V7zm2 3V8l-3 3 3 3v-2h5v-2H9zM4.5 9H2v1h2.5V9zM2 12h2.5v-1H2v1zm9 1h1v2c-.02.28-.11.52-.3.7-.19.18-.42.28-.7.3H1c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h3c0-1.11.89-2 2-2 1.11 0 2 .89 2 2h3c.55 0 1 .45 1 1v5h-1V6H1v9h10v-2zM2 5h8c0-.55-.45-1-1-1H8c-.55 0-1-.45-1-1s-.45-1-1-1-1 .45-1 1-.45 1-1 1H3c-.55 0-1 .45-1 1z"></path></svg></a>
                                                     </p>
                                                 </div>
-                                                <p>The <code>accelerate_runner</code> will be created, which represents the root of your project.</p>
+                                                <p>The <code>accelerate_runner</code> folder will be created, which represents the root of your project.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -534,7 +534,7 @@
                 <input type="hidden" name="token" value="${TOKEN}">
                 <input type="submit" class="btn btn-primary" id="download_credentials" value="Download credentials">
             </form>
-            <p class="alert-danger my-alert-danger">The link is expired on: <span class="exp-date font-weight-bold">${EXPIRATION_DATE}</span></p>
+            <p class="alert-danger my-alert-danger">The link expired on: <span class="exp-date font-weight-bold">${EXPIRATION_DATE}</span></p>
 
             <div class="accelerate_runner">
                 <p class="text-left">If the steps are successful you should see a folder called "accelerate_runner" which contains all the libraries required to connect to the server and run the coding challenge.</p>
@@ -564,11 +564,6 @@
                         <p>
                             <ul>
                                 <li>
-                                    Requires Java 8. If you do not have Java 8 <a
-                                            href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">download</a>
-                                        and install it.
-                                </li>
-                                <li>
                                     If you have multiple screens attached, please only use the laptop screen for coding.
                                 </li>
                                 <li>
@@ -592,7 +587,7 @@
     <div class="row">
         <div id="challenge-flow" class="col-md-10 container-centered">
             <h2>4. Start the warmup</h2>
-            <p>In your IDE of choice, open up the <code>README.md</code> file of the repo that you cloned.</p>
+            <p>In your IDE of choice, open the <code>README.md</code> file from the <code>accelerate_runner</code> folder.</p>
             <p>To get started, follow the instructions provided in the README.md and source code comments.</p>
             <br/>
             <p>While working on the challenge you will be interacting with the server by running the code and you will provide your solutions within the same project.</p>
@@ -863,11 +858,12 @@
             hr = '0' + hr;
         }
 
-        expDateText = hr + ':' + minutes + ampm +
+        expDateText =
             days[date.getDay()] + ', ' +
             date.getDate() + ' ' +
             months[date.getMonth()] + ' ' +
-            date.getFullYear();
+            date.getFullYear()  + ' ' +
+            "at "+hr + ':' + minutes + ampm;
 
         expDateSpan.text(expDateText);
 
