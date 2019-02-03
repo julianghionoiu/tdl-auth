@@ -313,23 +313,21 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10 container-centered">
-            <h2>How does this work?</h2>
             <div class="row text-center">
                 <div class="col-md-4">
-                    <img src="${RESOURCES_WEB_PATH}/img/ic_settings_black_24dp_2x.png">
-                    <h3>Set up</h3>
-                    <h4>in minutes</h4>
+                    <img src="${RESOURCES_WEB_PATH}/img/ic_whatshot_black_24dp_2x.png">
+                    <h3>Average Completion Time</h3>
+                    <h4>${CODING_SESSION_DURATION}</h4>
                     <p>
-                        You will download a project, install some libraries and will then be ready
-                        to write code in your own IDE using your choice of frameworks and tools.
+                        This does not mean you need to rush this. The quality of your code and your development technique are equaly important.
                     </p>
                 </div>
                 <div class="col-md-4">
-                    <img src="${RESOURCES_WEB_PATH}/img/ic_whatshot_black_24dp_2x.png">
-                    <h3>Challenge</h3>
-                    <h4>${CODING_SESSION_DURATION}</h4>
+                    <img src="${RESOURCES_WEB_PATH}/img/ic_settings_black_24dp_2x.png">
+                    <h3>You have</h3>
+                    <h4>9 hours remaining</h4>
                     <p>
-                        A realistic coding challenge designed to measure code quality. Code through multiple incremental requirements.
+                        Complete the challenge by <br/><span class="exp-date font-weight-bold">${EXPIRATION_DATE}</span>
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -551,8 +549,6 @@
                         <h2>3. Start recording</h2>
                         <p>The development technique is as important as the final solution. It is very informative to see
                             how the source code evolved over time and this is why we ask participants to record screen and source code.</p>
-                        <p>This also means that you get access to all the data. After you perform the challenge you get to see (anonymously) how the
-                            other participants tackled the same challenge. This includes video and source code.</p>
                         <div class="alert alert-danger" role="alert">
                             <span class="glyphicon glyphicon-warning-sign"></span>
                             We do not collect <strong>personal identifiable information</strong> (email, social
@@ -862,8 +858,8 @@
             days[date.getDay()] + ', ' +
             date.getDate() + ' ' +
             months[date.getMonth()] + ' ' +
-            date.getFullYear()  + ' ' +
-            "at "+hr + ':' + minutes + ampm;
+            date.getFullYear()  + ', ' +
+            hr + ':' + minutes + ampm;
 
         expDateSpan.text(expDateText);
 
