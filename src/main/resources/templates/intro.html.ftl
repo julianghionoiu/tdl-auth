@@ -19,6 +19,10 @@
 
     <#include "/partials/global.style.html.ftl">
     <#include "/partials/0a_header/style.html.ftl">
+    <#include "/partials/4_start_with_warmup/style.html.ftl">
+    <#include "/partials/1_download_runner/style.html.ftl">
+    <#include "/partials/2_download_credentials/style.html.ftl">
+    <#include "/partials/3_start_recorder/style.html.ftl">
 </head>
 <body>
 
@@ -45,6 +49,7 @@
 
 <#include "/partials/global_detectos.script.html.ftl">
 <#include "/partials/global_datespan.script.html.ftl">
+<#include "/partials/0b_expectation_shields/script.html.ftl">
 <#include "/partials/1_download_runner/script.html.ftl">
 <#include "/partials/2_download_credentials/script.html.ftl">
 <#include "/partials/3_start_recorder/script.html.ftl">

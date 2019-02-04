@@ -17,8 +17,8 @@
                 <#--noinspection HtmlUnknownTarget-->
                 <img src="${RESOURCES_WEB_PATH}/img/ic_settings_black_24dp_2x.png">
                 <h3>You have</h3>
-                <h4>9 hours remaining</h4>
-                <p>
+                <h4 id="you-have">9 hours remaining</h4>
+                <p id="you-have-message">
                     Complete the challenge by <br/><span class="exp-date font-weight-bold">${EXPIRATION_DATE}</span>
                 </p>
             </div>
