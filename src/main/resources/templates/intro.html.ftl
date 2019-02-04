@@ -1,16 +1,7 @@
 <!DOCTYPE html>
 <#-- @ftlroot "." -->
 <#-- @ftlvariable name="RESOURCES_WEB_PATH" type="java.lang.String" -->
-<#-- @ftlvariable name="HEADER_IMAGE_NAME" type="java.lang.String" -->
-<#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
-<#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
-<#-- @ftlvariable name="ALLOW_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
-<#-- @ftlvariable name="USERNAME" type="java.lang.String" -->
-<#-- @ftlvariable name="CHALLENGE" type="java.lang.String" -->
-<#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
-<#-- @ftlvariable name="API_VERIFY_ENDPOINT" type="java.lang.String" -->
-<#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.Long" -->
 <#setting number_format="computer">
 <html lang="en">
 <head>
