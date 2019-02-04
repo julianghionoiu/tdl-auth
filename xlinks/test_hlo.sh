@@ -9,7 +9,7 @@ USERNAME=$2
 PAYLOAD_FILE=$(mktemp)
 cat << EOF > ${PAYLOAD_FILE}
 {
-  "headerImageName": "mountain.jpg",
+  "headerImageName": "accelerate.jpg",
   "mainChallengeTitle": "Hello",
   "sponsorName": "${COMPANY}",
   "codingDurationLabel": "can be solved in 5 minutes",

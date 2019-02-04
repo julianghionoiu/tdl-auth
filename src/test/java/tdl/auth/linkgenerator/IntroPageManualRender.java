@@ -22,14 +22,14 @@ public class IntroPageManualRender {
                 "../staticResources",
                 "https://www.example.com/production/verify");
         String content = template.generateContent(
-                "accelerate.jpg",
-                "challengeTitle",
-                "LongName Company",
+                "makers.jpg",
+                "Developer Insights",
+                "Makers Academy",
                 "3 hours",
                 true,
-                "myUsername",
-                "myChallenge",
-                "myToken",
+                "xwya01",
+                "CHK",
+                "asgahdfh",
                 new Date(),
                 "myJourneyId");
         Files.write(Paths.get("./build/intro.html"), content.getBytes(),

@@ -2,20 +2,19 @@
 
 set -e
 
-if [ ! $# -eq 2 ]; then echo "Usage: $0 company username"; exit 1; fi
-COMPANY=$1
-USERNAME=$2
+if [ $# -eq 0 ]; then echo "Usage: $0 username"; exit 1; fi
+USERNAME=$1
 
 PAYLOAD_FILE=$(mktemp)
 cat << EOF > ${PAYLOAD_FILE}
 {
-  "headerImageName": "accelerate.jpg",
-  "mainChallengeTitle": "Insights",
-  "sponsorName": "${COMPANY}",
-  "codingDurationLabel": "can be solved in 2-3 hours",
+  "headerImageName": "makers.jpg",
+  "mainChallengeTitle": "Developer Insights",
+  "sponsorName": "Makers Academy",
+  "codingDurationLabel": "3 to 4 hours",
   "allowNoVideoOption": true,
   "username":"${USERNAME}",
-  "validityDays": 21,
+  "validityDays": 14,
   "warmupChallenges": [ "SUM", "HLO" ],
   "officialChallenge": "CHK"
 }
