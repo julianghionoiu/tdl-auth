@@ -29,10 +29,10 @@
         }
 
         if (timeNow >= expDate){
-            $('#you-have').text('Link expired');
-            $('#you-have-message').text('For an extension, please email your contact.');
+            $('#you-have-time').text('Link expired');
+            $('#you-have-time-message').text('For an extension, please email your contact.');
         }else{
-            $('#you-have').text(leftDays + ' ' + daysText + ', ' + leftHours + ' ' + hoursText + ', ' + leftMinutes + ' ' + minutesText);
+            $('#you-have-time').text(leftDays + ' ' + daysText + ', ' + leftHours + ' ' + hoursText + ', ' + leftMinutes + ' ' + minutesText + ' remaining');
         }
     });
 </script>

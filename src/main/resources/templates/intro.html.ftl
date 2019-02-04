@@ -19,6 +19,7 @@
 
     <#include "/partials/global.style.html.ftl">
     <#include "/partials/0a_header/style.html.ftl">
+    <#include "/partials/0b_expectation_shields/style.html.ftl">
     <#include "/partials/4_start_with_warmup/style.html.ftl">
     <#include "/partials/1_download_runner/style.html.ftl">
     <#include "/partials/2_download_credentials/style.html.ftl">
