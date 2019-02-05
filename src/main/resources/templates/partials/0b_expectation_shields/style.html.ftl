@@ -1,12 +1,10 @@
 <style>
-    #you-have-time-block {
-        background-color: #f9f2f4;
-        padding: 0 0 10px 0;
+    #you-have-time-block h3, #you-have-time-block .time-icons{
+        color: #a94442;
     }
-    @media only screen and (max-width: 767px) {
-        #you-have-time-block {
-            margin: 10px 0;
-            padding: 10px 0;
-        }
+
+    .time-icons{
+        font-size: 44px;
     }
+
 </style>
