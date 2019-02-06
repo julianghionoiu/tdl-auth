@@ -1,8 +1,7 @@
 <#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.Long" -->
 <script>
     $(document).ready(function(){
-        <#--var expDate = ${EXPIRATION_DATE};-->
-        var expDate = new Date(2019,1,5, 11);
+        var expDate = ${EXPIRATION_DATE};
         var timeNow = new Date();
         timeNow = timeNow.getTime();
 
