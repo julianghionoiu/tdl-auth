@@ -4,10 +4,10 @@ import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 public class IntroPageManualRender {
@@ -16,7 +16,7 @@ public class IntroPageManualRender {
     /**
      * Use this to visually inspect the rendering of the candidate page
      */
-    public static void main(String[] args) throws IOException, TemplateException {
+    public static void main(String[] args) throws IOException, TemplateException, ParseException {
         IntroPageTemplate template = new IntroPageTemplate(
                 "intro.html.ftl",
                 "../staticResources",
@@ -30,7 +30,7 @@ public class IntroPageManualRender {
                 "xwya01",
                 "CHK",
                 "asgahdfh",
-                new Date(),
+                new SimpleDateFormat("dd/MM/yyyy").parse("31/02/2019"),
                 "myJourneyId");
         Files.write(Paths.get("./build/intro.html"), content.getBytes(),
                 StandardOpenOption.CREATE,

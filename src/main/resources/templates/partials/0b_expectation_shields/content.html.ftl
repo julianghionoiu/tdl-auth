@@ -6,25 +6,25 @@
         <div class="row text-center">
             <div class="col-md-4">
                 <#--noinspection HtmlUnknownTarget-->
-                <img src="${RESOURCES_WEB_PATH}/img/ic_whatshot_black_24dp_2x.png">
+                <p class="time-icons"><i class="fas fa-fire"></i></p>
                 <h3>Average Completion Time</h3>
                 <h4>${CODING_SESSION_DURATION}</h4>
                 <p>
                     This does not mean you need to rush this. The quality of your code and your development technique are equaly important.
                 </p>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" id="you-have-time-block">
                 <#--noinspection HtmlUnknownTarget-->
-                <img src="${RESOURCES_WEB_PATH}/img/ic_settings_black_24dp_2x.png">
+                <p class="time-icons"><i class="fas fa-cog"></i></p>
                 <h3>You have</h3>
-                <h4>9 hours remaining</h4>
-                <p>
+                <h4 id="you-have-time"></h4>
+                <p id="you-have-time-message">
                     Complete the challenge by <br/><span class="exp-date font-weight-bold">${EXPIRATION_DATE}</span>
                 </p>
             </div>
             <div class="col-md-4">
                 <#--noinspection HtmlUnknownTarget-->
-                <img src="${RESOURCES_WEB_PATH}/img/ic_timer_black_48px.svg">
+                <p class="time-icons"><i class="fas fa-stopwatch"></i></p>
                 <h3>Pause/Resume</h3>
                 <h4>anytime</h4>
                 <p>
