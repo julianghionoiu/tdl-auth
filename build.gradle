@@ -58,6 +58,13 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4:1.7.0RC4'
     testCompile 'org.powermock:powermock-module-junit4-rule-agent:1.7.0RC4'
     testCompile 'com.github.stefanbirkner:system-rules:1.16.0'
+
+    // Web tests
+    testCompile "org.seleniumhq.selenium:selenium-java:3.141.59"
+    testCompile 'org.seleniumhq.selenium:selenium-remote-driver:3.141.59'
+    testCompile "org.testcontainers:testcontainers:1.10.6"
+    testCompile 'org.testcontainers:selenium:1.10.6'
+    testCompile "org.testcontainers:nginx:1.10.6"
 }
 
 
