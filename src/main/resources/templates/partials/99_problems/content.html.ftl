@@ -26,7 +26,7 @@
             <p>
                 If, for any technical reason, you are not able to go through the challenge please email:
             </p>
-            <pre><code>participant@exocode.co.uk</code></pre>
+            <pre><code>support@accelerate.io</code></pre>
             <p>
                 We can provide you with alternative ways of completing the challenge.
             </p>
