@@ -53,6 +53,17 @@ Steps to test.
 1. Execute script `prepare-test.sh`, after previously set environment variable `AWS_CONFIG` and `STACK_NAME` for generating AWS test environment using CloudFormation.
 2. Execute gradle `test` action.
 
+### Visual Web Test
+
+Dependencies:
+- Docker
+- ImageMagick (convert)
+
+To run the web tests:
+```
+./gradlew webTests
+```
+
 ### Deploy
 
 Prepare resources

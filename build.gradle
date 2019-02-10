@@ -65,6 +65,8 @@ dependencies {
     testCompile "org.testcontainers:testcontainers:1.10.6"
     testCompile 'org.testcontainers:selenium:1.10.6'
     testCompile "org.testcontainers:nginx:1.10.6"
+    testCompile 'com.hotwire.image-assert:image-assert:1.0.5'
+    testCompile 'ru.yandex.qatools.ashot:ashot:1.5.4'
 }
 
 
