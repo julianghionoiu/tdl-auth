@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 
 public class IntroPageManualRender {
@@ -21,6 +22,7 @@ public class IntroPageManualRender {
                 "intro.html.ftl",
                 "../staticResources",
                 "https://www.example.com/production/verify");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         IntroPageParameters introPageParameters = new IntroPageParameters().toBuilder()
                 .headerImageName("makers.jpg")
                 .mainChallengeTitle("Developer Insights")
@@ -30,7 +32,8 @@ public class IntroPageManualRender {
                 .username("xwya01")
                 .challenge("CHK")
                 .token("asdf")
-                .expirationDate(new SimpleDateFormat("dd/MM/yyyy").parse("31/02/2019"))
+                .expirationDate(simpleDateFormat.parse("31/02/2019"))
+                .fakeCurrentDate(Optional.of(simpleDateFormat.parse("30/02/2019")))
                 .journeyId("myJourneyId")
                 .build();
         String content = template.generateContent(introPageParameters);

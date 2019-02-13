@@ -3,7 +3,7 @@ package tdl.auth.linkgenerator;
 import lombok.*;
 
 import java.util.Date;
-
+import java.util.Optional;
 
 
 @Getter
@@ -11,14 +11,18 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IntroPageParameters {
-    @Builder.Default String headerImageName = "accelerate.jpg";
-    @Builder.Default String mainChallengeTitle = "Challenge";
-    @Builder.Default String sponsorName = "Accelerate";
-    @Builder.Default String codingSessionDurationLabel = "few hours";
-    @Builder.Default Boolean allowNoVideoOption = true;
-    @Builder.Default String username = "xUSERNAME";
-    @Builder.Default String challenge = "xCHALLENGE";
-    @Builder.Default String token = "xTOKEN";
-    @Builder.Default Date expirationDate = new Date();
-    @Builder.Default String journeyId = "xJOURNEY";
+    @Builder.Default private String headerImageName = "accelerate.jpg";
+    @Builder.Default private String mainChallengeTitle = "Challenge";
+    @Builder.Default private String sponsorName = "Accelerate";
+    @Builder.Default private String codingSessionDurationLabel = "few hours";
+    @Builder.Default private Boolean allowNoVideoOption = true;
+    @Builder.Default private String username = "xUSERNAME";
+    @Builder.Default private String challenge = "xCHALLENGE";
+    @Builder.Default private String token = "xTOKEN";
+    @Builder.Default private Date expirationDate = new Date();
+    @Builder.Default private String journeyId = "xJOURNEY";
+
+    // Testing only
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    @Builder.Default private Optional<Date> fakeCurrentDate = Optional.empty();
 }

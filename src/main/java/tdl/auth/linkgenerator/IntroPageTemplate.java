@@ -45,6 +45,11 @@ public class IntroPageTemplate {
         contentParams.put("CHALLENGE", introPageParameters.getChallenge());
         contentParams.put("TOKEN", introPageParameters.getToken());
         contentParams.put("JOURNEY_ID", introPageParameters.getJourneyId());
+
+        // Lock time during testing
+        introPageParameters.getFakeCurrentDate()
+                .ifPresent(date -> contentParams.put("FAKE_CURRENT_DATE", date.getTime()));
+
         template.process(contentParams, stringWriter);
         return stringWriter.toString();
     }
