@@ -1,4 +1,4 @@
-package tdl.auth.linkgenerator.webTests;
+package tdl.auth.linkgenerator;
 
 import com.hotwire.imageassert.Image;
 import com.hotwire.imageassert.ImageAssert;
@@ -15,8 +15,7 @@ import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.SimpleShootingStrategy;
 import ru.yandex.qatools.ashot.shooting.ViewportPastingDecorator;
-import tdl.auth.linkgenerator.IntroPageTemplate;
-import tdl.auth.linkgenerator.webTests.support.TestExceptionResultListener;
+import tdl.auth.webTests.support.TestExceptionResultListener;
 
 import javax.imageio.ImageIO;
 import java.nio.file.Files;

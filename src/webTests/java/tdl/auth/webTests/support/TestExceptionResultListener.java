@@ -1,4 +1,4 @@
-package tdl.auth.linkgenerator.webTests.support;
+package tdl.auth.webTests.support;
 
 import com.hotwire.imageassert.listener.Result;
 import com.hotwire.imageassert.listener.ResultListener;
