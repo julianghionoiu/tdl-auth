@@ -61,7 +61,7 @@ Dependencies:
 
 To run the web tests:
 ```
-./gradlew webTests
+./gradlew webTests -i
 ```
 
 ### Deploy

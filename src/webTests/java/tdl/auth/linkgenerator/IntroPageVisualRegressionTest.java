@@ -35,7 +35,7 @@ public class IntroPageVisualRegressionTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @BeforeClass
     public static void setup() {
-        Path webTestsPath = Paths.get("./build/web-test");
+        Path webTestsPath = Paths.get("./build/web-tests");
         webTestsPath.toFile().mkdir();
 
         staticResourcesPath = Paths.get("./staticResources");

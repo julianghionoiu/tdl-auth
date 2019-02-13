@@ -30,7 +30,7 @@ public class IntroPageManualRender {
                 "xwya01",
                 "CHK",
                 "asgahdfh",
-                new SimpleDateFormat("dd/MM/yyyy").parse("31/02/2019"),
+                new SimpleDateFormat("dd/MM/yyyy").parse("31/02/2020"),
                 "myJourneyId");
         Files.write(Paths.get("./build/intro.html"), content.getBytes(),
                 StandardOpenOption.CREATE,
