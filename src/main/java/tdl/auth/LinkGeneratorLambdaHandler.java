@@ -134,7 +134,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
         String journeyId = JourneyIdUtils.encode(request.getUsername(), request.getWarmupChallenges(), request.getOfficialChallenge());
         context.getLogger().log(String.format("username: %s, challenge: %s, token: %s, pageStorageBucket: %s, authVerifyEndpointURL: %s",
                 request.getUsername(), request.getOfficialChallenge(), token, pageStorageBucket, authVerifyEndpointURL));
-        IntroPageParameters introPageParameters = new IntroPageParameters().toBuilder()
+        IntroPageParameters introPageParameters = IntroPageParameters.builder()
                 .headerImageName(request.getHeaderImageName())
                 .mainChallengeTitle(request.getMainChallengeTitle())
                 .sponsorName(request.getSponsorName())

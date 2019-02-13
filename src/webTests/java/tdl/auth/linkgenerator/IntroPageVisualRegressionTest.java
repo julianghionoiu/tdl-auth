@@ -76,7 +76,7 @@ public class IntroPageVisualRegressionTest {
                 "../staticResources",
                 "https://www.example.com/production/verify");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        IntroPageParameters introPageParameters = new IntroPageParameters().toBuilder()
+        IntroPageParameters introPageParameters = IntroPageParameters.builder()
                 .headerImageName("makers.jpg")
                 .mainChallengeTitle("Developer Insights")
                 .sponsorName("Makers Academy")

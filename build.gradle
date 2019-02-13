@@ -61,7 +61,7 @@ dependencies {
     
     compile 'org.freemarker:freemarker:2.3.14'
 
-    compileOnly 'org.projectlombok:lombok:1.16.16'
+    compileOnly 'org.projectlombok:lombok:1.16.18'
 
 
     testCompile('junit:junit:4.11'){

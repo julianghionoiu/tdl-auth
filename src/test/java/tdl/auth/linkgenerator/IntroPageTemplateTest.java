@@ -19,12 +19,12 @@ public class IntroPageTemplateTest {
                 "test-intro.html.ftl",
                 resourcesWebPath,
                 authUrl);
-        IntroPageParameters params = new IntroPageParameters().toBuilder()
+        IntroPageParameters params = IntroPageParameters.builder()
                 .headerImageName("headerImageName.jpg")
                 .mainChallengeTitle("challengeTitle")
                 .sponsorName("sponsorName")
                 .codingSessionDurationLabel("3hours")
-                .allowNoVideoOption(false)
+                .allowNoVideoOption(true)
                 .username("myUsername")
                 .challenge("myChallenge")
                 .token("myToken")

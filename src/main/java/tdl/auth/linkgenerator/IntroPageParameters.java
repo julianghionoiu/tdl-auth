@@ -7,7 +7,7 @@ import java.util.Optional;
 
 
 @Getter
-@Builder(toBuilder = true)
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class IntroPageParameters {
