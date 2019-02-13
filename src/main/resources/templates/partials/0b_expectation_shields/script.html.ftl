@@ -1,9 +1,9 @@
 <#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.Long" -->
+<#-- @ftlvariable name="FAKE_CURRENT_DATE" type="java.lang.Long" -->
 <script>
     $(document).ready(function(){
         var expDate = ${EXPIRATION_DATE};
-        var timeNow = new Date();
-        timeNow = timeNow.getTime();
+        var timeNow = ${FAKE_CURRENT_DATE!"new Date().getTime()"};
 
         var leftDays = 0,
             leftHours = 0,

@@ -6,7 +6,6 @@ import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,31 +29,22 @@ public class IntroPageTemplate {
         this.authVerifyEndpointUrl = authVerifyEndpointUrl;
     }
 
-    public String generateContent(String headerImageName,
-                                  String mainChallengeTitle,
-                                  String sponsorName,
-                                  String codingSessionDurationLabel,
-                                  Boolean allowNoVideoOption,
-                                  String username,
-                                  String challenge,
-                                  String token,
-                                  Date expirationDate,
-                                  String journeyId)
+    public String generateContent(IntroPageParameters introPageParameters)
             throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> contentParams = new HashMap<>();
         contentParams.put("RESOURCES_WEB_PATH", resourcesWebPath);
-        contentParams.put("HEADER_IMAGE_NAME", headerImageName);
-        contentParams.put("MAIN_CHALLENGE_TITLE", mainChallengeTitle);
-        contentParams.put("SPONSOR", sponsorName);
-        contentParams.put("EXPIRATION_DATE", expirationDate.getTime());
-        contentParams.put("CODING_SESSION_DURATION", codingSessionDurationLabel);
-        contentParams.put("ALLOW_NO_VIDEO_OPTION", allowNoVideoOption);
         contentParams.put("API_VERIFY_ENDPOINT", authVerifyEndpointUrl);
-        contentParams.put("USERNAME", username);
-        contentParams.put("CHALLENGE", challenge);
-        contentParams.put("TOKEN", token);
-        contentParams.put("JOURNEY_ID", journeyId);
+        contentParams.put("HEADER_IMAGE_NAME", introPageParameters.getHeaderImageName());
+        contentParams.put("MAIN_CHALLENGE_TITLE", introPageParameters.getMainChallengeTitle());
+        contentParams.put("SPONSOR", introPageParameters.getSponsorName());
+        contentParams.put("EXPIRATION_DATE", introPageParameters.getExpirationDate().getTime());
+        contentParams.put("CODING_SESSION_DURATION", introPageParameters.getCodingSessionDurationLabel());
+        contentParams.put("ALLOW_NO_VIDEO_OPTION", introPageParameters.getAllowNoVideoOption());
+        contentParams.put("USERNAME", introPageParameters.getUsername());
+        contentParams.put("CHALLENGE", introPageParameters.getChallenge());
+        contentParams.put("TOKEN", introPageParameters.getToken());
+        contentParams.put("JOURNEY_ID", introPageParameters.getJourneyId());
         template.process(contentParams, stringWriter);
         return stringWriter.toString();
     }

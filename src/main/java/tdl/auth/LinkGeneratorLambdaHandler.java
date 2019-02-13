@@ -15,6 +15,7 @@ import ro.ghionoiu.kmsjwt.key.KeyOperationException;
 import tdl.auth.helpers.JWTTdlTokenUtils;
 import tdl.auth.helpers.JourneyIdUtils;
 import tdl.auth.helpers.LambdaExceptionLogger;
+import tdl.auth.linkgenerator.IntroPageParameters;
 import tdl.auth.linkgenerator.IntroPageTemplate;
 import tdl.auth.linkgenerator.LinkGeneratorRequest;
 import tdl.auth.linkgenerator.PageUploader;
@@ -133,17 +134,19 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
         String journeyId = JourneyIdUtils.encode(request.getUsername(), request.getWarmupChallenges(), request.getOfficialChallenge());
         context.getLogger().log(String.format("username: %s, challenge: %s, token: %s, pageStorageBucket: %s, authVerifyEndpointURL: %s",
                 request.getUsername(), request.getOfficialChallenge(), token, pageStorageBucket, authVerifyEndpointURL));
-        String pageContents = introPageTemplate.generateContent(
-                request.getHeaderImageName(),
-                request.getMainChallengeTitle(),
-                request.getSponsorName(),
-                request.getCodingDurationLabel(),
-                request.getAllowNoVideoOption(),
-                request.getUsername(),
-                request.getOfficialChallenge(),
-                token,
-                expirationDate, journeyId
-        );
+        IntroPageParameters introPageParameters = new IntroPageParameters().toBuilder()
+                .headerImageName(request.getHeaderImageName())
+                .mainChallengeTitle(request.getMainChallengeTitle())
+                .sponsorName(request.getSponsorName())
+                .codingSessionDurationLabel(request.getCodingDurationLabel())
+                .allowNoVideoOption(request.getAllowNoVideoOption())
+                .username(request.getUsername())
+                .challenge(request.getOfficialChallenge())
+                .token(token)
+                .expirationDate(expirationDate)
+                .journeyId(journeyId)
+                .build();
+        String pageContents = introPageTemplate.generateContent(introPageParameters);
         return pageUploader.uploadPage(pageContents);
     }
 

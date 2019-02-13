@@ -21,17 +21,19 @@ public class IntroPageManualRender {
                 "intro.html.ftl",
                 "../staticResources",
                 "https://www.example.com/production/verify");
-        String content = template.generateContent(
-                "makers.jpg",
-                "Developer Insights",
-                "Makers Academy",
-                "3 hours",
-                true,
-                "xwya01",
-                "CHK",
-                "asgahdfh",
-                new SimpleDateFormat("dd/MM/yyyy").parse("31/02/2020"),
-                "myJourneyId");
+        IntroPageParameters introPageParameters = new IntroPageParameters().toBuilder()
+                .headerImageName("makers.jpg")
+                .mainChallengeTitle("Developer Insights")
+                .sponsorName("Makers Academy")
+                .codingSessionDurationLabel("3 hours")
+                .allowNoVideoOption(true)
+                .username("xwya01")
+                .challenge("CHK")
+                .token("asdf")
+                .expirationDate(new SimpleDateFormat("dd/MM/yyyy").parse("31/02/2019"))
+                .journeyId("myJourneyId")
+                .build();
+        String content = template.generateContent(introPageParameters);
         Files.write(Paths.get("./build/intro.html"), content.getBytes(),
                 StandardOpenOption.CREATE,
                 StandardOpenOption.TRUNCATE_EXISTING);
