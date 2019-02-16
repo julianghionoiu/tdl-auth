@@ -40,7 +40,7 @@ public class IntroPageTemplate {
         contentParams.put("SPONSOR", introPageParameters.getSponsorName());
         contentParams.put("EXPIRATION_DATE", introPageParameters.getExpirationDate().getTime());
         contentParams.put("CODING_SESSION_DURATION", introPageParameters.getCodingSessionDurationLabel());
-        contentParams.put("ALLOW_NO_VIDEO_OPTION", introPageParameters.getAllowNoVideoOption());
+        contentParams.put("ENABLE_NO_VIDEO_OPTION", introPageParameters.getEnableNoVideoOption());
         contentParams.put("USERNAME", introPageParameters.getUsername());
         contentParams.put("CHALLENGE", introPageParameters.getChallenge());
         contentParams.put("TOKEN", introPageParameters.getToken());

@@ -24,7 +24,7 @@ public class IntroPageTemplateTest {
                 .mainChallengeTitle("challengeTitle")
                 .sponsorName("sponsorName")
                 .codingSessionDurationLabel("3hours")
-                .allowNoVideoOption(true)
+                .enableNoVideoOption(true)
                 .username("myUsername")
                 .challenge("myChallenge")
                 .token("myToken")

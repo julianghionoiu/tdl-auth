@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="RESOURCES_WEB_PATH" type="java.lang.String" -->
-<#-- @ftlvariable name="ALLOW_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
+<#-- @ftlvariable name="ENABLE_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
 <div class="row margins-mobile">
     <div class="col-md-10 container-centered">
         <div class="row text-left">
@@ -14,7 +14,7 @@
                         We do not collect <strong>personal identifiable information</strong> (email, social
                         media), so please close all other tabs that contain these before you start recording.
                     </div>
-                        <#if ALLOW_NO_VIDEO_OPTION>
+                        <#if ENABLE_NO_VIDEO_OPTION>
                         <p>Although very useful, if recording video makes you uncomfortable, you can disable it by
                             adding the <code>--no-video</code> option to the recorder command line.</p>
                         </#if>

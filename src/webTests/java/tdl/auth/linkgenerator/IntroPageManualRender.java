@@ -28,7 +28,7 @@ public class IntroPageManualRender {
                 .mainChallengeTitle("Developer Insights")
                 .sponsorName("Makers Academy")
                 .codingSessionDurationLabel("3 hours")
-                .allowNoVideoOption(true)
+                .enableNoVideoOption(true)
                 .username("xwya01")
                 .challenge("CHK")
                 .token("asdf")

@@ -4,7 +4,7 @@
 <#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
 <#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
-<#-- @ftlvariable name="ALLOW_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
+<#-- @ftlvariable name="ENABLE_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
 <#-- @ftlvariable name="USERNAME" type="java.lang.String" -->
 <#-- @ftlvariable name="CHALLENGE" type="java.lang.String" -->
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
@@ -21,7 +21,7 @@
         This link will expire on: ${EXPIRATION_DATE}
         You will get ${CODING_SESSION_DURATION} of uninterrupted coding challenge
 
-        <#if ALLOW_NO_VIDEO_OPTION>
+        <#if ENABLE_NO_VIDEO_OPTION>
         <p>no video option enabled</p>
         </#if>
 

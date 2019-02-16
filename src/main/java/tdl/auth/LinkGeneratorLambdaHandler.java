@@ -139,7 +139,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
                 .mainChallengeTitle(request.getMainChallengeTitle())
                 .sponsorName(request.getSponsorName())
                 .codingSessionDurationLabel(request.getCodingDurationLabel())
-                .allowNoVideoOption(request.getAllowNoVideoOption())
+                .enableNoVideoOption(request.getAllowNoVideoOption())
                 .username(request.getUsername())
                 .challenge(request.getOfficialChallenge())
                 .token(token)

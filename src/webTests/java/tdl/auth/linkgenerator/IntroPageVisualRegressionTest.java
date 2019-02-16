@@ -3,27 +3,34 @@ package tdl.auth.linkgenerator;
 import com.hotwire.imageassert.Image;
 import com.hotwire.imageassert.ImageAssert;
 import com.hotwire.imageassert.report.HTMLReportResultListener;
+import freemarker.template.TemplateException;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.NginxContainer;
 import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.SimpleShootingStrategy;
 import ru.yandex.qatools.ashot.shooting.ViewportPastingDecorator;
 import tdl.auth.webTests.support.TestExceptionResultListener;
 
 import javax.imageio.ImageIO;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class IntroPageVisualRegressionTest {
 
@@ -32,10 +39,12 @@ public class IntroPageVisualRegressionTest {
     private static Path webdriverRecordingPath;
     private static Path webdriverScreenshotPath;
     private static Path imageComparisonReportsPath;
+    private static AShot aShot;
+    private static IntroPageTemplate pageTemplate;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @BeforeClass
-    public static void setup() {
+    public static void setup() throws IOException {
         Path webTestsPath = Paths.get("./build/web-tests");
         webTestsPath.toFile().mkdir();
 
@@ -52,6 +61,15 @@ public class IntroPageVisualRegressionTest {
 
         imageComparisonReportsPath = webTestsPath.resolve("comparison-reports");
         imageComparisonReportsPath.toFile().mkdir();
+
+        ViewportPastingDecorator strategy =
+                new ViewportPastingDecorator(new SimpleShootingStrategy()).withScrollTimeout(100);
+        aShot = new AShot().shootingStrategy(strategy);
+
+        pageTemplate = new IntroPageTemplate(
+                "intro.html.ftl",
+                "../staticResources",
+                "https://www.example.com/production/verify");
     }
 
     @Rule
@@ -64,57 +82,106 @@ public class IntroPageVisualRegressionTest {
                     BindMode.READ_ONLY);
 
     @Rule
+    //NOTE: Change BrowserWebDriverContainer.VncRecordingMode if you want to visually debug failing test
     public BrowserWebDriverContainer chrome =
             new BrowserWebDriverContainer()
                     .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING, webdriverRecordingPath.toFile())
                     .withCapabilities(new ChromeOptions());
 
+    //~~~~~~~ Tests
+
+
     @Test
-    public void testSimple() throws Exception {
-        IntroPageTemplate template = new IntroPageTemplate(
-                "intro.html.ftl",
-                "../staticResources",
-                "https://www.example.com/production/verify");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        IntroPageParameters introPageParameters = IntroPageParameters.builder()
-                .headerImageName("makers.jpg")
-                .mainChallengeTitle("Developer Insights")
-                .sponsorName("Makers Academy")
-                .codingSessionDurationLabel("3 hours")
-                .allowNoVideoOption(true)
-                .username("xwya01")
-                .challenge("CHK")
-                .token("asdf")
-                .expirationDate(simpleDateFormat.parse("31/02/2019"))
-                .fakeCurrentDate(Optional.of(simpleDateFormat.parse("30/02/2019")))
-                .journeyId("myJourneyId")
+    public void testDefaultJourney() throws Exception {
+
+        IntroPage p = generateAndServe(fixedDatePageParameters()
+                .build());
+
+        p.assertScreenVisuallyMatches("default_page.png");
+        p.assertDownloadLinkIs("https://get.accelerate.io/v0/runner-for-java-linux.zip");
+
+        p.selectPlatform("Windows");
+        p.selectLanguage("Python");
+
+        p.assertScreenVisuallyMatches("different_language_and_platform.png");
+        p.assertDownloadLinkIs("https://get.accelerate.io/v0/runner-for-python-windows.zip");
+    }
+
+
+    @Test
+    public void testAllTogglesChanged() throws Exception { ;
+        IntroPageParameters introPageParameters = fixedDatePageParameters()
+                .enableNoVideoOption(false)
+                .enableApplyPressure(false)
+                .enableReportSharing(false)
                 .build();
-        String content = template.generateContent(introPageParameters);
+
+        IntroPage p = generateAndServe(introPageParameters);
+
+        p.assertScreenVisuallyMatches("all_toggles_disabled.png");
+    }
+
+    //~~~~~~~ The Page object
+
+    @SuppressWarnings("SameParameterValue")
+    static class IntroPage {
+
+        WebDriver webDriver;
+        IntroPage(WebDriver webDriver) {
+            this.webDriver = webDriver;
+        }
+
+        void selectLanguage(final String language) {
+            webDriver.findElement(By.id(language.toLowerCase() + "-tab")).click();
+        }
+
+        void selectPlatform(final String platform) {
+            webDriver.findElement(By.id(platform.toLowerCase() + "-tab")).click();
+        }
+
+        void assertDownloadLinkIs(String expected) {
+            String defaultDownloadLink = webDriver.findElement(By.className("download-link")).getAttribute("href");
+            assertThat(defaultDownloadLink, equalTo(expected));
+        }
+
+        void assertScreenVisuallyMatches(String screenshotName) throws IOException {
+            Path screenshot1 = webdriverScreenshotPath.resolve(screenshotName);
+            ImageIO.write(aShot.takeScreenshot(webDriver).getImage(), "PNG", screenshot1.toFile());
+
+            Path reportPath = imageComparisonReportsPath.resolve(screenshotName);
+            ImageAssert.assertThat(Image.load(screenshot1.toFile()))
+                    .reportingTo(new HTMLReportResultListener(reportPath.toFile()))
+                    .reportingTo(new TestExceptionResultListener("Images are different. See comparison report at: " + reportPath.toAbsolutePath()))
+                    .isEqualTo(resource(screenshotName));
+        }
+
+
+    }
+
+    //~~~~~~~ Helpers
+
+    private static IntroPageParameters.IntroPageParametersBuilder fixedDatePageParameters() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return IntroPageParameters.builder()
+                .expirationDate(simpleDateFormat.parse("31/02/2019"))
+                .fakeCurrentDate(Optional.of(simpleDateFormat.parse("30/02/2019")));
+    }
+
+    private IntroPage generateAndServe(IntroPageParameters introPageParameters)
+            throws IOException, TemplateException {
+        String content = pageTemplate.generateContent(introPageParameters);
         Files.write(nginxWebServePath.resolve("index.html"), content.getBytes(),
                 StandardOpenOption.CREATE,
                 StandardOpenOption.TRUNCATE_EXISTING);
 
         RemoteWebDriver webDriver = chrome.getWebDriver();
         webDriver.get("http://" + getHostIp() + ":" + nginx.getMappedPort(80) + "/page/index.html");
-
-        ViewportPastingDecorator strategy =
-                new ViewportPastingDecorator(new SimpleShootingStrategy()).withScrollTimeout(100);
-        final Screenshot screenshot = new AShot().shootingStrategy(
-                strategy).takeScreenshot(webDriver);
-
-        Path screenshot1 = webdriverScreenshotPath.resolve("test1.png");
-        ImageIO.write(screenshot.getImage(), "PNG", screenshot1.toFile());
-
-        Path reportPath = imageComparisonReportsPath.resolve("test1");
-        ImageAssert.assertThat(Image.load(screenshot1.toFile()))
-                .reportingTo(new HTMLReportResultListener(reportPath.toFile()))
-                .reportingTo(new TestExceptionResultListener("Images are different. See comparison report at: " + reportPath.toAbsolutePath()))
-                .isEqualTo(resource("expected_test.png"));
+        return new IntroPage(webDriver);
     }
 
     @SuppressWarnings("SameParameterValue")
-    private Image resource(String relativeTestResource) {
-        return Image.load(this.getClass().getResourceAsStream(relativeTestResource));
+    private static Image resource(String relativeTestResource) {
+        return Image.load(IntroPageVisualRegressionTest.class.getResourceAsStream(relativeTestResource));
     }
 
     private String getHostIp() {
