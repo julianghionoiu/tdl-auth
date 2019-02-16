@@ -85,32 +85,38 @@ public class IntroPageVisualRegressionTest {
     //NOTE: Change BrowserWebDriverContainer.VncRecordingMode if you want to visually debug failing test
     public BrowserWebDriverContainer chrome =
             new BrowserWebDriverContainer()
-                    .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING, webdriverRecordingPath.toFile())
+                    .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.SKIP, webdriverRecordingPath.toFile())
                     .withCapabilities(new ChromeOptions());
 
     //~~~~~~~ Tests
 
-
     @Test
-    public void testDefaultJourney() throws Exception {
+    public void testValidLinkDefaultView() throws Exception {
 
-        IntroPage p = generateAndServe(fixedDatePageParameters()
+        IntroPage p = generateAndServe(validLinkPageParameters()
                 .build());
 
-        p.assertScreenVisuallyMatches("default_page.png");
+        p.assertScreenVisuallyMatches("valid_link_default_view.png");
         p.assertDownloadLinkIs("https://get.accelerate.io/v0/runner-for-java-linux.zip");
+    }
+
+    @Test
+    public void testValidLinkSelectRunner() throws Exception {
+
+        IntroPage p = generateAndServe(validLinkPageParameters()
+                .build());
 
         p.selectPlatform("Windows");
         p.selectLanguage("Python");
 
-        p.assertScreenVisuallyMatches("different_language_and_platform.png");
+        p.assertScreenVisuallyMatches("valid_link_select_runner.png");
         p.assertDownloadLinkIs("https://get.accelerate.io/v0/runner-for-python-windows.zip");
     }
 
 
     @Test
     public void testAllTogglesChanged() throws Exception { ;
-        IntroPageParameters introPageParameters = fixedDatePageParameters()
+        IntroPageParameters introPageParameters = validLinkPageParameters()
                 .enableNoVideoOption(false)
                 .enableApplyPressure(false)
                 .enableReportSharing(false)
@@ -118,7 +124,17 @@ public class IntroPageVisualRegressionTest {
 
         IntroPage p = generateAndServe(introPageParameters);
 
-        p.assertScreenVisuallyMatches("all_toggles_disabled.png");
+        p.assertScreenVisuallyMatches("all_toggles_set_to_false.png");
+    }
+
+    @Test
+    public void testExpiredLink() throws Exception { ;
+        IntroPageParameters introPageParameters = expiredLinkPageParameters()
+                .build();
+
+        IntroPage p = generateAndServe(introPageParameters);
+
+        p.assertScreenVisuallyMatches("expired_link.png");
     }
 
     //~~~~~~~ The Page object
@@ -160,12 +176,20 @@ public class IntroPageVisualRegressionTest {
 
     //~~~~~~~ Helpers
 
-    private static IntroPageParameters.IntroPageParametersBuilder fixedDatePageParameters() throws ParseException {
+    private static IntroPageParameters.IntroPageParametersBuilder validLinkPageParameters() throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return IntroPageParameters.builder()
                 .expirationDate(simpleDateFormat.parse("31/02/2019"))
                 .fakeCurrentDate(Optional.of(simpleDateFormat.parse("30/02/2019")));
     }
+
+    private static IntroPageParameters.IntroPageParametersBuilder expiredLinkPageParameters() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return IntroPageParameters.builder()
+                .expirationDate(simpleDateFormat.parse("1/02/2019"))
+                .fakeCurrentDate(Optional.of(simpleDateFormat.parse("2/02/2019")));
+    }
+
 
     private IntroPage generateAndServe(IntroPageParameters introPageParameters)
             throws IOException, TemplateException {
