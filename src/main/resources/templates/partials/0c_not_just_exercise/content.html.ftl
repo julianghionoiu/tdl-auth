@@ -15,7 +15,7 @@
             </div>
             <div class="col-lg-6">
                 <#--noinspection HtmlUnknownTarget-->
-                <img src="${RESOURCES_WEB_PATH}/img/leaderboard-transparent-bg.png" class="img-fluid"/>
+                <img src="${RESOURCES_WEB_PATH}/img/intro/leaderboard-transparent-bg.png" class="img-fluid"/>
             </div>
         </div>
     </div>

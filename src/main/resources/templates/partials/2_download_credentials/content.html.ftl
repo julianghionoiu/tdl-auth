@@ -25,7 +25,7 @@
             <p class="text-left">If the steps are successful you should see a folder called "accelerate_runner"
                 which contains all the libraries required to connect to the server and run the coding challenge.</p>
         <#--noinspection HtmlUnknownTarget-->
-            <img src="${RESOURCES_WEB_PATH}/img/download_runner_project.png" class="img-fluid download-credentials-img-margins">
+            <img src="${RESOURCES_WEB_PATH}/img/runner_setup/download_runner_project.png" class="img-fluid download-credentials-img-margins">
         </div>
     </div>
 </div>

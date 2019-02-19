@@ -105,7 +105,7 @@
                                                 <pre><code class="copy-code">wget https://get.accelerate.io/v0/runner-for-java-windows.zip</code></pre>
                                                 <p>
                                                     <a href="#" class="copy-btn copy-text">
-                                                        <img src="${RESOURCES_WEB_PATH}/img/clippy.svg" width="14" height="16">
+                                                        <img src="${RESOURCES_WEB_PATH}/img/runner_setup/clippy.svg" width="14" height="16">
                                                     </a>
                                                 </p>
                                             </div>
@@ -138,7 +138,7 @@
                                                 <pre><code class="copy-code">unzip runner-for-java-windows.zip</code></pre>
                                                 <p>
                                                     <a href="#" class="copy-btn copy-text">
-                                                        <img src="${RESOURCES_WEB_PATH}/img/clippy.svg" width="14" height="16">
+                                                        <img src="${RESOURCES_WEB_PATH}/img/runner_setup/clippy.svg" width="14" height="16">
                                                     </a>
                                                 </p>
                                             </div>
