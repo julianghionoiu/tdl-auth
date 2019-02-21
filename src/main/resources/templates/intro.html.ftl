@@ -32,7 +32,7 @@
 
 <div class="container-fluid">
     <#include "/partials/0b_expectation_shields/content.html.ftl">
-    <#include "/partials/0c_not_just_exercise/content.html.ftl">
+    <#include "/partials/0c_the_challenge/content.html.ftl">
     <#include "/partials/0d_before_you_start/content.html.ftl">
 
     <#include "/partials/1_download_runner/content.html.ftl">

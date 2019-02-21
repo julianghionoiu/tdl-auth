@@ -55,14 +55,14 @@
     .row {
         padding: 15px 0;
     }
-    ul li{
+    li {
         font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
         font-size: 14px;
         line-height: 1.42857143;
         color: #333;
     }
-    .alert-info {
-        color: #31708f;
+    .alert-info, .alert-info ol li {
+        color: #20465c;
         background-color: #d9edf7;
         border-color: #bce8f1;
     }

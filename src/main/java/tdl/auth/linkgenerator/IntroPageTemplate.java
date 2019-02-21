@@ -38,10 +38,12 @@ public class IntroPageTemplate {
         contentParams.put("HEADER_IMAGE_NAME", introPageParameters.getHeaderImageName());
         contentParams.put("MAIN_CHALLENGE_TITLE", introPageParameters.getMainChallengeTitle());
         contentParams.put("SPONSOR", introPageParameters.getSponsorName());
+        contentParams.put("INSPIRED_BY", introPageParameters.getInspiredBy());
         contentParams.put("EXPIRATION_DATE", introPageParameters.getExpirationDate().getTime());
         contentParams.put("CODING_SESSION_DURATION", introPageParameters.getCodingSessionDurationLabel());
         contentParams.put("ENABLE_NO_VIDEO_OPTION", introPageParameters.getEnableNoVideoOption());
         contentParams.put("ENABLE_APPLY_PRESSURE", introPageParameters.getEnableApplyPressure());
+        contentParams.put("ENABLE_REPORT_SHARING", introPageParameters.getEnableReportSharing());
         contentParams.put("USERNAME", introPageParameters.getUsername());
         contentParams.put("CHALLENGE", introPageParameters.getChallenge());
         contentParams.put("TOKEN", introPageParameters.getToken());

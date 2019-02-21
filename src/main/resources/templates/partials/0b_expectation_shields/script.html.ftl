@@ -49,13 +49,15 @@
         }
 
         if (timeNow >= expDate) {
-            $('#you-have-time').text('Link expired');
-            $('#you-have-time-message').text('For an extension, please email your contact.');
+            $('#time-title').text('Warning!');
+            $('#time-subtitle').text('Link expired');
+            $('#time-message').text('For an extension, please email your contact.');
         } else if (enableApplyPressure) {
-            $('#you-have-time').text(outputStr + ' remaining');
+            $('#time-title').text('You have');
+            $('#time-subtitle').text(outputStr + ' remaining');
         } else {
-            $('#you-have-time').text('plenty of time');
-            $('#you-have-time-message').text('Start whenever you are ready.');
+            $('#time-title').text('You have');
+            $('#time-subtitle').text('plenty of time');
         }
     });
 </script>

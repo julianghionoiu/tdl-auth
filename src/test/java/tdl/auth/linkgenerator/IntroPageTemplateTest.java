@@ -23,6 +23,7 @@ public class IntroPageTemplateTest {
                 .headerImageName("headerImageName.jpg")
                 .mainChallengeTitle("challengeTitle")
                 .sponsorName("sponsorName")
+                .inspiredBy("divineInspiration")
                 .codingSessionDurationLabel("3hours")
                 .enableNoVideoOption(true)
                 .enableApplyPressure(true)
@@ -36,6 +37,7 @@ public class IntroPageTemplateTest {
         assertThat(content, containsString(resourcesWebPath+"/"+ params.getHeaderImageName()));
         assertThat(content, containsString(params.getMainChallengeTitle()));
         assertThat(content, containsString(params.getSponsorName()));
+        assertThat(content, containsString(params.getInspiredBy()));
         assertThat(content, containsString(params.getUsername()));
         assertThat(content, containsString(params.getChallenge()));
         assertThat(content, containsString(params.getCodingSessionDurationLabel()));
