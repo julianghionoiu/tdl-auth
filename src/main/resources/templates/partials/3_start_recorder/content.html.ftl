@@ -35,7 +35,7 @@
             </div>
             <div class="col-lg-6">
                 <#--noinspection HtmlUnknownTarget-->
-                <img src="${RESOURCES_WEB_PATH}/img/record/hello-challenge.gif" class="img-fluid start-recording-img-margins">
+                <img src="${RESOURCES_WEB_PATH}/img/record/record.png" class="img-fluid start-recording-img-margins">
             </div>
         </div>
     </div>
