@@ -1,6 +1,6 @@
 <#-- @ftlvariable name="RESOURCES_WEB_PATH" type="java.lang.String" -->
 <#-- @ftlvariable name="ENABLE_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
-<div class="row margins-mobile">
+<div class="row dark-background margins-mobile">
     <div class="col-md-10 container-centered">
         <div class="row text-left">
             <div class="col-lg-6">

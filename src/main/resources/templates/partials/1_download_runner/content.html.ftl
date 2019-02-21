@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="RESOURCES_WEB_PATH" type="java.lang.String" -->
 <div class="row dark-background margins-mobile" id="clone-repo-section">
     <div class="col-md-10 container-centered">
         <div class="row text-left">
