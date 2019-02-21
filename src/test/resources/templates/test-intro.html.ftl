@@ -5,6 +5,7 @@
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
 <#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
 <#-- @ftlvariable name="ENABLE_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
+<#-- @ftlvariable name="ENABLE_APPLY_PRESSURE" type="java.lang.Boolean" -->
 <#-- @ftlvariable name="USERNAME" type="java.lang.String" -->
 <#-- @ftlvariable name="CHALLENGE" type="java.lang.String" -->
 <#-- @ftlvariable name="TOKEN" type="java.lang.String" -->
@@ -23,6 +24,10 @@
 
         <#if ENABLE_NO_VIDEO_OPTION>
         <p>no video option enabled</p>
+        </#if>
+
+        <#if ENABLE_APPLY_PRESSURE>
+        <p>applying pressure</p>
         </#if>
 
         <!--suppress HtmlUnknownTarget -->

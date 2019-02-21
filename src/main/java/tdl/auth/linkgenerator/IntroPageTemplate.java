@@ -41,6 +41,7 @@ public class IntroPageTemplate {
         contentParams.put("EXPIRATION_DATE", introPageParameters.getExpirationDate().getTime());
         contentParams.put("CODING_SESSION_DURATION", introPageParameters.getCodingSessionDurationLabel());
         contentParams.put("ENABLE_NO_VIDEO_OPTION", introPageParameters.getEnableNoVideoOption());
+        contentParams.put("ENABLE_APPLY_PRESSURE", introPageParameters.getEnableApplyPressure());
         contentParams.put("USERNAME", introPageParameters.getUsername());
         contentParams.put("CHALLENGE", introPageParameters.getChallenge());
         contentParams.put("TOKEN", introPageParameters.getToken());

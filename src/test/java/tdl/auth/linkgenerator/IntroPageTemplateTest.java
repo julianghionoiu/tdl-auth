@@ -25,6 +25,7 @@ public class IntroPageTemplateTest {
                 .sponsorName("sponsorName")
                 .codingSessionDurationLabel("3hours")
                 .enableNoVideoOption(true)
+                .enableApplyPressure(true)
                 .username("myUsername")
                 .challenge("myChallenge")
                 .token("myToken")
@@ -39,6 +40,7 @@ public class IntroPageTemplateTest {
         assertThat(content, containsString(params.getChallenge()));
         assertThat(content, containsString(params.getCodingSessionDurationLabel()));
         assertThat(content, containsString("no video option enabled"));
+        assertThat(content, containsString("applying pressure"));
         assertThat(content, containsString(params.getToken()));
         assertThat(content, containsString(authUrl));
         assertThat(content, containsString(params.getJourneyId()));

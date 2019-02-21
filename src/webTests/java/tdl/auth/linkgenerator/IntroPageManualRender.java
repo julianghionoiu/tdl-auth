@@ -29,6 +29,7 @@ public class IntroPageManualRender {
                 .sponsorName("Makers Academy")
                 .codingSessionDurationLabel("3 hours")
                 .enableNoVideoOption(true)
+                .enableApplyPressure(false)
                 .username("xwya01")
                 .challenge("CHK")
                 .token("asdf")
