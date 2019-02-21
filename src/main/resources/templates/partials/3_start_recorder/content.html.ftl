@@ -25,8 +25,15 @@
                             </li>
                             <li>
                                 <p>Start the recorder in a new terminal tab/window.</p>
-                                <div class="start-rec">
-                                    <pre><code>./record_screen_and_upload.bat</code></pre>
+                                <div class="start-rec copy-block">
+                                    <div class="copy-block-line">
+                                        <pre><code class="copy-code">./record_screen_and_upload.bat</code></pre>
+                                        <p>
+                                            <a href="#" class="copy-btn copy-text">
+                                                <img src="${RESOURCES_WEB_PATH}/img/record/clippy.svg" width="14" height="16">
+                                            </a>
+                                        </p>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
