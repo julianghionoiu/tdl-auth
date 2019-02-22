@@ -115,7 +115,7 @@ public class IntroPageVisualRegressionTest {
 
 
     @Test
-    public void testAllTogglesChanged() throws Exception { ;
+    public void testAllTogglesChanged() throws Exception {
         IntroPageParameters introPageParameters = validLinkPageParameters()
                 .enableNoVideoOption(false)
                 .enableApplyPressure(false)
