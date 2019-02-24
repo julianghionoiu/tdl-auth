@@ -1,11 +1,11 @@
 <style>
-    .os-list-tab, .lang-list-tab{
+    .os-list, .lang-list{
         border-bottom: none
     }
-    .os-list-tab .nav-link, .lang-list-tab .nav-link{
+    .os-list .nav-link, .lang-list .nav-link{
         border-radius: 0.25rem;
     }
-    .os-list-tab .nav-link.active, .lang-list-tab .nav-link.active{
+    .os-list .nav-link.active, .lang-list .nav-link.active{
         border-color: #dee2e6;
         font-weight: 700;
         background-color: orange;

@@ -94,10 +94,11 @@ public class IntroPageVisualRegressionTest {
     public void testValidLinkDefaultView() throws Exception {
 
         IntroPage p = generateAndServe(validLinkPageParameters()
+                .defaultLanguage("Ruby")
                 .build());
 
         p.assertScreenVisuallyMatches("valid_link_default_view.png");
-        p.assertDownloadLinkIs("https://get.accelerate.io/v0/runner-for-java-linux.zip");
+        p.assertDownloadLinkIs("https://get.accelerate.io/v0/runner-for-ruby-linux.zip");
     }
 
     @Test

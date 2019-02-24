@@ -21,16 +21,16 @@
                             <div id="" class="collapse show" aria-labelledby="headingOne"
                                  data-parent="#accordionExample">
                                 <div class="card-body">
-                                    <ul class="nav nav-tabs os-list-tab" id="osTab" role="tablist">
-                                        <li class="nav-item os-list">
+                                    <ul class="nav nav-tabs os-list" id="osTab" role="tablist">
+                                        <li class="nav-item">
                                             <a class="nav-link" id="windows-tab" data-toggle="tab" href="#windows"
                                                role="tab" aria-selected="false">Windows</a>
                                         </li>
-                                        <li class="nav-item os-list">
+                                        <li class="nav-item">
                                             <a class="nav-link" id="macos-tab" data-toggle="tab" href="#macos"
                                                role="tab" aria-selected="false">Mac</a>
                                         </li>
-                                        <li class="nav-item os-list">
+                                        <li class="nav-item">
                                             <a class="nav-link" id="linux-tab" data-toggle="tab" href="#linux"
                                                role="tab" aria-selected="true">Linux</a>
                                         </li>
@@ -50,7 +50,7 @@
                             <div id="" class="collapse show" aria-labelledby="headingTwo"
                                  data-parent="#accordionExample">
                                 <div class="card-body">
-                                    <ul class="nav nav-tabs lang-list-tab" id="languagesTab" role="tablist">
+                                    <ul class="nav nav-tabs lang-list" id="languagesTab" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link" id="csharp-tab" data-toggle="tab" href="#csharp"
                                                role="tab" aria-selected="false">C#</a>
@@ -60,7 +60,7 @@
                                                role="tab" aria-selected="false">F#</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="java-tab" data-toggle="tab" href="#java"
+                                            <a class="nav-link" id="java-tab" data-toggle="tab" href="#java"
                                                role="tab" aria-selected="true">Java</a>
                                         </li>
                                         <li class="nav-item">

@@ -29,6 +29,7 @@ public class IntroPageManualRender {
                 .sponsorName("Makers Academy")
                 .inspiredBy("real business domain")
                 .codingSessionDurationLabel("3 hours")
+                .defaultLanguage("Ruby")
                 .username("xwya01")
                 .challenge("CHK")
                 .token("asdf")
