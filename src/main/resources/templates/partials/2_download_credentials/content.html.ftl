@@ -6,7 +6,7 @@
 <#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.Long" -->
 <div class="row">
     <div class="col-md-10 mb-5 container-centered">
-        <h3>2. Download credentials</h3>
+        <h3><a name="download-credentials-section"></a>2. Download credentials</h3>
         <p>To securely connect to the server you need to download a pair of credentials <b>before each coding
             session</b>.
             Download and save the credentials to the <code>config</code> directory:</p>

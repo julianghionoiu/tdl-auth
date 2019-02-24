@@ -2,14 +2,13 @@
 <div class="row">
     <div id="challenge-flow" class="col-md-10 container-centered">
         <h2>4. Start the warmup</h2>
-        <p>In your IDE of choice, open the <code>README.md</code> file from the <code>accelerate_runner</code> folder.
-        </p>
+        <p>In your IDE of choice, open the <code>README.md</code> file from the <code>accelerate_runner</code> folder.</p>
+        <p>The <code>accelerate_runner</code> project contains all the code you need to interact with the challenge server.
+            You write your solutions in the same project and then you run them against the server using the instructions provided.</p>
         <p>To get started, follow the instructions provided in the README.md and source code comments.</p>
         <br/>
-        <p>While working on the challenge you will be interacting with the server by running the code and you will
-            provide your solutions within the same project.</p>
-        <p>The challenge has the following flow. Do not worry about the details, the Warmup will guide you through
-            the process.</p>
+        <p>The challenge has the following flow: Start -> Read instructions -> Write solution -> Deploy</p>
+        <p>Do not worry about the details, the Warmup will guide you through the process.</p>
         <div class="row margins-mobile">
             <div class="col-sm-6 col-md-5">
                 <#--noinspection HtmlUnknownTarget-->

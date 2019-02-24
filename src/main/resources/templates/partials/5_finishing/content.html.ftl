@@ -4,7 +4,6 @@
     <div class="col-md-10 container-centered">
         <div>
             <h3>5. Finishing</h3>
-            <p>You can stop any time you want. We will consider the progress you have made so far.</p>
             <p>When you have finished, you simply have to stop the recorder (<code>CTRL + C</code> or <code>CTRL +
                 D</code>).</p>
             <p>After finishing, your recording will be reviewed by ${SPONSOR} and you will be contacted with
