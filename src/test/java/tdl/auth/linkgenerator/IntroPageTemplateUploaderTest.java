@@ -33,16 +33,16 @@ public class IntroPageTemplateUploaderTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
     public void uploadPage() throws IOException, TemplateException {
-        doCallRealMethod().when(uploader).uploadPage(any());
+        doCallRealMethod().when(uploader).uploadPage(any(), any());
         doReturn(mock(PutObjectResult.class)).when(s3client).putObject(any());
 
         URL url = new URL("http://www.example.com");
         doReturn(url).when(s3client).getUrl(anyString(), anyString());
         
-        String result = uploader.uploadPage("content");
+        String result = uploader.uploadPage("xyz01","content");
         
         verify(s3client, times(1)).putObject(any());
-        verify(s3client, times(1)).getUrl(anyString(), anyString());
+        verify(s3client, times(1)).getUrl(any(), contains("xyz01"));
 
         assertEquals(result, "http://www.example.com");
     }

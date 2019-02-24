@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class PageUploader {
-    private static final long KEY_LENGTH = 32;
+    private static final long KEY_LENGTH = 6;
 
     private final AmazonS3 s3client;
     private final String bucket;
@@ -19,9 +19,9 @@ public class PageUploader {
         this.s3client = s3client;
     }
 
-    public String uploadPage(String pageContents) {
-        String directory = generateDirectory();
-        String path = directory + "/index.html";
+    public String uploadPage(String username, String pageContents) {
+        String salt = generateSalt();
+        String path = username +"/"+ salt + "/index.html";
 
         InputStream stream = new ByteArrayInputStream(pageContents.getBytes(StandardCharsets.UTF_8));
         ObjectMetadata metadata = new ObjectMetadata();
@@ -33,8 +33,9 @@ public class PageUploader {
         return s3client.getUrl(bucket, path).toString();
     }
 
-    private String generateDirectory() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn1234567890";
+    @SuppressWarnings("FieldCanBeLocal")
+    private static String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn1234567890";
+    private static String generateSalt() {
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
         while (salt.length() < KEY_LENGTH) { // length of the random string.

@@ -147,7 +147,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
                 .journeyId(journeyId)
                 .build();
         String pageContents = introPageTemplate.generateContent(introPageParameters);
-        return pageUploader.uploadPage(pageContents);
+        return pageUploader.uploadPage(request.getUsername(), pageContents);
     }
 
     private Date getExpirationDate(int days) {
