@@ -38,7 +38,7 @@ public class LinkGeneratorLambdaAcceptanceTest {
                 TEST_PUBLIC_PAGE_BUCKET,
                 "http://www.example.com/",
                 testCredentialsProvider,
-                "intro.html.ftl", "../000common"
+                "intro.html.ftl", "../../000common"
         );
     }
 

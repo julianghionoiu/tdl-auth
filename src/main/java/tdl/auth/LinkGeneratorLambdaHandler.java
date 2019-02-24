@@ -50,7 +50,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
                 getEnv("AUTH_ENDPOINT_URL"),
                 DefaultAWSCredentialsProviderChain.getInstance(),
                 "intro.html.ftl",
-                "../000common");
+                "../../000common");
     }
 
     LinkGeneratorLambdaHandler(String region, String jwtEncryptKeyArn, String pageStorageBucket, String authVerifyEndpointURL,
