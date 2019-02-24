@@ -13,7 +13,9 @@ public class LinkGeneratorRequest {
     private String mainChallengeTitle;
     private String sponsorName;
     private String codingDurationLabel;
-    private Boolean allowNoVideoOption;
+    private Boolean enableNoVideoOption;
+    private Boolean enableApplyPressure;
+    private Boolean enableReportSharing;
     private String username;
     private Integer validityDays;
     private List<String> warmupChallenges;
