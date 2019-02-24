@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-10 container-centered">
-        <h2>Possible problems</h2>
+        <h2>Troubleshooting</h2>
     </div>
     <div class="col-md-10 container-centered">
         <div id="problems-credentials-have-expired">
