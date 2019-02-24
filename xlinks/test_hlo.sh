@@ -12,6 +12,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "headerImageName": "accelerate.jpg",
   "mainChallengeTitle": "Hello",
   "sponsorName": "${COMPANY}",
+  "inspiredByLabel": "magic",
   "codingDurationLabel": "can be solved in 5 minutes",
   "enableNoVideoOption": true,
   "enableApplyPressure": true,

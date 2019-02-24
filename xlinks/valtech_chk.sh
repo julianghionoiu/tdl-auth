@@ -11,6 +11,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "headerImageName": "valtech.jpg",
   "mainChallengeTitle": "Insights",
   "sponsorName": "Valtech",
+  "inspiredByLabel": "real business domain",
   "codingDurationLabel": "can be solved in 2-3 hours",
   "enableNoVideoOption": false,
   "enableApplyPressure": false,

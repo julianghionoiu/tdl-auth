@@ -11,6 +11,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "headerImageName": "mountain.jpg",
   "mainChallengeTitle": "Checkout",
   "sponsorName": "iwoca",
+  "inspiredByLabel": "real business domain",
   "codingDurationLabel": "can be solved in 2 hours",
   "enableNoVideoOption": true,
   "enableApplyPressure": true,

@@ -27,7 +27,7 @@ public class IntroPageManualRender {
                 .headerImageName("makers.jpg")
                 .mainChallengeTitle("Developer Insights")
                 .sponsorName("Makers Academy")
-                .inspiredBy("real business domain")
+                .inspiredByLabel("real business domain")
                 .codingSessionDurationLabel("3 hours")
                 .defaultLanguage("Ruby")
                 .username("xwya01")

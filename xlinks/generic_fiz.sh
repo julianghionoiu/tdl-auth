@@ -12,6 +12,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "headerImageName": "accelerate.jpg",
   "mainChallengeTitle": "FizzDeluxe",
   "sponsorName": "${COMPANY}",
+  "inspiredByLabel": "real development flow",
   "codingDurationLabel": "can be solved in 45 minutes",
   "enableNoVideoOption": true,
   "enableApplyPressure": true,

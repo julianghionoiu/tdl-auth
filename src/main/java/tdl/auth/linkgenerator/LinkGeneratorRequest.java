@@ -8,10 +8,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class LinkGeneratorRequest {
     private String headerImageName;
     private String mainChallengeTitle;
     private String sponsorName;
+    private String inspiredByLabel;
     private String codingDurationLabel;
     private Boolean enableNoVideoOption;
     private Boolean enableApplyPressure;

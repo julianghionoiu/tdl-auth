@@ -11,6 +11,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "headerImageName": "valtech.jpg",
   "mainChallengeTitle": "FizzDeluxe",
   "sponsorName": "Valtech",
+  "inspiredByLabel": "real development flow",
   "codingDurationLabel": "can be solved in 45 minutes",
   "enableNoVideoOption": false,
   "enableApplyPressure": false,

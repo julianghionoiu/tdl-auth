@@ -11,6 +11,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "headerImageName": "makers.jpg",
   "mainChallengeTitle": "Developer Insights",
   "sponsorName": "Makers Academy",
+  "inspiredByLabel": "real business domain",
   "codingDurationLabel": "3 to 4 hours",
   "enableNoVideoOption": true,
   "enableApplyPressure": true,

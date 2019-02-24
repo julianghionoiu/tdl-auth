@@ -11,6 +11,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "headerImageName": "ofgem.jpg",
   "mainChallengeTitle": "FizzDeluxe",
   "sponsorName": "Ofgem",
+  "inspiredByLabel": "real development flow",
   "codingDurationLabel": "can be solved in 45 minutes",
   "enableNoVideoOption": true,
   "enableApplyPressure": false,

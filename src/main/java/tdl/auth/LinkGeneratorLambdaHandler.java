@@ -8,7 +8,6 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import ro.ghionoiu.kmsjwt.key.KMSEncrypt;
 import ro.ghionoiu.kmsjwt.key.KeyOperationException;
@@ -22,23 +21,15 @@ import tdl.auth.linkgenerator.PageUploader;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.function.Predicate;
 
 /**
  * This handler receives JSON containing email, username, challengeId, validity.
  */
 public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorRequest, String> {
 
-    private static Configuration templateConfiguration;
     private final IntroPageTemplate introPageTemplate;
 
     private KMSEncrypt kmsEncrypt;
-
-    static {
-        Configuration configuration = new Configuration();
-        configuration.setClassForTemplateLoading(LinkGeneratorLambdaHandler.class, "/templates/");
-        templateConfiguration = configuration;
-    }
 
     private final String authVerifyEndpointURL;
     private final String pageStorageBucket;
@@ -106,27 +97,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
     }
 
     String getUploadPageUrlFromRequest(LinkGeneratorRequest request, Context context) throws KeyOperationException, IOException, TemplateException {
-        Predicate<LinkGeneratorRequest> mainChallengeTitle = req -> req.getMainChallengeTitle() != null;
-        if (!mainChallengeTitle.test(request)) throw new IllegalArgumentException("Not a valid main challenge title");
-
-        Predicate<LinkGeneratorRequest> sponsorName = req -> req.getSponsorName() != null;
-        if (!sponsorName.test(request)) throw new IllegalArgumentException("Not a valid sponsor name");
-
-        Predicate<LinkGeneratorRequest> validUsername = req -> req.getUsername() != null;
-        if (!validUsername.test(request)) throw new IllegalArgumentException("Not a valid username");
-
-        Predicate<LinkGeneratorRequest> positiveValidity = req -> req.getValidityDays() > 0;
-        if (!positiveValidity.test(request)) throw new IllegalArgumentException("Incorrect validity");
-
-        Predicate<LinkGeneratorRequest> nonNullChallenges = req -> req.getWarmupChallenges() != null;
-        if (!nonNullChallenges.test(request)) throw new IllegalArgumentException("Warmup challenges is null");
-
-        Predicate<LinkGeneratorRequest> validChallenge = req -> req.getOfficialChallenge() != null;
-        if (!validChallenge.test(request)) throw new IllegalArgumentException("Not a valid official challenge");
-
-        Predicate<LinkGeneratorRequest> codingDurationLabel = req -> req.getCodingDurationLabel() != null;
-        if (!codingDurationLabel.test(request)) throw new IllegalArgumentException("Not a valid coding duration label");
-
+        context.getLogger().log("Received request with parameter: " + request);
 
         Date expirationDate = getExpirationDate(request.getValidityDays());
         String token = JWTTdlTokenUtils.generate(kmsEncrypt, request.getUsername(), request.getWarmupChallenges(),
@@ -138,6 +109,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
                 .headerImageName(request.getHeaderImageName())
                 .mainChallengeTitle(request.getMainChallengeTitle())
                 .sponsorName(request.getSponsorName())
+                .inspiredByLabel(request.getInspiredByLabel())
                 .codingSessionDurationLabel(request.getCodingDurationLabel())
                 .enableNoVideoOption(request.getEnableNoVideoOption())
                 .enableApplyPressure(request.getEnableApplyPressure())
