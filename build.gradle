@@ -30,6 +30,22 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    webTests {
+        java {
+            srcDir file('src/webTests/java')
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+        }
+        resources.srcDir file('src/webTests/resources')
+    }
+}
+
+configurations {
+    webTestsCompile.extendsFrom compile
+    webTestsRuntime.extendsFrom runtime
+}
+
 dependencies {
     compile 'com.amazonaws:aws-lambda-java-core:1.1.0'
     compile 'com.amazonaws:aws-java-sdk-sts:1.11.135'
@@ -39,12 +55,13 @@ dependencies {
 
     compile 'com.beust:jcommander:1.64'
     compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'org.slf4j:log4j-over-slf4j:1.7.25'
     compile 'ch.qos.logback:logback-classic:1.1.3'
     compile 'org.json:json:20140107'
     
     compile 'org.freemarker:freemarker:2.3.14'
 
-    compileOnly 'org.projectlombok:lombok:1.16.16'
+    compileOnly 'org.projectlombok:lombok:1.16.18'
 
 
     testCompile('junit:junit:4.11'){
@@ -58,8 +75,28 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4:1.7.0RC4'
     testCompile 'org.powermock:powermock-module-junit4-rule-agent:1.7.0RC4'
     testCompile 'com.github.stefanbirkner:system-rules:1.16.0'
+
+    // Web tests
+    webTestsCompile('junit:junit:4.11'){
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    }
+    webTestsCompile 'org.hamcrest:hamcrest-core:1.3'
+    webTestsCompile "org.seleniumhq.selenium:selenium-java:3.141.59"
+    webTestsCompile 'org.seleniumhq.selenium:selenium-remote-driver:3.141.59'
+    webTestsCompile "org.testcontainers:testcontainers:1.10.6"
+    webTestsCompile 'org.testcontainers:selenium:1.10.6'
+    webTestsCompile "org.testcontainers:nginx:1.10.6"
+    webTestsCompile 'com.hotwire.image-assert:image-assert:1.0.5'
+    webTestsCompile 'ru.yandex.qatools.ashot:ashot:1.5.4'
 }
 
+task webTests(type: Test) {
+    description "Runs the web tests acceptance test"
+    group = 'verification'
+    testClassesDirs = sourceSets.webTests.output.classesDirs
+    classpath = sourceSets.webTests.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
 
 apply plugin: 'com.github.johnrengelman.shadow'
 

@@ -1,6 +1,6 @@
 <#-- @ftlvariable name="RESOURCES_WEB_PATH" type="java.lang.String" -->
-<#-- @ftlvariable name="ALLOW_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
-<div class="row margins-mobile">
+<#-- @ftlvariable name="ENABLE_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
+<div class="row dark-background margins-mobile">
     <div class="col-md-10 container-centered">
         <div class="row text-left">
             <div class="col-lg-6">
@@ -14,7 +14,7 @@
                         We do not collect <strong>personal identifiable information</strong> (email, social
                         media), so please close all other tabs that contain these before you start recording.
                     </div>
-                        <#if ALLOW_NO_VIDEO_OPTION>
+                        <#if ENABLE_NO_VIDEO_OPTION>
                         <p>Although very useful, if recording video makes you uncomfortable, you can disable it by
                             adding the <code>--no-video</code> option to the recorder command line.</p>
                         </#if>
@@ -25,8 +25,15 @@
                             </li>
                             <li>
                                 <p>Start the recorder in a new terminal tab/window.</p>
-                                <div class="start-rec">
-                                    <pre><code>./record_screen_and_upload.bat</code></pre>
+                                <div class="start-rec copy-block">
+                                    <div class="copy-block-line">
+                                        <pre><code class="copy-code">./record_screen_and_upload.bat</code></pre>
+                                        <p>
+                                            <a href="#" class="copy-btn copy-text">
+                                                <img src="${RESOURCES_WEB_PATH}/img/record/clippy.svg" width="14" height="16">
+                                            </a>
+                                        </p>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
@@ -35,7 +42,7 @@
             </div>
             <div class="col-lg-6">
                 <#--noinspection HtmlUnknownTarget-->
-                <img src="${RESOURCES_WEB_PATH}/img/hello-challenge.gif" class="img-fluid start-recording-img-margins">
+                <img src="${RESOURCES_WEB_PATH}/img/record/record.png" class="img-fluid start-recording-img-margins">
             </div>
         </div>
     </div>

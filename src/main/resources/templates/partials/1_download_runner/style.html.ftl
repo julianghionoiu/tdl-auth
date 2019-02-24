@@ -1,11 +1,11 @@
 <style>
-    .os-list-tab, .lang-list-tab{
+    .os-list, .lang-list{
         border-bottom: none
     }
-    .os-list-tab .nav-link, .lang-list-tab .nav-link{
+    .os-list .nav-link, .lang-list .nav-link{
         border-radius: 0.25rem;
     }
-    .os-list-tab .nav-link.active, .lang-list-tab .nav-link.active{
+    .os-list .nav-link.active, .lang-list .nav-link.active{
         border-color: #dee2e6;
         font-weight: 700;
         background-color: orange;
@@ -21,45 +21,6 @@
         border-color: #4C5675;
     }
 
-    .copy-block-line{
-        display: flex;
-        display: -webkit-flex;
-        width: 100%;
-        height: auto;
-    }
-    .copy-block-line p{
-        display: flex;
-        display: -webkit-flex;
-        justify-content: center;
-    }
-    .copy-block-line p a{
-        display: flex;
-        display: -webkit-flex;
-        justify-content: center;
-        -webkit-justify-content: center;
-        align-items: center;
-        -webkit-align-items: center;
-    }
-    .copy-btn{
-        text-decoration: none;
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-        display: inline-block;
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
-        background-color: #f6f8fa;
-    }
-    .copy-btn:hover{
-        background-color: #ecf0f4;
-    }
-    .copy-block-line pre{
-        border: 1px solid #ccc;
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
     .download-link{
         margin-left: 10px;
     }

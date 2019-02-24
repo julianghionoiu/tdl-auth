@@ -14,8 +14,8 @@
             <p><strong>Causes:</strong> The credentials you have for uploading your recording have expired.
             </p>
             <p>
-                <strong>Actions:</strong> You need to download new credentials. See the <a
-                    href="#clone-repo-section">"Clone repo and download credentials"</a> section
+                <strong>Actions:</strong> You need to download new set of credentials. See the <a
+                    href="#download-credentials-section">"Download credentials"</a> section
                 above.
             </p>
         </div>
@@ -26,10 +26,7 @@
             <p>
                 If, for any technical reason, you are not able to go through the challenge please email:
             </p>
-            <pre><code>participant@exocode.co.uk</code></pre>
-            <p>
-                We can provide you with alternative ways of completing the challenge.
-            </p>
+            <pre><code>ask@accelerate.io</code></pre>
         </div>
     </div>
 </div>

@@ -53,6 +53,17 @@ Steps to test.
 1. Execute script `prepare-test.sh`, after previously set environment variable `AWS_CONFIG` and `STACK_NAME` for generating AWS test environment using CloudFormation.
 2. Execute gradle `test` action.
 
+### Visual Web Test
+
+Dependencies:
+- Docker
+- ImageMagick (convert)
+
+To run the web tests:
+```
+./gradlew webTests -i
+```
+
 ### Deploy
 
 Prepare resources
@@ -96,8 +107,12 @@ aws lambda invoke \
 --payload '{"headerImageName": "mountain.jpg",
             "mainChallengeTitle":"Secret",
             "sponsorName": "Julian",
+            "inspiredByLabel": "real business domain",
             "codingDurationLabel": "1 hour",
-            "allowNoVideoOption": true,
+            "defaultLanguage": "Java",
+            "enableNoVideoOption": true,
+            "enableApplyPressure": true,
+            "enableReportSharing": true,
             "username":"mani0310",
             "validityDays": 14, 
             "warmupChallenges": [ "SUM" ],
@@ -117,8 +132,12 @@ aws lambda invoke \
 --payload '{"headerImageName": "mountain.jpg",
             "mainChallengeTitle":"Checkout",
             "sponsorName": "Julian",
+            "inspiredByLabel": "real business domain",
             "codingDurationLabel": "10 minutes",
-            "allowNoVideoOption": true,
+            "defaultLanguage": "Java",
+            "enableNoVideoOption": true,
+            "enableApplyPressure": true,
+            "enableReportSharing": true,
             "username":"iuli0831",
             "validityDays": 10,
             "warmupChallenges": [ "SUM" ],

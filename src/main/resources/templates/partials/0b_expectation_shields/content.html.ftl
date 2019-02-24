@@ -16,9 +16,9 @@
             <div class="col-md-4" id="you-have-time-block">
                 <#--noinspection HtmlUnknownTarget-->
                 <p class="time-icons"><i class="fas fa-cog"></i></p>
-                <h3>You have</h3>
-                <h4 id="you-have-time"></h4>
-                <p id="you-have-time-message">
+                <h3 id="time-title">You have</h3>
+                <h4 id="time-subtitle"></h4>
+                <p id="time-message">
                     Complete the challenge by <br/><span class="exp-date font-weight-bold">${EXPIRATION_DATE}</span>
                 </p>
             </div>

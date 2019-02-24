@@ -1,9 +1,16 @@
 <#-- @ftlvariable name="EXPIRATION_DATE" type="java.lang.Long" -->
+<#-- @ftlvariable name="ENABLE_APPLY_PRESSURE" type="java.lang.Boolean" -->
+<#-- @ftlvariable name="FAKE_CURRENT_DATE" type="java.lang.Long" -->
 <script>
     $(document).ready(function(){
         var expDate = ${EXPIRATION_DATE};
-        var timeNow = new Date();
-        timeNow = timeNow.getTime();
+        var timeNow = ${FAKE_CURRENT_DATE!"new Date().getTime()"};
+
+        <#if ENABLE_APPLY_PRESSURE>
+        var enableApplyPressure = true;
+        <#else >
+        var enableApplyPressure = false;
+        </#if>
 
         var leftDays = 0,
             leftHours = 0,
@@ -41,11 +48,16 @@
             }
         }
 
-        if (timeNow >= expDate){
-            $('#you-have-time').text('Link expired');
-            $('#you-have-time-message').text('For an extension, please email your contact.');
-        }else{
-            $('#you-have-time').text(outputStr + ' remaining');
+        if (timeNow >= expDate) {
+            $('#time-title').text('Warning!');
+            $('#time-subtitle').text('Link expired');
+            $('#time-message').text('For an extension, please email your contact.');
+        } else if (enableApplyPressure) {
+            $('#time-title').text('You have');
+            $('#time-subtitle').text(outputStr + ' remaining');
+        } else {
+            $('#time-title').text('You have');
+            $('#time-subtitle').text('plenty of time');
         }
     });
 </script>
