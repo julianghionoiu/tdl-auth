@@ -15,6 +15,7 @@ public class LinkGeneratorRequest {
     private String sponsorName;
     private String inspiredByLabel;
     private String codingDurationLabel;
+    private String defaultLanguage;
     private Boolean enableNoVideoOption;
     private Boolean enableApplyPressure;
     private Boolean enableReportSharing;

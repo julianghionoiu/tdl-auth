@@ -111,6 +111,7 @@ public class LinkGeneratorLambdaHandler implements RequestHandler<LinkGeneratorR
                 .sponsorName(request.getSponsorName())
                 .inspiredByLabel(request.getInspiredByLabel())
                 .codingSessionDurationLabel(request.getCodingDurationLabel())
+                .defaultLanguage(request.getDefaultLanguage())
                 .enableNoVideoOption(request.getEnableNoVideoOption())
                 .enableApplyPressure(request.getEnableApplyPressure())
                 .enableReportSharing(request.getEnableReportSharing())

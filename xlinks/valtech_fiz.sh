@@ -13,6 +13,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "sponsorName": "Valtech",
   "inspiredByLabel": "real development flow",
   "codingDurationLabel": "can be solved in 45 minutes",
+  "defaultLanguage": "CSharp",
   "enableNoVideoOption": false,
   "enableApplyPressure": false,
   "enableReportSharing": false,

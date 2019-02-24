@@ -13,6 +13,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "sponsorName": "Makers Academy",
   "inspiredByLabel": "real business domain",
   "codingDurationLabel": "3 to 4 hours",
+  "defaultLanguage": "Ruby",
   "enableNoVideoOption": true,
   "enableApplyPressure": true,
   "enableReportSharing": true,

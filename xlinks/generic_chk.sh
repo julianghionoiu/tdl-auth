@@ -14,6 +14,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "sponsorName": "${COMPANY}",
   "inspiredByLabel": "real business domain",
   "codingDurationLabel": "can be solved in 2-3 hours",
+  "defaultLanguage": "Java",
   "enableNoVideoOption": true,
   "enableApplyPressure": true,
   "enableReportSharing": true,

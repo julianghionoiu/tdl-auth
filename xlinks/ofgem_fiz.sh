@@ -13,6 +13,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "sponsorName": "Ofgem",
   "inspiredByLabel": "real development flow",
   "codingDurationLabel": "can be solved in 45 minutes",
+  "defaultLanguage": "Python",
   "enableNoVideoOption": true,
   "enableApplyPressure": false,
   "enableReportSharing": true,

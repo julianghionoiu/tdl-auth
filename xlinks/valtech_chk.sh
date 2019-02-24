@@ -12,6 +12,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "mainChallengeTitle": "Insights",
   "sponsorName": "Valtech",
   "inspiredByLabel": "real business domain",
+  "defaultLanguage": "CSharp",
   "codingDurationLabel": "can be solved in 2-3 hours",
   "enableNoVideoOption": false,
   "enableApplyPressure": false,

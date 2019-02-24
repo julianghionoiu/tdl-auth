@@ -13,6 +13,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "sponsorName": "iwoca",
   "inspiredByLabel": "real business domain",
   "codingDurationLabel": "can be solved in 2 hours",
+  "defaultLanguage": "Python",
   "enableNoVideoOption": true,
   "enableApplyPressure": true,
   "enableReportSharing": true,

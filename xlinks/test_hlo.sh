@@ -14,6 +14,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "sponsorName": "${COMPANY}",
   "inspiredByLabel": "magic",
   "codingDurationLabel": "can be solved in 5 minutes",
+  "defaultLanguage": "Python",
   "enableNoVideoOption": true,
   "enableApplyPressure": true,
   "enableReportSharing": true,
