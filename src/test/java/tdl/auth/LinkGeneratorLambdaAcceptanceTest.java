@@ -29,7 +29,7 @@ public class LinkGeneratorLambdaAcceptanceTest {
     private LinkGeneratorLambdaHandler handler;
 
     @Before
-    public void setUp() throws IOException, TemplateException {
+    public void setUp() throws IOException {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(TEST_ROOT_USER_ACCESS_KEY_ID, TEST_ROOT_USER_SECRET_ACCESS_KEY);
         AWSStaticCredentialsProvider testCredentialsProvider = new AWSStaticCredentialsProvider(awsCreds);
         handler = new LinkGeneratorLambdaHandler(
@@ -48,7 +48,11 @@ public class LinkGeneratorLambdaAcceptanceTest {
                 "mountain.jpg",
                 "AcceptanceTest",
                 "CI",
+                "fire and ice",
                 "0 seconds",
+                "Java",
+                true,
+                true,
                 true,
                 TEST_USERNAME,
                 10,
