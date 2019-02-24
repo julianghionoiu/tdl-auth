@@ -13,7 +13,7 @@
         <div class="row margins-mobile">
             <div class="col-sm-6 col-md-5">
                 <#--noinspection HtmlUnknownTarget-->
-                <img src="${RESOURCES_WEB_PATH}/img/warmup/start-challenge.png" alt="Start challenge." class="img-fluid">
+                <img src="${RESOURCES_WEB_PATH}/img/warmup/1_start_challenge.png" alt="Start challenge." class="img-fluid">
                 <p>1. Start the challenge</p>
                 <div class="horizontal-arrow">
                     <span class="glyphicon glyphicon-arrow-right hidden-sm hidden-xs">
@@ -23,7 +23,7 @@
             </div>
             <div class="col-sm-6 col-md-5">
                 <#--noinspection HtmlUnknownTarget-->
-                <img src="${RESOURCES_WEB_PATH}/img/warmup/read-instructionsv3.png" alt="Get challenge instructions"
+                <img src="${RESOURCES_WEB_PATH}/img/warmup/2_read_description.png" alt="Get challenge instructions"
                      class="img-fluid">
                 <p>2. Read the challenge instructions</p>
                 <div class="horizontal-arrow">
@@ -36,13 +36,13 @@
         <div class="row margins-mobile">
             <div class="col-sm-6 col-md-5">
                 <#--noinspection HtmlUnknownTarget-->
-                <img src="${RESOURCES_WEB_PATH}/img/warmup/write-a-solution.png" alt="Example of challenge instructions"
+                <img src="${RESOURCES_WEB_PATH}/img/warmup/3_write_solution.png" alt="Example of challenge instructions"
                      class="img-fluid">
                 <p>3. Write a solution</p>
             </div>
             <div class="col-sm-6 col-md-5">
                 <#--noinspection HtmlUnknownTarget-->
-                <img src="${RESOURCES_WEB_PATH}/img/warmup/check-resultsv2.png" alt="Deploy your solution to production."
+                <img src="${RESOURCES_WEB_PATH}/img/warmup/4_deploy.png" alt="Deploy your solution to production."
                      class="img-fluid">
                 <p>4. Deploy and get feedback</p>
                 <div class="horizontal-arrow">
