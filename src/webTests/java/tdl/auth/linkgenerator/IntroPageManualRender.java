@@ -24,12 +24,13 @@ public class IntroPageManualRender {
                 "https://www.example.com/production/verify");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         IntroPageParameters introPageParameters = IntroPageParameters.builder()
-                .headerImageName("makers.jpg")
+                .headerImageName("recworks.png")
                 .mainChallengeTitle("Developer Insights")
-                .sponsorName("Makers Academy")
+                .sponsorName("RecWorks")
+                .enableApplyPressure(false)
                 .inspiredByLabel("real business domain")
                 .codingSessionDurationLabel("3 hours")
-                .defaultLanguage("Ruby")
+                .defaultLanguage("Java")
                 .username("xwya01")
                 .challenge("CHK")
                 .token("asdf")

@@ -8,19 +8,19 @@ USERNAME=$1
 PAYLOAD_FILE=$(mktemp)
 cat << EOF > ${PAYLOAD_FILE}
 {
-  "headerImageName": "accelerate.jpg",
-  "mainChallengeTitle": "Checkout",
-  "sponsorName": "iwoca",
-  "inspiredByLabel": "real business domain",
-  "codingDurationLabel": "can be solved in 2 hours",
-  "defaultLanguage": "Python",
+  "headerImageName": "recworks.png",
+  "mainChallengeTitle": "FizzDeluxe",
+  "sponsorName": "RecWorks",
+  "inspiredByLabel": "real development flow",
+  "codingDurationLabel": "can be solved in 45 minutes",
+  "defaultLanguage": "Java",
   "enableNoVideoOption": true,
-  "enableApplyPressure": true,
+  "enableApplyPressure": false,
   "enableReportSharing": true,
   "username":"${USERNAME}",
-  "validityDays": 14,
+  "validityDays": 60,
   "warmupChallenges": [ "SUM", "HLO" ],
-  "officialChallenge": "CHK"
+  "officialChallenge": "FIZ"
 }
 EOF
 
