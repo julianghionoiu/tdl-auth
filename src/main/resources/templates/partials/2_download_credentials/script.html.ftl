@@ -2,8 +2,7 @@
 <script>
     $(document).ready(function(){
         var expDate = ${EXPIRATION_DATE};
-        var timeNow = new Date();
-        timeNow = timeNow.getTime();
+        var timeNow = ${FAKE_CURRENT_DATE!"new Date().getTime()"};
 
         if (timeNow >= expDate){
             $('#download_credentials').attr('disabled', 'disabled');
