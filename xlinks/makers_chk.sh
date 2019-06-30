@@ -14,11 +14,11 @@ cat << EOF > ${PAYLOAD_FILE}
   "inspiredByLabel": "real business domain",
   "codingDurationLabel": "3 to 4 hours",
   "defaultLanguage": "Ruby",
-  "enableNoVideoOption": true,
-  "enableApplyPressure": true,
+  "enableNoVideoOption": false,
+  "enableApplyPressure": false,
   "enableReportSharing": true,
   "username":"${USERNAME}",
-  "validityDays": 14,
+  "validityDays": 7,
   "warmupChallenges": [ "SUM", "HLO" ],
   "officialChallenge": "CHK"
 }

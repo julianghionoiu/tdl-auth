@@ -2,26 +2,25 @@
 
 set -e
 
-if [ ! $# -eq 1 ]; then echo "Usage: $0 company username"; exit 1; fi
-COMPANY="Accelerate"
+if [ $# -eq 0 ]; then echo "Usage: $0 username"; exit 1; fi
 USERNAME=$1
 
 PAYLOAD_FILE=$(mktemp)
 cat << EOF > ${PAYLOAD_FILE}
 {
-  "headerImageName": "accelerate.jpg",
-  "mainChallengeTitle": "Hello",
-  "sponsorName": "${COMPANY}",
-  "inspiredByLabel": "magic",
-  "codingDurationLabel": "can be solved in 5 minutes",
-  "defaultLanguage": "Python",
-  "enableNoVideoOption": true,
-  "enableApplyPressure": true,
+  "headerImageName": "makers.jpg",
+  "mainChallengeTitle": "Fizz Deluxe",
+  "sponsorName": "Makers Academy",
+  "inspiredByLabel": "real development flow",
+  "codingDurationLabel": "1 to 2 hours",
+  "defaultLanguage": "Ruby",
+  "enableNoVideoOption": false,
+  "enableApplyPressure": false,
   "enableReportSharing": true,
   "username":"${USERNAME}",
-  "validityDays": 21,
-  "warmupChallenges": [ "SUM" ],
-  "officialChallenge": "HLO"
+  "validityDays": 18,
+  "warmupChallenges": [ "SUM", "HLO" ],
+  "officialChallenge": "FIZ"
 }
 EOF
 

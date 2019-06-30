@@ -20,7 +20,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "enableReportSharing": true,
   "username":"${USERNAME}",
   "validityDays": 21,
-  "warmupChallenges": [ "SUM" ],
+  "warmupChallenges": [ "SUM", "ARRS", "IRNG" ],
   "officialChallenge": "HLO"
 }
 EOF
