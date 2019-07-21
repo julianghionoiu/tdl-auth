@@ -14,7 +14,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "inspiredByLabel": "real business domain",
   "codingDurationLabel": "can be solved in 2 hours",
   "defaultLanguage": "Python",
-  "enableNoVideoOption": true,
+  "videoRecordingOption": "DISABLED",
   "enableApplyPressure": true,
   "enableReportSharing": true,
   "username":"${USERNAME}",

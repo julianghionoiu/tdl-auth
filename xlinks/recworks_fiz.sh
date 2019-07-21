@@ -14,7 +14,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "inspiredByLabel": "real development flow",
   "codingDurationLabel": "can be solved in 45 minutes",
   "defaultLanguage": "Java",
-  "enableNoVideoOption": true,
+  "videoRecordingOption": "OPTIONAL",
   "enableApplyPressure": false,
   "enableReportSharing": true,
   "username":"${USERNAME}",

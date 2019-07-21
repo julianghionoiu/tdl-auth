@@ -14,7 +14,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "inspiredByLabel": "real business domain",
   "codingDurationLabel": "3 to 4 hours",
   "defaultLanguage": "Ruby",
-  "enableNoVideoOption": false,
+  "videoRecordingOption": "MANDATORY",
   "enableApplyPressure": false,
   "enableReportSharing": true,
   "username":"${USERNAME}",

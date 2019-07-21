@@ -15,7 +15,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "inspiredByLabel": "magic",
   "codingDurationLabel": "can be solved in 5 minutes",
   "defaultLanguage": "Python",
-  "enableNoVideoOption": true,
+  "videoRecordingOption": "OPTIONAL",
   "enableApplyPressure": true,
   "enableReportSharing": true,
   "username":"${USERNAME}",

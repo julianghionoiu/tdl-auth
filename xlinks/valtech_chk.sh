@@ -14,7 +14,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "inspiredByLabel": "real business domain",
   "defaultLanguage": "CSharp",
   "codingDurationLabel": "can be solved in 2-3 hours",
-  "enableNoVideoOption": false,
+  "videoRecordingOption": "MANDATORY",
   "enableApplyPressure": false,
   "enableReportSharing": false,
   "username":"${USERNAME}",
