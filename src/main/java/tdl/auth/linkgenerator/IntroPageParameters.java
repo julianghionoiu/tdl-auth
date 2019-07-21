@@ -17,7 +17,7 @@ public class IntroPageParameters {
     @Builder.Default private String inspiredByLabel = "xINSPIRED_BY";
     @Builder.Default private String codingSessionDurationLabel = "xCODING_DURATION";
     @Builder.Default private String defaultLanguage = "Java";
-    @Builder.Default private Boolean enableNoVideoOption = true;
+    @Builder.Default private VideoRecordingOption videoRecordingOption = VideoRecordingOption.OPTIONAL;
     @Builder.Default private Boolean enableApplyPressure = true;
     @Builder.Default private Boolean enableReportSharing = true;
     @Builder.Default private String username = "xUSERNAME";

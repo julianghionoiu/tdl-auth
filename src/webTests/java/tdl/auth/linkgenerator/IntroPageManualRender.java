@@ -28,6 +28,7 @@ public class IntroPageManualRender {
                 .mainChallengeTitle("Developer Insights")
                 .sponsorName("RecWorks")
                 .enableApplyPressure(false)
+                .videoRecordingOption(VideoRecordingOption.MANDATORY)
                 .inspiredByLabel("real business domain")
                 .codingSessionDurationLabel("3 hours")
                 .defaultLanguage("Java")

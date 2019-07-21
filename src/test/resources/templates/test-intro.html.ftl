@@ -3,9 +3,10 @@
 <#-- @ftlvariable name="HEADER_IMAGE_NAME" type="java.lang.String" -->
 <#-- @ftlvariable name="MAIN_CHALLENGE_TITLE" type="java.lang.String" -->
 <#-- @ftlvariable name="SPONSOR" type="java.lang.String" -->
+<#-- @ftlvariable name="JOURNEY_ID" type="java.lang.String" -->
 <#-- @ftlvariable name="INSPIRED_BY" type="java.lang.String" -->
 <#-- @ftlvariable name="CODING_SESSION_DURATION" type="java.lang.String" -->
-<#-- @ftlvariable name="ENABLE_NO_VIDEO_OPTION" type="java.lang.Boolean" -->
+<#-- @ftlvariable name="VIDEO_RECORDING_OPTION" type="tdl.auth.linkgenerator.VideoRecordingOption" -->
 <#-- @ftlvariable name="ENABLE_APPLY_PRESSURE" type="java.lang.Boolean" -->
 <#-- @ftlvariable name="ENABLE_REPORT_SHARING" type="java.lang.Boolean" -->
 <#-- @ftlvariable name="USERNAME" type="java.lang.String" -->
@@ -25,8 +26,9 @@
         This link will expire on: ${EXPIRATION_DATE}
         You will get ${CODING_SESSION_DURATION} of uninterrupted coding challenge
 
-        <#if ENABLE_NO_VIDEO_OPTION>
-        <p>no video option enabled</p>
+
+        <#if VIDEO_RECORDING_OPTION.name() == "MANDATORY">
+        <p>video recording is mandatory</p>
         </#if>
 
         <#if ENABLE_APPLY_PRESSURE>

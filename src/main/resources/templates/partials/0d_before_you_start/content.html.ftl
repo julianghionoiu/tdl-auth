@@ -13,7 +13,7 @@
             </ol>
         </div>
         <#if ENABLE_REPORT_SHARING>
-        <p>Each screen gets recorded so after the challenge you get the opportunity to see (anonymously) how other
+        <p>After the challenge you get the opportunity to see (anonymously) how other
             people have approached this problem. There is huge learning potential in seeing other approaches.</p>
         <p>People who have completed the challenge will have access to other results and recordings.</p>
         </#if>

@@ -16,7 +16,7 @@ public class LinkGeneratorRequest {
     private String inspiredByLabel;
     private String codingDurationLabel;
     private String defaultLanguage;
-    private Boolean enableNoVideoOption;
+    private VideoRecordingOption videoRecordingOption;
     private Boolean enableApplyPressure;
     private Boolean enableReportSharing;
     private String username;

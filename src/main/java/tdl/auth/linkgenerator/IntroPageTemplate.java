@@ -42,7 +42,7 @@ public class IntroPageTemplate {
         contentParams.put("EXPIRATION_DATE", introPageParameters.getExpirationDate().getTime());
         contentParams.put("CODING_SESSION_DURATION", introPageParameters.getCodingSessionDurationLabel());
         contentParams.put("DEFAULT_LANGUAGE", introPageParameters.getDefaultLanguage());
-        contentParams.put("ENABLE_NO_VIDEO_OPTION", introPageParameters.getEnableNoVideoOption());
+        contentParams.put("VIDEO_RECORDING_OPTION", introPageParameters.getVideoRecordingOption());
         contentParams.put("ENABLE_APPLY_PRESSURE", introPageParameters.getEnableApplyPressure());
         contentParams.put("ENABLE_REPORT_SHARING", introPageParameters.getEnableReportSharing());
         contentParams.put("USERNAME", introPageParameters.getUsername());

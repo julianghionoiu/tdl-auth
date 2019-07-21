@@ -91,7 +91,7 @@ public class IntroPageVisualRegressionTest {
     //~~~~~~~ Tests
 
     @Test
-    public void testValidLinkDefaultView() throws Exception {
+    public void test_valid_link_default_view() throws Exception {
 
         IntroPage p = generateAndServe(validLinkPageParameters()
                 .defaultLanguage("Ruby")
@@ -102,7 +102,7 @@ public class IntroPageVisualRegressionTest {
     }
 
     @Test
-    public void testValidLinkSelectRunner() throws Exception {
+    public void test_valid_link_select_runner() throws Exception {
 
         IntroPage p = generateAndServe(validLinkPageParameters()
                 .build());
@@ -116,20 +116,31 @@ public class IntroPageVisualRegressionTest {
 
 
     @Test
-    public void testAllTogglesChanged() throws Exception {
+    public void test_flags_MandatoryVideo_DoNotApplyPressure_DisableReportSharing() throws Exception {
         IntroPageParameters introPageParameters = validLinkPageParameters()
-                .enableNoVideoOption(false)
+                .videoRecordingOption(VideoRecordingOption.MANDATORY)
                 .enableApplyPressure(false)
                 .enableReportSharing(false)
                 .build();
 
         IntroPage p = generateAndServe(introPageParameters);
 
-        p.assertScreenVisuallyMatches("all_toggles_set_to_false.png");
+        p.assertScreenVisuallyMatches("flags_MandatoryVideo_DoNotApplyPressure_DisableReportSharing.png");
     }
 
     @Test
-    public void testExpiredLink() throws Exception { ;
+    public void test_flags_VideoDisabled() throws Exception {
+        IntroPageParameters introPageParameters = validLinkPageParameters()
+                .videoRecordingOption(VideoRecordingOption.DISABLED)
+                .build();
+
+        IntroPage p = generateAndServe(introPageParameters);
+
+        p.assertScreenVisuallyMatches("flags_VideoDisabled.png");
+    }
+
+    @Test
+    public void test_expired_link() throws Exception {
         IntroPageParameters introPageParameters = expiredLinkPageParameters()
                 .build();
 

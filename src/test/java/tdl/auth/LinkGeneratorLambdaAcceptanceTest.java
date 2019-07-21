@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.EnvironmentVariables;
 import tdl.auth.linkgenerator.LinkGeneratorRequest;
+import tdl.auth.linkgenerator.VideoRecordingOption;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -51,7 +52,7 @@ public class LinkGeneratorLambdaAcceptanceTest {
                 "fire and ice",
                 "0 seconds",
                 "Java",
-                true,
+                VideoRecordingOption.OPTIONAL,
                 true,
                 true,
                 TEST_USERNAME,
