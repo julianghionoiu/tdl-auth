@@ -153,6 +153,19 @@ cat ./build/outputfile.txt | tr -d "\"" | sed  's/https/http/' | pbcopy
 echo "base64error"  | base64 --decode
 ```
 
+### Static images - staticResources
+
+Sync test bucket
+```
+cd staticResources
+aws s3 sync . s3://intro.test.befaster.io/000common
+```
+
+Sync prod bucket
+```
+cd staticResources
+aws s3 sync . s3://intro.befaster.io/000common
+```
 
 ### Useful commands
 
