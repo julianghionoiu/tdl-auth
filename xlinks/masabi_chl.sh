@@ -12,7 +12,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "mainChallengeTitle": "Developer Insights",
   "sponsorName": "",
   "inspiredByLabel": "real business domain",
-  "codingDurationLabel": "2 to 3 hours",
+  "codingDurationLabel": "1 to 3 hours",
   "defaultLanguage": "Java",
   "videoRecordingOption": "OPTIONAL",
   "enableApplyPressure": false,
