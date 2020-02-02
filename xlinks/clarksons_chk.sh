@@ -18,7 +18,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "enableApplyPressure": false,
   "enableReportSharing": true,
   "username":"${USERNAME}",
-  "validityDays": 30,
+  "validityDays": 42,
   "warmupChallenges": [ "SUM", "HLO" ],
   "officialChallenge": "CHK"
 }
