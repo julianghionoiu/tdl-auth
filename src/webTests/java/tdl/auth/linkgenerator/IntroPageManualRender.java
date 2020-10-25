@@ -24,9 +24,9 @@ public class IntroPageManualRender {
                 "https://www.example.com/production/verify");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         IntroPageParameters introPageParameters = IntroPageParameters.builder()
-                .headerImageName("recworks.png")
+                .headerImageName("i3verticals.png")
                 .mainChallengeTitle("Developer Insights")
-                .sponsorName("RecWorks")
+                .sponsorName("i3verticals")
                 .enableApplyPressure(false)
                 .videoRecordingOption(VideoRecordingOption.MANDATORY)
                 .inspiredByLabel("real business domain")
