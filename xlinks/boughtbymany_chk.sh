@@ -8,17 +8,17 @@ USERNAME=$1
 PAYLOAD_FILE=$(mktemp)
 cat << EOF > ${PAYLOAD_FILE}
 {
-  "headerImageName": "thinkmoney.jpg",
-  "mainChallengeTitle": "Developer Insights",
-  "sponsorName": "",
+  "headerImageName": "boughtbymany.png",
+  "mainChallengeTitle": "&nbsp;",
+  "sponsorName": "Developer Insights",
   "inspiredByLabel": "real business domain",
-  "codingDurationLabel": "2 to 3 hours",
-  "defaultLanguage": "csharp",
+  "codingDurationLabel": "can be solved in 3 hours",
+  "defaultLanguage": "Python",
   "videoRecordingOption": "MANDATORY",
   "enableApplyPressure": false,
   "enableReportSharing": true,
   "username":"${USERNAME}",
-  "validityDays": 90,
+  "validityDays": 30,
   "warmupChallenges": [ "SUM", "HLO" ],
   "officialChallenge": "CHK"
 }
