@@ -9,10 +9,10 @@ PAYLOAD_FILE=$(mktemp)
 cat << EOF > ${PAYLOAD_FILE}
 {
   "headerImageName": "thinkmoney.jpg",
-  "mainChallengeTitle": "Developer Insights",
+  "mainChallengeTitle": "FizzDeluxe",
   "sponsorName": "",
-  "inspiredByLabel": "real business domain",
-  "codingDurationLabel": "2 to 3 hours",
+  "inspiredByLabel": "real development flow",
+  "codingDurationLabel": "can be solved in 45 minutes",
   "defaultLanguage": "csharp",
   "videoRecordingOption": "MANDATORY",
   "enableApplyPressure": false,
@@ -20,7 +20,7 @@ cat << EOF > ${PAYLOAD_FILE}
   "username":"${USERNAME}",
   "validityDays": 90,
   "warmupChallenges": [ "SUM", "HLO" ],
-  "officialChallenge": "CHK"
+  "officialChallenge": "FIZ"
 }
 EOF
 
