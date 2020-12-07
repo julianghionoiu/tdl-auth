@@ -24,14 +24,14 @@ public class IntroPageManualRender {
                 "https://www.example.com/production/verify");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         IntroPageParameters introPageParameters = IntroPageParameters.builder()
-                .headerImageName("boughtbymany.png")
-                .mainChallengeTitle("&nbsp;")
-                .sponsorName("Developer Insights")
+                .headerImageName("tapsimple.png")
+                .mainChallengeTitle("Developer Insights")
+                .sponsorName("TapSimple")
                 .enableApplyPressure(false)
                 .videoRecordingOption(VideoRecordingOption.MANDATORY)
                 .inspiredByLabel("real business domain")
                 .codingSessionDurationLabel("3 hours")
-                .defaultLanguage("Java")
+                .defaultLanguage("Nodejs")
                 .username("xwya01")
                 .challenge("CHK")
                 .token("asdf")
